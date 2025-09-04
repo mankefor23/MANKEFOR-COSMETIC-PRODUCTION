@@ -6,7 +6,6 @@
         <title>MANKEFOR COSMETIC PRODUCTION</title>
         <link rel="stylesheet" href="index.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     </head>
     <body>
@@ -15,8 +14,8 @@
                 <div class="icon">
                     <h2 class="logo"><img src="/images/prelogo.png" width="100px" height="80px"></h2>
                     <div class="text">
-                        <p style="color: red;"  data-aos="fade-down-right" data-aos-duration="1400">MANKEFOR</p> 
-                        <p style="color: gray" data-aos="fade-down-right"data-aos-duration="1000">COSMETIC</p>
+                        <p style="color: red;"  data-aos="fade-down" data-aos-duration="1400">MANKEFOR</p> 
+                        <p style="color: gray" data-aos="fade-down"data-aos-duration="1000">COSMETIC</p>
                     </div>
                 </div>
 
@@ -27,8 +26,8 @@
                         <li data-aos="fade-up" data-aos-duration="1700"><a href="product.html">PRODUCT</a></li>
                         <li data-aos="fade-up" data-aos-duration="1800"><a href="contact.html">CONTACT</a></li> 
                         <li class="search">
-                            <input class="srch" type="search" name="" placeholder="Search...">
-                            <a href="#"><button class="btn" data-aos="zoom-out-left" data-aos-duration="1800">Search</button></a>
+                            <input class="srch" id="search" type="search" name="" placeholder="Search...">
+                            <a href="#"><button class="btn" id="searchb" data-aos="zoom-out-left" data-aos-duration="1800">Search</button></a>
                         </li>
                     </ul>
                 </div>
@@ -60,10 +59,10 @@
             <!-- <button class="tile-btn" style="background-color: #f78426;">Learn more</button> -->
         </div>
 
-        <div class="section-3">
+        <div class="section-3" id="replace">
             <div class="tile">
                 <div class="tile-left">
-                    <img width="500" height="390" img src="/images/liquid 1.webp" data-aos="fade-down" data-aos-delay="900">
+                    <img width="500" height="390" img src="/images/liquid1.webp" data-aos="fade-down" data-aos-delay="900">
                 </div>
                 <div class="tile-right">
                     <h1 class="tile-header" data-aos="flip-left"><i >PRECIOUS LIQUID SOAP</i></h1>
@@ -191,6 +190,7 @@
             &copy; All right Reserved. Build by <i>MANKEFOR PRECIOUS</i>
         </div>
       </footer>
+      <script src="./search.js"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
         AOS.init();

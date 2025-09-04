@@ -1,3 +1,112 @@
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Exo 2";
+}
+.main {
+  width: 100%;
+  /* background-image: url("/images/4_test.jpg"); */
+  background-position: center;
+  background-size: cover;
+  height: fit-content;
+  padding-bottom: 40px;
+  position: relative;
+}
+.navbar {
+  width: 100%;
+  height: 120px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 10px 15px 20px skyblue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  z-index: 10;
+}
+.icon {
+  /* width: fit-content;
+    height: fit-content; */
+  height: 20px;
+  width: 20px;
+  display: flex;
+  align-items: center;
+}
+.logo {
+  color: #ff7200;
+  font-size: 35px;
+  font-family: Arial;
+}
+.icon .text {
+  font-size: 1.6rem;
+  font-weight: bold;
+  font-family: "Exo 2", sans-serif;
+}
+.menu {
+  width: fit-content;
+  height: 70px;
+}
+ul {
+  float: left;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+ul li {
+  list-style: none;
+  font-size: 20px;
+  padding-left: 10px;
+  padding-right: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: fit-content;
+  width: 120px;
+}
+ul li a {
+  text-decoration: none;
+  color: black;
+  font-family: Arial;
+  font-weight: bold;
+  transition: 0.4s ease-in-out;
+}
+ul li a:hover {
+  color: #b7ddec;
+}
+.search {
+  width: 330px;
+  transform: translateY(-7px);
+}
+.srch {
+  font-family: "Times New Roman";
+  width: 200px;
+  height: 40px;
+  background: transparent;
+  border: 1px solid #ff7200;
+  margin-top: 13px;
+  border-right: none;
+  font-size: 20px;
+  float: left;
+  padding: 10px;
+  border-bottom-left-radius: 5px;
+  border-top-left-radius: 5px;
+  outline: none;
+}
+.srch::placeholder {
+  color: gray;
+}
+.btn {
+  width: 100px;
+  height: 40px;
+  background: #ff7200;
+  border: 2px solid #ff7200;
+  margin-top: 13px;
+  color: #fff;
+  font-size: 15px;
+  outline: none;
+}
 /* *{ */
 /* margin: 0; */
 /* padding: 0; */

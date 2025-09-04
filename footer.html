@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        footer{
+            width: 100vw;
+            height: fit-content;
+            background-color: #343434;
+            color: white;
+            padding-top: 50px;
+        }
+        .footer{
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            padding: 0 12%;
+        }
+        .footer-content{
+            width: 100%;
+            padding-left: 90px;
+        }
+        .list{
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            margin: 0;
+        }
+        .list li{
+            width: auto;
+            padding: 7px;
+            text-decoration: none;
+            color: #fff;
+        }
+        .list li a {
+            color: white;
+        }
+        .list li::before{
+            content: '';
+            position: absolute;
+            transform: translate(-50%, -50%);
+            left: 50%;
+            top: 100%;
+            width: 0;
+            height: 2px;
+            background: #f18930;
+            transition-duration: -5s;
+        }
+        .list li:hover::before{
+            width: 70px;
+        }
+
+        .footer h3{
+            font-size: 28px;
+            text-align: left;
+            margin-bottom: 10px;
+        }
+        .footer p{
+            margin-left: 20px;
+            margin-top: 7px;
+        }
+        .social-icons{
+            text-align: left;
+            padding: 30px;
+        }
+        .social-icons i{
+            display: inline-block;
+            color: white;
+            font-size: 19px;
+            margin-right: 5px;
+            margin-bottom: 10px;
+        }
+        .footer-bottom{
+            text-align: center;
+            background: #f18930;
+            padding: 10px 0;
+            margin-top: 50px;
+        }
+        .footer-bottom p{
+            color: #343434;
+            margin: 0;
+            font-size: 16px;
+            padding: 7px;
+        }
+
+        .footer-content p {
+            transition: all .1s ease;
+            cursor: pointer;
+        }
+
+        .footer-content p:hover {
+            border-left: 3.5px solid orange;
+            padding-left: 3px;
+        }
+
+        .footer-closing {
+            height: fit-content;
+            width: 100vw;
+            text-align: center;
+            font-size: .8rem;
+            margin: 0 auto;
+            margin-top: 10px;
+            padding: 20px;
+            background-color: #36393a;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+     <footer>
+        <div class="footer">
+            <div class="footer-content">
+                <h3>Contact Us</h3>
+                <p>+237 651-586-004</p>
+                <p>+237 687-719-778</p>
+                <p>+237 681-719-198</p>
+                <br>
+                <p>mankeforcosmeticproduction@gmail.com</p>
+                <p>preciousliquidsaop@gmail.com</p>
+                <br>
+                <p>MILE 2 BAMENDA, CAMEROON</p>
+            </div>
+            <div class="footer-content">
+                <h3>Quick Links</h3>
+                <ul class="list">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="product.html">Product</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+            <div class="social-icons">
+                <h3>Follow Us</h3>
+                <i href="#" class="fa fa-facebook"></i> <span style="color: white;">Facebook</span> <br>
+            </div>
+        </div>
+        <div class="footer-closing">
+            &copy; All right Reserved. Build by <i>MANKEFOR PRECIOUS</i>
+        </div>
+      </footer>
+</body>
+</html>

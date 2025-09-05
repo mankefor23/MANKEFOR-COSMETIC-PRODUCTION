@@ -6,7 +6,34 @@ let products = [
     description:
       "Gentle on hands, tough on dirt Perfect for everyday cleaning with a refreshing scent and lasting freshness.",
   },
-  {},
+  {
+    title: "Precious Essence",
+    image: "./images/perfume7.jpg",
+    keyWords: ["essence", "precious", "perfume", "fragance"],
+    description:
+      "Precious Essence - a timless fragrance crafted for elegance, confidence, and unforgettable presence.",
+  },
+  {
+    title: "Precious bath Glow",
+    image: "./images/bathing4.jpg",
+    keyWords: ["bath", "glow", "skin"],
+    description:
+      "Nourish your skin with every wash.Gentle, radiant, and refreshing - for the glow you were born to shine.",
+  },
+  {
+    title: "Precious Power Wash",
+    image: "./images/power2.webp",
+    keyWords: ["power", "wash"],
+    description:
+      "Engineered on stains, made for families.Precious Power Wash is your trusted solution for tough stains - powerful, safe, and perfect for both home and industrial use.",
+  },
+  {
+    title: "Precious Pure Bleach",
+    image: "./images/javel1.webp",
+    keyWords: ["pure", "bleach"],
+    description:
+      "Gentle on fabrics, tough on dirt.Precious Pur Wash delivers a pure, powerful clean that's safe for your family and strong enough for heavy-duty use. .",
+  },
 ];
 
 let search = document.getElementById("search");
@@ -37,3 +64,4 @@ button.addEventListener("click", () => {
 });
 
 function renderPage() {}
+Page();

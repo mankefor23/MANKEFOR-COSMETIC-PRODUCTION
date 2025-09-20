@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mankefor Cosmetic | Profile Management</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f7f7f7;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin: 0;
+        padding: 20px;
+      }
+
+      .container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        width: 400px;
+      }
+
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .form-group {
+        margin-bottom: 15px;
+      }
+
+      label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 5px;
+        color: #444;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        background: #d63384;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        background: #b52b6d;
+      }
+
+      .success {
+        color: green;
+        text-align: center;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Manage Profile</h2>
+      <form id="profileForm">
+        <!-- Personal Info -->
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="name" required />
+        </div>
+        <div class="form-group">
+          <label>Email</label>
+          <input type="email" id="email" required disabled />
+        </div>
+        <div class="form-group">
+          <label>Phone</label>
+          <input type="text" id="phone" />
+        </div>
+
+        <!-- Address -->
+        <div class="form-group">
+          <label>Delivery Address</label>
+          <input type="text" id="address" />
+        </div>
+
+        <!-- Payment Preferences -->
+        <div class="form-group">
+          <label>Payment Method</label>
+          <select id="payment">
+            <option value="Card">Card</option>
+            <option value="Mobile Money">Mobile Money</option>
+            <option value="PayPal">PayPal</option>
+            <option value="Cash on Delivery">Cash on Delivery</option>
+          </select>
+        </div>
+
+        <button type="submit">Save Changes</button>
+        <p class="success" id="successMsg"></p>
+      </form>
+    </div>
+
+    <script>
+      const profileForm = document.getElementById("profileForm");
+      const successMsg = document.getElementById("successMsg");
+
+      // Get logged in user (saved in login)
+      let loggedInEmail = localStorage.getItem("loggedInUser");
+
+      if (!loggedInEmail) {
+        alert("⚠️ Please login first!");
+        window.location.href = "login.html?option=login"; // Redirect if not logged in
+      }
+
+      // Load existing user profile
+      let user = JSON.parse(localStorage.getItem(loggedInEmail));
+      if (user) {
+        document.getElementById("name").value = user.name || "";
+        document.getElementById("email").value = loggedInEmail;
+        document.getElementById("phone").value = user.phone || "";
+        document.getElementById("address").value = user.address || "";
+        document.getElementById("payment").value = user.payment || "Card";
+      }
+
+      // Save profile updates
+      profileForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        let updatedUser = {
+          name: document.getElementById("name").value,
+          password: user.password, // keep old password
+          phone: document.getElementById("phone").value,
+          address: document.getElementById("address").value,
+          payment: document.getElementById("payment").value,
+        };
+
+        localStorage.setItem(loggedInEmail, JSON.stringify(updatedUser));
+        successMsg.textContent = "✅ Profile updated successfully!";
+      });
+    </script>
+  </body>
+</html>

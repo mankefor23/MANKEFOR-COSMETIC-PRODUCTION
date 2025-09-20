@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Place Order Form</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        /* background: #f2f2f2; */
+        padding: 20px;
+      }
+      .order-form {
+        background: #fff;
+        padding: 20px;
+        border-radius: 12px;
+        max-width: 500px;
+        margin: auto;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+      .order-form h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+        background-color: #ff7200;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 6px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        font-size: 14px;
+      }
+      .payment-options {
+        display: flex;
+        gap: 20px;
+        margin-top: 8px;
+      }
+      textarea {
+        resize: none;
+        height: 80px;
+      }
+      button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        background: #ff7200;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+      }
+      button:hover {
+        background: #218838;
+      }
+      .result {
+        margin-top: 20px;
+        padding: 15px;
+        background: #e9ffe9;
+        border: 1px solid #b2ffb2;
+        border-radius: 8px;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <form class="order-form" id="laceForm">
+      <h2>Place Order Form</h2>
+
+      <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" id="name" name="fullname" />
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" />
+      </div>
+
+      <div class="form-group">
+        <label for="product">Select Product</label>
+        <select id="product" name="product">
+          <option value="">-- Choose a Product --</option>
+          <option value="lace1">Precious liquid soap 5000 XAF (5L)</option>
+          <option value="lace2">Precious liquid soap 1000 XAF (1L)</option>
+          <option value="lace3">Precious Liquid soap 500 XAF (1/2L)</option>
+          <option value="lace4">Precious Essence 15000 XAF</option>
+          <option value="lace5">Precious Essence 10000 XAF</option>
+          <option value="lace6">Precious Essence 5000 XAF</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="date">Delivery Date</label>
+        <input type="date" id="date" name="delivery_date" />
+      </div>
+      <div class="form-group">
+        <label for="date">Delivery Location</label>
+        <input type="text" id="location" name="delivery location" />
+      </div>
+
+      <div class="form-group">
+        <label>Payment Method</label>
+        <div class="payment-options">
+          <label><input type="radio" name="payment" value="MTN" /> MTN</label>
+          <label
+            ><input type="radio" id="radio" name="payment" value="Orange" />
+            Orange</label
+          >
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="note">Additional Note</label>
+        <textarea
+          id="note"
+          name="note"
+          placeholder="Enter any details..."
+        ></textarea>
+      </div>
+
+      <button type="submit">Submit Order</button>
+    </form>
+
+    <div class="result" id="result"></div>
+
+    <script>
+      const form = document.getElementById("laceForm");
+      const resultDiv = document.getElementById("result");
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault(); // stop form from refreshing page
+
+        // collect form data
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const product = document.getElementById("product").value;
+        const date = document.getElementById("date").value;
+        const payment = document.getElementById("radio").value;
+        const note = document.getElementById("note").value;
+        let object = {
+          name,
+          email,
+          product,
+          date,
+          payment,
+          note,
+        };
+        localStorage.setItem("key", JSON.stringify(object));
+        let news = localStorage.getItem("key");
+        console.log(news);
+        // display results
+        resultDiv.style.display = "block";
+        resultDiv.innerHTML = `
+        <h3>Order Summary</h3>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
+        <p><strong>Product:</strong> ${product}</p>
+        <p><strong>Delivery Date:</strong> ${date}</p>
+        <p><strong>Payment Method:</strong> ${payment}</p>
+        <p><strong>Note:</strong> ${note ? note : "None"}</p>
+      `;
+
+        // clear form
+        form.reset();
+      });
+    </script>
+  </body>
+</html>
+<!-- form.reset();
+      });
+    </script>
+  </body>
+</html> -->
+>

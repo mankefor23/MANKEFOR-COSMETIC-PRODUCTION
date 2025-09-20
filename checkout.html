@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout & Payment</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 400px;
+        margin: auto;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      label {
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+
+      button {
+        width: 100%;
+        padding: 10px;
+        background: #6c5ce7;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        margin-top: 15px;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background: #5a4acb;
+      }
+
+      #result {
+        margin-top: 15px;
+        padding: 10px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Checkout Form</h1>
+      <form id="checkoutForm">
+        <!-- Full Name -->
+        <label for="fullname">Full Name</label>
+        <input type="text" id="fullname" name="fullname" required />
+
+        <!-- Email -->
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" required />
+
+        <!-- Product -->
+        <label for="product">Select Product</label>
+        <select id="product" name="product" required>
+          <option value="">-- Choose a product --</option>
+          <option value="9.99">Premium Lace ($9.99)</option>
+          <option value="14.99">Luxury Lace ($14.99)</option>
+          <option value="19.99">Deluxe Lace ($19.99)</option>
+        </select>
+
+        <!-- Delivery Date -->
+        <label for="delivery">Delivery Date</label>
+        <input type="date" id="delivery" name="delivery" required />
+
+        <!-- Note -->
+        <label for="note">Additional Note</label>
+        <textarea id="note" name="note" rows="3"></textarea>
+
+        <!-- Payment -->
+        <p><strong>Payment Method:</strong></p>
+        <label
+          ><input type="radio" name="method" value="mtn" required /> MTN Mobile
+          Money</label
+        >
+        <label
+          ><input type="radio" name="method" value="orange" /> Orange
+          Money</label
+        >
+        <label
+          ><input type="radio" name="method" value="cash" /> Cash on
+          Delivery</label
+        >
+
+        <button type="submit">Place Order</button>
+      </form>
+
+      <!-- Where we show result -->
+      <div id="result"></div>
+    </div>
+
+    <script>
+      document
+        .getElementById("checkoutForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault(); // stop page refresh
+
+          let name = document.getElementById("fullname").value;
+          let email = document.getElementById("email").value;
+          let product = document.getElementById("product").value;
+          let delivery = document.getElementById("delivery").value;
+          let method = document.querySelector(
+            "input[name='method']:checked",
+          ).value;
+
+          let message = "";
+
+          if (method === "mtn") {
+            message = `Hi ${name}, your order ($${product}) is placed. Pay using *126# (MTN Mobile Money).`;
+          } else if (method === "orange") {
+            message = `Hi ${name}, your order ($${product}) is placed. Pay using Orange Money app.`;
+          } else {
+            message = `Hi ${name}, your order ($${product}) will be paid on delivery.`;
+          }
+
+          document.getElementById("result").innerHTML =
+            `<p style="background:#d1fae5;color:#065f46">${message}</p>`;
+        });
+    </script>
+  </body>
+</html>

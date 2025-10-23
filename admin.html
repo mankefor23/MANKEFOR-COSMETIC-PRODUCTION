@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mankefor Production — Admin Dashboard</title>
+    <style>
+      :root {
+        --blue: #0056b3;
+        --orange: #ff7f00;
+        --bg: #f6f8fb;
+        --card: #ffffff;
+        --muted: #6b7280;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        font-family: Inter, system-ui, Arial, Helvetica, sans-serif;
+        background: var(--bg);
+        color: #0f1724;
+      }
+
+      /* Login */
+      .login-wrap {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 24px;
+      }
+      .login-card {
+        width: 100%;
+        max-width: 420px;
+        background: var(--card);
+        border-radius: 12px;
+        padding: 28px;
+        box-shadow: 0 6px 20px rgba(8, 15, 30, 0.08);
+      }
+      h1 {
+        margin: 0 0 8px 0;
+        font-size: 1.25rem;
+      }
+      p.lead {
+        margin: 0 0 18px 0;
+        color: var(--muted);
+      }
+      label {
+        display: block;
+        font-size: 0.85rem;
+        margin-bottom: 6px;
+      }
+      input[type="text"],
+      input[type="password"] {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #e6e9ef;
+        border-radius: 8px;
+        margin-bottom: 12px;
+      }
+      button.btn {
+        background: var(--orange);
+        border: none;
+        color: white;
+        padding: 10px 14px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 0.9rem;
+        margin-top: 8px;
+      }
+
+      /* Layout */
+      .app {
+        display: flex;
+        min-height: 100vh;
+      }
+      .sidebar {
+        width: 260px;
+        background: var(--blue);
+        color: white;
+        padding: 18px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .nav {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        margin-top: 10px;
+      }
+      .nav a {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
+        border-radius: 8px;
+        color: rgba(255, 255, 255, 0.95);
+        text-decoration: none;
+      }
+      .nav a.active {
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .toggle-sidebar {
+        display: none;
+      }
+
+      .main {
+        flex: 1;
+        padding: 22px;
+      }
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 16px;
+      }
+      .search {
+        flex: 1;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+      .search input {
+        width: 100%;
+        padding: 8px 12px;
+        border-radius: 8px;
+        border: 1px solid #e6e9ef;
+      }
+      .top-actions {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+      .card-row {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 14px;
+        margin-bottom: 18px;
+      }
+      .card {
+        background: var(--card);
+        padding: 14px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(8, 15, 30, 0.04);
+      }
+      .card h3 {
+        margin: 0;
+        font-size: 0.9rem;
+        color: var(--muted);
+      }
+      .card .value {
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-top: 8px;
+      }
+
+      @media (max-width: 760px) {
+        .app {
+          flex-direction: column;
+        }
+        .sidebar {
+          position: fixed;
+          left: -320px;
+          top: 0;
+          height: 100vh;
+          z-index: 40;
+          transition: left 0.22s;
+        }
+        .sidebar.open {
+          left: 0;
+        }
+        .toggle-sidebar {
+          display: inline-block;
+          background: var(--card);
+          padding: 8px;
+          border-radius: 8px;
+          cursor: pointer;
+        }
+        .main {
+          padding: 12px;
+        }
+        .card-row {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- LOGIN -->
+    <div id="loginScreen" class="login-wrap">
+      <div class="login-card">
+        <h1>Mankefor Production</h1>
+        <p class="lead">
+          Admin login to manage products, orders and customers.
+        </p>
+
+        <label for="username">Username</label>
+        <input id="username" type="text" placeholder="Enter username" />
+
+        <label for="password">Password</label>
+        <input id="password" type="password" placeholder="Enter password" />
+
+        <button id="loginBtn" class="btn">Login</button>
+      </div>
+    </div>
+
+    <!-- APP -->
+    <div id="app" class="app" style="display: none">
+      <aside class="sidebar" id="sidebar">
+        <nav class="nav" id="navLinks">
+          <a href="#" class="active" data-section="overview">🏠 Overview</a>
+          <a href="#" data-section="products">📦 Products</a>
+          <a href="#" data-section="orders">🧾 Orders</a>
+          <a href="#" data-section="customers">👥 Customers</a>
+          <a href="#" data-section="notifications"
+            >🔔 Notifications
+            <span
+              id="notifCount"
+              style="
+                margin-left: 6px;
+                background: var(--orange);
+                padding: 4px 8px;
+                border-radius: 999px;
+                font-weight: 700;
+                color: white;
+                font-size: 0.75rem;
+              "
+              >0</span
+            ></a
+          >
+          <a href="#" id="logout">⚙️ Logout</a>
+        </nav>
+        <div
+          style="
+            margin-top: auto;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.85);
+          "
+        >
+          © Mankefor
+        </div>
+      </aside>
+
+      <main class="main">
+        <div class="topbar">
+          <div style="display: flex; gap: 12px; align-items: center">
+            <div class="toggle-sidebar" id="hamburger">☰</div>
+            <div class="search">
+              <input id="globalSearch" placeholder="Search..." /><button
+                class="btn"
+                onclick="performSearch()"
+              >
+                Search
+              </button>
+            </div>
+          </div>
+          <div class="top-actions">
+            <div id="currentDate"></div>
+          </div>
+        </div>
+
+        <section id="overview" class="section">
+          <div class="card-row">
+            <div class="card">
+              <h3>Total Orders</h3>
+              <div class="value" id="totalOrders">0</div>
+            </div>
+            <div class="card">
+              <h3>Total Customers</h3>
+              <div class="value" id="totalCustomers">0</div>
+            </div>
+            <div class="card">
+              <h3>Total Products</h3>
+              <div class="value" id="totalProducts">0</div>
+            </div>
+            <div class="card">
+              <h3>Pending Approvals</h3>
+              <div class="value" id="pendingApprovals">0</div>
+            </div>
+          </div>
+          <div id="recentOrdersTable"></div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      const hiddenUser = atob("TWFua2Vmb3IgUHJvZHVjdGlvbg=="); // encoded username
+      const hiddenPass = atob("TmNoaW5kYSAyMw=="); // encoded password
+
+      document
+        .getElementById("loginBtn")
+        .addEventListener("click", attemptLogin);
+
+      function attemptLogin() {
+        const u = document.getElementById("username").value.trim();
+        const p = document.getElementById("password").value;
+        if (u === hiddenUser && p === hiddenPass) {
+          document.getElementById("loginScreen").style.display = "none";
+          document.getElementById("app").style.display = "flex";
+          initApp();
+        } else {
+          alert("Invalid credentials");
+        }
+      }
+
+      function initApp() {
+        const dateEl = document.getElementById("currentDate");
+        function updateDate() {
+          dateEl.textContent = new Date().toLocaleString();
+        }
+        updateDate();
+        setInterval(updateDate, 1000);
+      }
+
+      document.getElementById("hamburger").addEventListener("click", () => {
+        document.getElementById("sidebar").classList.toggle("open");
+      });
+    </script>
+  </body>
+</html>

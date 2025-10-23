@@ -630,9 +630,9 @@
                         <li data-aos="fade-up" data-aos-duration="1600"><a href="about.html">ABOUT</a></li>
                         <li data-aos="fade-up" data-aos-duration="1700"><a href="product.html">PRODUCT</a></li>
                         <li data-aos="fade-up" data-aos-duration="1800"><a href="contact.html">CONTACT</a></li> 
-                        <li class="search">
-                            <input class="srch" type="search" name="" placeholder="Search...">
-                            <a href="#"><button class="btn" data-aos="zoom-out-left" data-aos-duration="1800">Search</button></a>
+                        <!-- <li class="search">
+                            <input class="srch" type="search" name="" placeholder="Search..."> -->
+                            <a href="search"><button class="btn" data-aos="zoom-out-left" data-aos-duration="1800">Search</button></a> -->
                         </li>
                     </ul>
                 </div>
@@ -645,7 +645,8 @@
             <p data-aos="zoom-out-left" data-aos-duration="1800">We'd love to hear from you. Reach out with any questions or inquiries!</p>
         </header>
         <section class="contact-section">
-            <form class="contact-form" action="#" method="post" data-aos="zoom-out-left" data-aos-duration="2500">
+            <form class="contact-form" action="https://api.web3forms.com/submit" method="POST" data-aos="zoom-out-left" data-aos-duration="2500">
+              <input type="hidden" name="access_key" value="c36a8ecd-a750-4dee-8fb8-70bf69397ffe">
                 <label for="name">Full Name</label>
                 <input type="text" name="name" required>
                 <label for="Phone number">Phone Number</label>

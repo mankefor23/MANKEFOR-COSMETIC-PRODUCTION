@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>E-Commerce Order & Tracking</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f5f5f5;
+        margin: 0;
+        padding: 20px;
+      }
+      h1 {
+        text-align: center;
+      }
+      .card {
+        background: #fff;
+        padding: 20px;
+        margin: 20px auto;
+        max-width: 500px;
+        border-radius: 10px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+      }
+      label {
+        display: block;
+        margin-top: 10px;
+        font-weight: bold;
+      }
+      input,
+      select {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+      }
+      button {
+        margin-top: 15px;
+        padding: 10px;
+        background: #0066cc;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+      }
+      button:hover {
+        background: #004999;
+      }
+      .payment-options {
+        display: flex;
+        gap: 20px;
+        margin-top: 10px;
+      }
+      .payment-options label {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+      }
+      .payment-options img {
+        width: 50px;
+        height: auto;
+      }
+      .result {
+        margin-top: 15px;
+        padding: 10px;
+        background: #e7f5e7;
+        border: 1px solid #c5e1c5;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Order & Tracking System</h1>
+
+    <!-- Order Form -->
+    <div class="card">
+      <h2>Place Order</h2>
+      <form id="orderForm">
+        <label>Full Name</label>
+        <input type="text" name="fullname" required />
+
+        <label>Phone Number</label>
+        <input type="tel" name="phone" required />
+
+        <label>Email</label>
+        <input type="email" name="email" required />
+
+        <!-- Product -->
+        <label for="product">Select Product</label>
+        <select id="product" name="product" required>
+          <option value="">-- Choose a product --</option>
+          <option value="9.99">Precious liquid 5000XAF</option>
+          <option value="14.99">Precious liquid 1000 XAF</option>
+          <option value="19.99">Precious Essence 6000 XAF</option>
+        </select>
+
+        <label>Delivery Date</label>
+        <input type="date" name="date" required />
+
+        <label>Delivery Location</label>
+        <input type="text" name="location" required />
+
+        <label>Payment Option</label>
+        <div class="payment-options">
+          <label>
+            <input type="radio" name="payment" value="MTN" required />MTN
+          </label>
+          <label>
+            <input type="radio" name="payment" value="Orange" required />ORANGE
+          </label>
+        </div>
+
+        <button type="submit">Submit Order</button>
+      </form>
+      <div id="orderResult" class="result" style="display: none"></div>
+    </div>
+
+    <!-- Admin Confirmation
+    <div class="card">
+      <h2>Admin Confirmation</h2>
+      <form id="adminForm">
+        <label>Enter Tracking Number</label>
+        <input type="text" name="tracking" required />
+        <button type="submit">Confirm Order</button>
+      </form>
+      <div id="adminResult" class="result" style="display: none"></div>
+    </div> -->
+
+    <script>
+      // Generate tracking number
+      function genTracking() {
+        const now = new Date();
+        const rand = Math.floor(Math.random() * 10000).toString(16);
+        return (
+          "ORD-" +
+          now.getFullYear() +
+          (now.getMonth() + 1).toString().padStart(2, "0") +
+          now.getDate().toString().padStart(2, "0") +
+          "-" +
+          rand.toUpperCase()
+        );
+      }
+
+      // Save to localStorage
+      function saveOrder(order) {
+        let orders = JSON.parse(localStorage.getItem("orders") || "[]");
+        orders.push(order);
+        localStorage.setItem("orders", JSON.stringify(orders));
+      }
+      function getOrder(tracking) {
+        let orders = JSON.parse(localStorage.getItem("orders") || "[]");
+        return orders.find((o) => o.tracking === tracking);
+      }
+      function updateOrder(updated) {
+        let orders = JSON.parse(localStorage.getItem("orders") || "[]");
+        orders = orders.map((o) =>
+          o.tracking === updated.tracking ? updated : o,
+        );
+        localStorage.setItem("orders", JSON.stringify(orders));
+      }
+
+      // Handle Order Form
+      document.getElementById("orderForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        const order = {
+          tracking: genTracking(),
+          fullname: fd.get("fullname"),
+          phone: fd.get("phone"),
+          email: fd.get("email"),
+          product: fd.get("product"),
+          date: fd.get("date"),
+          location: fd.get("location"),
+          payment: fd.get("payment"),
+          status: "pending",
+        };
+        saveOrder(order);
+        document.getElementById("orderResult").style.display = "block";
+        document.getElementById("orderResult").innerHTML =
+          `✅ Order placed!<br>Tracking Number: <b>${order.tracking}</b><br>Status: ${order.status}`;
+        e.target.reset();
+      });
+
+      // Handle Admin Form
+      document.getElementById("adminForm").addEventListener("submit", (e) => {
+        e.preventDefault();
+        const tracking = new FormData(e.target).get("tracking");
+        const order = getOrder(tracking);
+        const box = document.getElementById("adminResult");
+        box.style.display = "block";
+        if (order) {
+          order.status = "confirmed";
+          updateOrder(order);
+          box.innerHTML = `✅ Order confirmed.<br>Tracking: <b>${order.tracking}</b><br>Customer: ${order.fullname}<br>Product: ${order.product}<br>Status: ${order.status}`;
+        } else {
+          box.innerHTML = "❌ Order not found.";
+        }
+      });
+    </script>
+  </body>
+</html>

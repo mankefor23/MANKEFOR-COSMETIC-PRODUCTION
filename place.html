@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Place Order</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background: #f4f6f9;
+        padding: 20px;
+      }
+      .order-container {
+        max-width: 500px;
+        margin: auto;
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+      h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        color: #333;
+      }
+      label {
+        font-weight: bold;
+        margin-top: 10px;
+        display: block;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        margin-top: 6px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+      }
+      button {
+        width: 100%;
+        padding: 14px;
+        margin-top: 20px;
+        background: #27ae60;
+        color: #fff;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #219150;
+      }
+      .success {
+        margin-top: 15px;
+        color: green;
+        text-align: center;
+        font-weight: bold;
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="order-container">
+      <h2>Place Your Order</h2>
+      <form id="orderForm">
+        <label>Full Name</label>
+        <input type="text" id="name" required />
+
+        <label>Email</label>
+        <input type="email" id="email" required />
+
+        <label>Phone Number</label>
+        <input type="tel" id="phone" required />
+
+        <label>Product</label>
+        <select id="product" required>
+          <option value="">-- Select Product --</option>
+          <option value="precious liquid saop">
+            Precious liquid soap 5000 XAF (5L)
+          </option>
+          <option value="precious liquid soap">
+            Precious liquid soap 1000 XAF (1L)
+          </option>
+          <option value="precious liquid saop">
+            Precious liquid soap 500 XAF (1/2L)
+          </option>
+
+          <option value="Hair Oil">Hair Oil</option>
+        </select>
+
+        <label>Delivery Date</label>
+        <input type="date" id="deliveryDate" required />
+
+        <label>Delivery Location</label>
+        <textarea id="location" required></textarea>
+
+        <label>Payment Method</label>
+        <select id="paymentMethod" required onchange="showPaymentField()">
+          <option value="">-- Select Payment Method --</option>
+          <option value="MTN">MTN</option>
+          <option value="Orange">Orange</option>
+        </select>
+
+        <div id="paymentNumberField" style="display: none">
+          <label id="paymentLabel">Enter Number</label>
+          <input
+            type="tel"
+            id="paymentNumber"
+            placeholder="Enter your mobile number"
+          />
+        </div>
+
+        <button type="submit">Submit Order</button>
+      </form>
+      <div class="success" id="successMsg">
+        ✅ Your order has been placed successfully!
+      </div>
+    </div>
+
+    <script>
+      function showPaymentField() {
+        const method = document.getElementById("paymentMethod").value;
+        const field = document.getElementById("paymentNumberField");
+        const label = document.getElementById("paymentLabel");
+        if (method === "MTN") {
+          field.style.display = "block";
+          label.innerText = "Enter MTN Number";
+        } else if (method === "Orange") {
+          field.style.display = "block";
+          label.innerText = "Enter Orange Number";
+        } else {
+          field.style.display = "none";
+        }
+      }
+
+      const form = document.getElementById("orderForm");
+      const successMsg = document.getElementById("successMsg");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+
+        const order = {
+          name: document.getElementById("name").value,
+          email: document.getElementById("email").value,
+          phone: document.getElementById("phone").value,
+          product: document.getElementById("product").value,
+          deliveryDate: document.getElementById("deliveryDate").value,
+          location: document.getElementById("location").value,
+          paymentMethod: document.getElementById("paymentMethod").value,
+          paymentNumber: document.getElementById("paymentNumber").value,
+          status: "Pending",
+        };
+
+        // Save order in localStorage
+        let orders = JSON.parse(localStorage.getItem("orders")) || [];
+        orders.push(order);
+        localStorage.setItem("orders", JSON.stringify(orders));
+
+        successMsg.style.display = "block";
+        form.reset();
+        document.getElementById("paymentNumberField").style.display = "none";
+      });
+    </script>
+  </body>
+</html>

@@ -7,7 +7,7 @@
 }
 .main {
   width: 100%;
-  /* background-image: url("/images/4_test.jpg"); */
+  background-image: url("/images/4_test.jpg");
   background-position: center;
   background-size: cover;
   height: fit-content;

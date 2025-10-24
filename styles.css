@@ -389,6 +389,18 @@ p {
     flex-direction: column;
 }
 
+/* Main Content */
+.main {
+    margin-top: 7.5rem;
+    padding-top: 2rem;
+}
+
+.main h1 {
+    margin-bottom: 1.5rem;
+    text-align: center;
+    line-height: 1.3;
+}
+
 /* Content Sections */
 .content-section {
     width: 100%;
@@ -710,6 +722,16 @@ p {
         margin-top: 10rem;
     }
 
+    .main {
+        margin-top: 10rem;
+        padding-top: 1rem;
+    }
+
+    .main h1 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
     .grid-3,
     .grid-4 {
         grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -719,6 +741,16 @@ p {
 @media (max-width: 480px) {
     .brand-text {
         font-size: 1.2rem;
+    }
+
+    .main {
+        margin-top: 8rem;
+        padding-top: 0.5rem;
+    }
+
+    .main h1 {
+        font-size: 1.3rem;
+        margin-bottom: 0.8rem;
     }
 
     .section-hero h1 {

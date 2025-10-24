@@ -1,1056 +1,531 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>MANKEFOR COSMETIC PRODUCTION</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap");
-
-      /* Base Styles */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Exo 2", sans-serif;
-      }
-
-      html {
-        font-size: 16px;
-      }
-
-      body {
-        overflow-x: hidden;
-        width: 100%;
-      }
-
-      .main {
-        width: 100%;
-        background-image: url("/images/4_test.jpg");
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        min-height: 100vh;
-        padding-bottom: 2.5rem;
-        position: relative;
-      }
-
-      /* Responsive Navigation */
-      .navbar {
-        width: 100%;
-        height: auto;
-        min-height: 7.5rem;
-        background-color: white;
-        border-radius: 0.5rem;
-        box-shadow: 0.625rem 0.9375rem 1.25rem skyblue;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: fixed;
-        z-index: 10;
-        padding: 0 1rem;
-        flex-wrap: wrap;
-      }
-
-      .icon {
-        display: flex;
-        align-items: center;
-        flex: 1;
-      }
-
-      .logo {
-        color: #ff7200;
-        font-size: 2.1875rem;
-        font-family: Arial, sans-serif;
-      }
-
-      .icon .text {
-        font-size: 1.6rem;
-        font-weight: bold;
-      }
-
-      .menu {
-        /* margin: 0 20px; */
-        display: flex;
-        justify-content: flex-end;
-        flex: 2;
-      }
-
-      .menu ul {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-      }
-
-      .menu ul li {
-        margin: 0 20px;
-        list-style: none;
-        font-size: 1.25rem;
-        padding: 0.625rem;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-width: fit-content;
-      }
-
-      .menu ul li a {
-        text-decoration: none;
-        color: black;
-        font-family: Arial, sans-serif;
-        font-weight: bold;
-        transition: 0.4s ease-in-out;
-      }
-
-      .menu ul li a:hover {
-        color: #b7ddec;
-      }
-
-      .search {
-        display: flex;
-        margin: 0.5rem 0;
-      }
-
-      .srch {
-        font-family: "Times New Roman", serif;
-        width: 12.5rem;
-        height: 2.5rem;
-        background: transparent;
-        border: 1px solid #ff7200;
-        border-right: none;
-        font-size: 1.25rem;
-        padding: 0.625rem;
-        border-bottom-left-radius: 0.3125rem;
-        border-top-left-radius: 0.3125rem;
-        outline: none;
-      }
-
-      .srch::placeholder {
-        color: gray;
-      }
-
-      .btn {
-        width: 6.25rem;
-        height: 2.5rem;
-        background: #ff7200;
-        border: 2px solid #ff7200;
-        color: #fff;
-        font-size: 0.9375rem;
-        outline: none;
-        cursor: pointer;
-      }
-
-      /* Hamburger Menu */
-      .menu-toggle {
-        display: none;
-        flex-direction: column;
-        justify-content: space-around;
-        width: 2rem;
-        height: 2rem;
-        cursor: pointer;
-      }
-
-      .menu-toggle span {
-        width: 100%;
-        height: 0.25rem;
-        background-color: #ff7200;
-        border-radius: 0.625rem;
-        transition: all 0.3s linear;
-      }
-
-      /* Main Content */
-      .content {
-        width: 90%;
-        margin: 0 auto;
-        color: black;
-        position: relative;
-        padding-top: 8rem;
-      }
-
-      .content .par {
-        padding-left: 1.25rem;
-        padding-bottom: 1.5625rem;
-        font-family: Arial, sans-serif;
-        letter-spacing: 0.075rem;
-      }
-
-      .content h1 {
-        font-family: "Times New Roman", serif;
-        font-size: clamp(1.8rem, 5vw, 3rem);
-        padding-left: 1.25rem;
-        padding-top: 15%;
-        letter-spacing: 0.125rem;
-      }
-
-      .cn {
-        width: 10rem;
-        height: 2.5rem;
-        background: #ff7200;
-        border: none;
-        margin-bottom: 0.625rem;
-        margin-left: 1.25rem;
-        font-size: 1.125rem;
-        border-radius: 0.625rem;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-      }
-
-      .content .cn a {
-        text-decoration: none;
-        color: #000;
-        transition: 0.3s ease;
-      }
-
-      .cn:hover {
-        background-color: #fff;
-      }
-
-      .content span {
-        color: #ff7200;
-        font-size: clamp(2.5rem, 8vw, 3.75rem);
-      }
-
-      .landing-images {
-        position: relative;
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 1rem;
-        margin-top: 2rem;
-      }
-
-      .landing-images > div {
-        width: 100%;
-        max-width: 28.125rem;
-        text-align: center;
-      }
-
-      .landing-images img {
-        max-width: 100%;
-        height: auto;
-      }
-
-      /* Section Styles */
-      .section-2 {
-        min-height: 7.5rem;
-        background: linear-gradient(
-          135deg,
-          #b7ddec,
-          #613d2069,
-          #b7ddec,
-          #613d2069,
-          #b7ddec
-        );
-        box-shadow:
-          0 -0.125rem 0.25rem black,
-          0 0.125rem 0.25rem black;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 5.625rem 0;
-        text-align: center;
-      }
-
-      .section-2 i {
-        display: block;
-        font-weight: bold;
-        font-size: clamp(1rem, 3vw, 1.3rem);
-        margin: 0.5rem 1rem;
-      }
-
-      .section-3 {
-        width: 100%;
-      }
-
-      .tile {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        padding: 3.5rem 1rem;
-        align-items: center;
-      }
-
-      .tile > div {
-        width: 100%;
-        max-width: 40rem;
-        padding: 1rem;
-      }
-
-      .tile-left > img {
-        border-radius: 0.625rem;
-        max-width: 100%;
-        height: auto;
-      }
-
-      .tile-header {
-        color: rgb(49, 46, 46);
-        margin-top: 4.6875rem;
-        padding: 0.625rem 0;
-        font-size: clamp(1.5rem, 4vw, 2rem);
-      }
-
-      .tile-paragraph {
-        margin-top: 1.25rem;
-        padding: 0 0.625rem;
-        font-size: clamp(1rem, 3vw, 1.7rem);
-        font-style: italic;
-      }
-
-      .tile-btn {
-        width: 10rem;
-        height: 2.5rem;
-        background: #ff7200;
-        border: none;
-        margin: 0.625rem;
-        font-size: 1.125rem;
-        border-radius: 0.625rem;
-        cursor: pointer;
-        transition: transform 0.1s ease;
-      }
-
-      .tile-btn:active {
-        transform: translateY(0.125rem);
-      }
-
-      .section-2 .tile-btn {
-        margin: 0 auto;
-        border: 1px solid black;
-        box-shadow:
-          0 -0.125rem 0.25rem black,
-          0 0.125rem 0.25rem black;
-        margin-top: 1.25rem;
-        padding: 0.375rem 0;
-      }
-
-      .section-4 {
-        width: 100%;
-        text-align: center;
-        font-size: clamp(1.2rem, 3vw, 1.7rem);
-        padding: 2.5rem 0;
-        background-color: #b7ddec;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .section-4 .line {
-        width: 8.75rem;
-        height: 0.3125rem;
-        background-color: #ff7200;
-        margin-top: 0.5rem;
-      }
-
-      .section-5 {
-        width: 100%;
-        display: flex;
-        justify-content: center;
-        padding: 2rem 0;
-      }
-
-      .product {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 1.25rem;
-        width: 100%;
-        margin: 0 auto;
-        gap: 1rem;
-      }
-
-      .product-card {
-        box-shadow: 0 0 0.625rem rgba(0, 0, 0, 0.1);
-        width: 100%;
-        max-width: 18.75rem;
-        margin: 0.9375rem;
-        padding: 1.25rem;
-        text-align: center;
-      }
-
-      .product-card img {
-        width: 100%;
-        height: 11.25rem;
-        object-fit: cover;
-        border-top-left-radius: 0.3125rem;
-        border-top-right-radius: 0.3125rem;
-      }
-
-      .product-card ul {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-
-      .product-card .price {
-        font-weight: bold;
-        margin: 0.625rem 0;
-      }
-
-      .product-card button {
-        background-color: #ff7200;
-        color: white;
-        padding: 0.625rem 1.25rem;
-        border: none;
-        border-radius: 0.25rem;
-        cursor: pointer;
-      }
-
-      /* Footer */
-      footer {
-        width: 100%;
-        background-color: #343434;
-        color: white;
-        padding-top: 3.125rem;
-      }
-
-      .footer {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        padding: 0 5%;
-      }
-
-      .footer-content {
-        width: 100%;
-        padding: 1rem;
-        margin-bottom: 1.5rem;
-      }
-
-      .list {
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        margin: 0;
-      }
-
-      .list li {
-        width: auto;
-        text-align: left;
-        padding: 0.4375rem;
-      }
-
-      .list li a {
-        color: white;
-        text-decoration: none;
-      }
-
-      .list li::before {
-        content: "";
-        position: absolute;
-        transform: translate(-50%, -50%);
-        left: 0;
-        top: 100%;
-        width: 0;
-        height: 0.125rem;
-        background: #f18930;
-        transition: width 0.3s ease;
-      }
-
-      .list li:hover::before {
-        width: 4.375rem;
-      }
-
-      .footer h3 {
-        font-size: 1.75rem;
-        margin-bottom: 0.625rem;
-      }
-
-      .footer p {
-        margin: 0.4375rem 0;
-        transition: all 0.1s ease;
-        cursor: pointer;
-        padding-left: 0.5rem;
-      }
-
-      .social-icons {
-        padding: 1.875rem 0;
-      }
-
-      .social-icons i {
-        display: inline-block;
-        color: white;
-        font-size: 1.1875rem;
-        margin-right: 0.3125rem;
-        margin-bottom: 0.625rem;
-      }
-
-      .footer-bottom {
-        text-align: center;
-        background: #f18930;
-        padding: 0.625rem 0;
-        margin-top: 3.125rem;
-      }
-
-      .footer-bottom p {
-        color: #343434;
-        margin: 0;
-        font-size: 1rem;
-        padding: 0.4375rem;
-      }
-
-      .footer-content p:hover {
-        border-left: 0.21875rem solid orange;
-        padding-left: 0.5rem;
-      }
-
-      .footer-closing {
-        width: 100%;
-        text-align: center;
-        font-size: 0.8rem;
-        padding: 1.25rem;
-        background-color: #36393a;
-        color: #fff;
-      }
-
-      /* Media Queries */
-      @media (min-width: 768px) {
-        .navbar {
-          flex-wrap: nowrap;
-          padding: 0 2rem;
-        }
-
-        .menu ul {
-          flex-wrap: nowrap;
-        }
-
-        .tile {
-          flex-direction: row;
-          padding: 3.5rem 2rem;
-        }
-
-        .tile:nth-child(even) {
-          flex-direction: row-reverse;
-        }
-
-        .footer {
-          flex-direction: row;
-          flex-wrap: wrap;
-        }
-
-        .footer-content {
-          width: 50%;
-        }
-      }
-
-      @media (min-width: 992px) {
-        .content {
-          width: 90%;
-          margin: 0 auto;
-        }
-
-        .landing-images {
-          flex-wrap: nowrap;
-          justify-content: space-around;
-        }
-
-        .landing-images > div {
-          width: 30%;
-        }
-
-        .footer-content {
-          width: 33.33%;
-        }
-      }
-
-      @media (max-width: 767px) {
-        .menu-toggle {
-          display: flex;
-        }
-
-        .menu {
-          display: none;
-          width: 100%;
-          order: 3;
-        }
-
-        .menu.active {
-          display: block;
-        }
-
-        .menu ul {
-          flex-direction: column;
-          width: 100%;
-        }
-
-        .menu ul li {
-          width: 100%;
-          padding: 0.8rem 0;
-        }
-
-        .search {
-          width: 100%;
-          justify-content: center;
-        }
-
-        .srch {
-          width: 70%;
-        }
-
-        .navbar {
-          padding: 1rem;
-        }
-
-        .content {
-          padding-top: 10rem;
-        }
-      }
-
-      @media (max-width: 480px) {
-        .icon .text {
-          font-size: 1.2rem;
-        }
-
-        .content h1 {
-          padding-top: 25%;
-        }
-
-        .tile-header {
-          margin-top: 2rem;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="main">
-      <div class="navbar" id="header">
-        <div class="icon">
-          <h2 class="logo">
-            <img
-              src="/images/prelogo.png"
-              width="100"
-              height="80"
-              alt="Mankefor Logo"
-            />
-          </h2>
-          <div class="text">
-            <p style="color: red" data-aos="fade-down" data-aos-duration="1400">
-              MANKEFOR
-            </p>
-            <p
-              style="color: gray"
-              data-aos="fade-down"
-              data-aos-duration="1000"
-            >
-              COSMETIC
-            </p>
-          </div>
-        </div>
-
-        <div class="menu-toggle" id="mobile-menu">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-
-        <div class="menu" id="nav-menu">
-          <ul>
-            <li data-aos="zoom-in-right" data-aos-duration="1500">
-              <a href="index.html">HOME</a>&nbsp;&nbsp;&nbsp;
-            </li>
-            <br /><br />
-            <li data-aos="fade-up" data-aos-duration="1600">
-              <a href="about.html">ABOUT</a>&nbsp;&nbsp;&nbsp;
-            </li>
-            <br /><br />
-            <li data-aos="fade-up" data-aos-duration="1700">
-              <a href="product.html">PRODUCT</a>&nbsp;&nbsp;&nbsp;
-            </li>
-            <br /><br />
-            <li data-aos="fade-up" data-aos-duration="1800">
-              <a href="contact.html">CONTACT</a>&nbsp;&nbsp;&nbsp;
-              <!-- <a href="contact.html">CONTACT</a> -->
-            </li>
-            <br /><br />
-            <li class="search">
-              <!-- <input
-                class="srch"
-                id="search"
-                type="search"
-                placeholder="Search..."
-              /> -->
-              <a href="search.html"
-                ><button
-                  class="btn"
-                  id="searchb"
-                  data-aos="zoom-out-left"
-                  data-aos-duration="1800"
-                >
-                  Search
-                </button></a
-              >
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="content">
-        <h1 data-aos="flip-right" data-aos-duration="1900">
-          WELCOME TO <br />MANKEFOR <span>COSMETIC</span> PRODUCTION
-        </h1>
-        <p class="par" data-aos="fade-left" data-aos-delay="400">
-          Dedicated to high-performance cleaning products made with care.
-        </p>
-        <div class="landing-images">
-          <div class="landing-image">
-            <img
-              src="/images/500.png"
-              data-aos="fade-up"
-              data-aos-delay="00"
-              alt="500ml product"
-              width="450"
-              height="330"
-            />
-          </div>
-          <div class="landing-image">
-            <img
-              src="/images/1000.png"
-              alt="1000ml product"
-              width="450"
-              height="330"
-            />
-          </div>
-          <div class="landing-image">
-            <img
-              src="/images/5000.png"
-              data-aos="fade-down"
-              data-aos-delay="900"
-              alt="5000ml product"
-              width="450"
-              height="330"
-            />
-          </div>
-        </div>
-        <br />
-        <a href="explore.html"
-          ><button class="cn" data-aos="fade-down-right">Explore Now</button></a
-        >
-      </div>
-    </div>
-
-    <div class="section-2">
-      <i data-aos="flip-right" data-aos-duration="1900"
-        >We have more offers made by MANKEFOR COSMETICS</i
-      >
-      <i data-aos="flip-right" data-aos-duration="1900"
-        >We are here to serve you.</i
-      >
-    </div>
-
-    <div class="section-3" id="replace">
-      <div class="tile">
-        <div class="tile-left">
-          <img
-            src="/images/liquid1.webp"
-            alt="Precious Liquid Soap"
-            data-aos="fade-down"
-            data-aos-delay="900"
-            width="500px"
-            height="390"
-          />
-        </div>
-        <div class="tile-right">
-          <h1 class="tile-header" data-aos="flip-left">
-            <i>PRECIOUS LIQUID SOAP</i>
-          </h1>
-          <p class="tile-paragraph" data-aos="flip-left">
-            <i>"Gentle on hands, tough on dirt."</i>
-          </p>
-          <p class="tile-paragraph" data-aos="flip-left">
-            <i
-              >"Perfect for everyday cleaning with a refreshing scent and
-              lasting freshness."</i
-            >
-          </p>
-          <br />
-          <a href="precious liquid.html"
-            ><button class="tile-btn" data-aos="flip-left">
-              Learn more
-            </button></a
-          >
-        </div>
-      </div>
-
-      <div class="tile">
-        <div class="tile-left">
-          <img
-            src="/images/perfume 7.jpg"
-            alt="Precious Essence"
-            data-aos="fade-up"
-            data-aos-delay="00"
-          />
-        </div>
-        <div class="tile-right">
-          <h1 class="tile-header" data-aos="flip-left">
-            <i>PRECIOUS ESSENCE</i>
-          </h1>
-          <p class="tile-paragraph" data-aos="flip-left">
-            <i
-              >"Precious Essence - a timless fragrance crafted for elegance,
-              confidence, and unforgettable presence."</i
-            >
-          </p>
-          <p class="tile-paragraph" data-aos="flip-left">
-            <i>"Indulge in the luxury you deserve."</i>
-          </p>
-          <br />
-          <a href="precious essence.html"
-            ><button class="tile-btn" data-aos="flip-left">
-              Learn more
-            </button></a
-          >
-        </div>
-      </div>
-
-      <div class="tile">
-        <div class="tile-left">
-          <img
-            src="/images/bathing 4.jpg"
-            alt="Precious Bath Glow"
-            data-aos="fade-down"
-            data-aos-delay="900"
-          />
-        </div>
-        <div class="tile-right">
-          <h1 class="tile-header" data-aos="flip-left">
-            <i>PRECIOUS BATH GLOW</i>
-          </h1>
-          <p class="tile-paragraph" data-aos="flip-left">
-            <i>"Nourish your skin with every wash."</i>
-          </p>
-          <p class="tile-paragraph" data-aos="flip-left">
-            <i
-              >"Gentle, radiant, and refreshing - for the glow you were born to
-              shine."</i
-            >
-          </p>
-          <br />
-          <a href="precious bath glow.html"
-            ><button class="tile-btn" data-aos="flip-left">
-              Learn more
-            </button></a
-          >
-        </div>
-      </div>
-
-      <div class="tile">
-        <div class="tile-left">
-          <img
-            src="/images/power 2.webp"
-            alt="Precious Power Wash"
-            data-aos="fade-up"
-            data-aos-delay="00"
-          />
-        </div>
-        <div class="tile-right">
-          <h1 class="tile-header" data-aos="flip-left">
-            <i>PRECIOUS POWER WASH</i>
-          </h1>
-          <p class="tile-paragraph" data-aos="flip-left">
-            <i>"Engineered on stains, made for families."</i>
-          </p>
-          <p class="tile-paragraph" data-aos="flip-left">
-            <i
-              >"Precious Power Wash is your trusted solution for tough stains -
-              powerful, safe, and perfect for both home and industrial use."</i
-            >
-          </p>
-          <br />
-          <a href="precious powerwash.html"
-            ><button class="tile-btn" data-aos="flip-left">
-              Learn more
-            </button></a
-          >
-        </div>
-      </div>
-
-      <div class="tile">
-        <div class="tile-left">
-          <img
-            src="/images/javel1.webp"
-            alt="Precious Pure Bleach"
-            data-aos="fade-down"
-            data-aos-delay="900"
-          />
-        </div>
-        <div class="tile-right">
-          <h1 class="tile-header" data-aos="flip-left">
-            <i>PRECIOUS PURE BLEACH</i>
-          </h1>
-          <p class="tile-paragraph" data-aos="flip-left">
-            <i>"Gentle on fabrics, tough on dirt."</i>
-          </p>
-          <p class="tile-paragraph" data-aos="flip-left">
-            <i
-              >"Precious Pure Wash delivers a pure, powerful clean that's safe
-              for your family and strong enough for heavy-duty use."</i
-            >
-          </p>
-          <br />
-          <a href="precious purebleach.html"
-            ><button class="tile-btn" data-aos="flip-left">
-              Learn more
-            </button></a
-          >
-        </div>
-      </div>
-    </div>
-
-    <div class="section-4" data-aos="flip-left">
-      <i>Featured Products</i>
-      <div class="line"></div>
-    </div>
-
-    <section class="product">
-      <div class="product-card">
-        <img
-          src="/images/500.png"
-          alt="Precious Liquid Soap 500ml"
-          data-aos="flip-right"
-          data-aos-duration="1900"
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>MANKEFOR COSMETIC PRODUCTION - Premium Cleaning Products</title>
+        <meta
+            name="description"
+            content="MANKEFOR COSMETIC PRODUCTION offers premium cleaning products including liquid soap, essence, bath glow, power wash, and pure bleach. Quality products made with care."
         />
-        <h2 data-aos="flip-right" data-aos-duration="1900">
-          Precious Liquid Soap
-        </h2>
-        <p data-aos="flip-right" data-aos-duration="1900">
-          Deep cleans clothes and keeps fabrics fresh and soft.
-        </p>
-        <p class="price" data-aos="flip-right" data-aos-duration="1900">
-          1/2L - 500 FCFA
-        </p>
-        <a href="Clients (2).html"
-          ><button data-aos="flip-right" data-aos-duration="1900">
-            Buy Now
-          </button></a
-        >
-      </div>
-
-      <div class="product-card">
-        <img
-          src="/images/1000.png"
-          alt="Precious Liquid Soap 1000ml"
-          data-aos="flip-right"
-          data-aos-duration="1900"
+        <meta
+            name="keywords"
+            content="cosmetic, cleaning products, liquid soap, essence, bath glow, power wash, bleach, Cameroon"
         />
-        <h2 data-aos="flip-right" data-aos-duration="1900">
-          Precious Liquid Soap
-        </h2>
-        <p data-aos="flip-right" data-aos-duration="1900">
-          Deep cleans clothes and keeps fabrics fresh and soft.
-        </p>
-        <p class="price" data-aos="flip-right" data-aos-duration="1900">
-          1L - 1000 FCFA
-        </p>
-        <a href="Clients (2).html"
-          ><button data-aos="flip-right" data-aos-duration="1900">
-            Buy now
-          </button></a
-        >
-      </div>
 
-      <div class="product-card">
-        <img
-          src="/images/5000.png"
-          alt="Precious Liquid Soap 5000ml"
-          data-aos="flip-right"
-          data-aos-duration="1900"
+        <!-- External Libraries -->
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
         />
-        <h2 data-aos="flip-right" data-aos-duration="1900">
-          Precious Liquid Soap
-        </h2>
-        <p data-aos="flip-right" data-aos-duration="1900">
-          Deep cleans clothes and keeps fabrics fresh and soft.
-        </p>
-        <p class="price" data-aos="flip-right" data-aos-duration="1900">
-          5L - 5000 FCFA
-        </p>
-        <a href="Clients (2).html"
-          ><button data-aos="flip-right" data-aos-duration="1900">
-            Buy Now
-          </button></a
-        >
-      </div>
-    </section>
+        <link
+            href="https://unpkg.com/aos@2.3.1/dist/aos.css"
+            rel="stylesheet"
+        />
 
-    <div class="section-5">
-      <a href="product.html"
-        ><button
-          class="tile-btn"
-          data-aos="flip-right"
-          data-aos-duration="1900"
-        >
-          View more >>
-        </button></a
-      >
-    </div>
+        <!-- Custom Styles -->
+        <link rel="stylesheet" href="styles.css" />
 
-    <div style="height: 200px"></div>
+        <!-- Favicon -->
+        <link rel="icon" type="image/png" href="/images/prelogo.png" />
+    </head>
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar" id="navbar">
+            <div class="navbar-brand">
+                <div class="logo">
+                    <img src="/images/prelogo.png" alt="Mankefor Logo" />
+                </div>
+                <div class="brand-text">
+                    <p
+                        class="brand-name"
+                        data-aos="fade-down"
+                        data-aos-duration="1400"
+                    >
+                        MANKEFOR
+                    </p>
+                    <p
+                        class="brand-subtitle"
+                        data-aos="fade-down"
+                        data-aos-duration="1000"
+                    >
+                        COSMETIC
+                    </p>
+                </div>
+            </div>
 
-    <footer>
-      <div class="footer">
-        <div class="footer-content">
-          <h3>Contact Us</h3>
-          <p>+237 651-586-004</p>
-          <p>+237 687-719-778</p>
-          <p>+237 681-719-198</p>
-          <br />
-          <p>mankeforcosmeticproduction@gmail.com</p>
-          <p>preciousliquidsaop@gmail.com</p>
-          <br />
-          <p>MILE 2 BAMENDA, CAMEROON</p>
-        </div>
+            <button
+                class="menu-toggle"
+                id="mobile-menu"
+                aria-label="Toggle mobile menu"
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
 
-        <div class="footer-content">
-          <h3>Quick Links</h3>
-          <ul class="list">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="product.html">Product</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </div>
+            <div class="navbar-nav" id="nav-menu">
+                <ul>
+                    <li data-aos="zoom-in-right" data-aos-duration="1500">
+                        <a href="index.html">HOME</a>
+                    </li>
+                    <li data-aos="fade-up" data-aos-duration="1600">
+                        <a href="about.html">ABOUT</a>
+                    </li>
+                    <li data-aos="fade-up" data-aos-duration="1700">
+                        <a href="product.html">PRODUCT</a>
+                    </li>
+                    <li data-aos="fade-up" data-aos-duration="1800">
+                        <a href="contact.html">CONTACT</a>
+                    </li>
+                    <li class="search-container">
+                        <a href="search.html">
+                            <button
+                                class="search-btn"
+                                data-aos="zoom-out-left"
+                                data-aos-duration="1800"
+                            >
+                                Search
+                            </button>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
 
-        <div class="footer-content">
-          <h3>Follow Us</h3>
-          <div class="social-icons">
-            <i href="#" class="fa fa-facebook"></i> <span>Facebook</span>
-          </div>
-        </div>
-      </div>
+        <!-- Hero Section -->
+        <main class="main">
+            <div class="container">
+                <section class="content-section">
+                    <h1 data-aos="flip-right" data-aos-duration="1900">
+                        WELCOME TO <br />MANKEFOR
+                        <span style="color: var(--primary-color)"
+                            >COSMETIC</span
+                        >
+                        PRODUCTION
+                    </h1>
+                    <p class="par" data-aos="fade-left" data-aos-delay="400">
+                        Dedicated to high-performance cleaning products made
+                        with care and precision.
+                    </p>
 
-      <div class="footer-closing">
-        &copy; All right Reserved. Build by <i>MANKEFOR PRECIOUS</i>
-      </div>
-    </footer>
+                    <div
+                        class="landing-images grid grid-3"
+                        data-aos="fade-up"
+                        data-aos-delay="600"
+                    >
+                        <div class="landing-image">
+                            <img
+                                src="/images/500.png"
+                                alt="500ml Precious Liquid Soap"
+                                width="450"
+                                height="330"
+                            />
+                        </div>
+                        <div class="landing-image">
+                            <img
+                                src="/images/1000.png"
+                                alt="1000ml Precious Liquid Soap"
+                                width="450"
+                                height="330"
+                            />
+                        </div>
+                        <div class="landing-image">
+                            <img
+                                src="/images/5000.png"
+                                alt="5000ml Precious Liquid Soap"
+                                width="450"
+                                height="330"
+                            />
+                        </div>
+                    </div>
 
-    <script src="./search.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script>
-      // Initialize AOS
-      AOS.init({
-        duration: 800,
-        once: true,
-      });
+                    <div class="text-center mt-4">
+                        <a
+                            href="explore.html"
+                            class="btn"
+                            data-aos="fade-down-right"
+                        >
+                            Explore Our Products
+                        </a>
+                    </div>
+                </section>
+            </div>
+        </main>
 
-      // Mobile menu toggle
-      document
-        .getElementById("mobile-menu")
-        .addEventListener("click", function () {
-          document.getElementById("nav-menu").classList.toggle("active");
-        });
+        <!-- Offers Section -->
+        <section class="section-hero">
+            <div class="container">
+                <i data-aos="flip-right" data-aos-duration="1900">
+                    We have more offers made by MANKEFOR COSMETICS
+                </i>
+                <i data-aos="flip-right" data-aos-duration="1900">
+                    We are here to serve you with quality and excellence.
+                </i>
+            </div>
+        </section>
 
-      // Close menu when clicking on a link
-      document.querySelectorAll("#nav-menu a").forEach((link) => {
-        link.addEventListener("click", () => {
-          document.getElementById("nav-menu").classList.remove("active");
-        });
-      });
-    </script>
-  </body>
+        <!-- Products Showcase -->
+        <section class="content-section" id="products">
+            <div class="container">
+                <!-- Precious Liquid Soap -->
+                <article class="tile">
+                    <div class="tile-content tile-image">
+                        <img
+                            src="/images/liquid1.webp"
+                            alt="Precious Liquid Soap"
+                            data-aos="fade-down"
+                            data-aos-delay="900"
+                        />
+                    </div>
+                    <div class="tile-content">
+                        <h2 class="tile-header" data-aos="flip-left">
+                            <em>PRECIOUS LIQUID SOAP</em>
+                        </h2>
+                        <p class="tile-paragraph" data-aos="flip-left">
+                            <em>"Gentle on hands, tough on dirt."</em>
+                        </p>
+                        <p class="tile-paragraph" data-aos="flip-left">
+                            <em
+                                >"Perfect for everyday cleaning with a
+                                refreshing scent and lasting freshness."</em
+                            >
+                        </p>
+                        <div class="mt-3">
+                            <a
+                                href="precious liquid.html"
+                                class="btn"
+                                data-aos="flip-left"
+                            >
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Precious Essence -->
+                <article class="tile">
+                    <div class="tile-content">
+                        <h2 class="tile-header" data-aos="flip-left">
+                            <em>PRECIOUS ESSENCE</em>
+                        </h2>
+                        <p class="tile-paragraph" data-aos="flip-left">
+                            <em
+                                >"Precious Essence - a timeless fragrance
+                                crafted for elegance, confidence, and
+                                unforgettable presence."</em
+                            >
+                        </p>
+                        <p class="tile-paragraph" data-aos="flip-left">
+                            <em>"Indulge in the luxury you deserve."</em>
+                        </p>
+                        <div class="mt-3">
+                            <a
+                                href="precious essence.html"
+                                class="btn"
+                                data-aos="flip-left"
+                            >
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
+                    <div class="tile-content tile-image">
+                        <img
+                            src="/images/perfume 7.jpg"
+                            alt="Precious Essence"
+                            data-aos="fade-up"
+                            data-aos-delay="00"
+                        />
+                    </div>
+                </article>
+
+                <!-- Precious Bath Glow -->
+                <article class="tile">
+                    <div class="tile-content tile-image">
+                        <img
+                            src="/images/bathing 4.jpg"
+                            alt="Precious Bath Glow"
+                            data-aos="fade-down"
+                            data-aos-delay="900"
+                        />
+                    </div>
+                    <div class="tile-content">
+                        <h2 class="tile-header" data-aos="flip-left">
+                            <em>PRECIOUS BATH GLOW</em>
+                        </h2>
+                        <p class="tile-paragraph" data-aos="flip-left">
+                            <em>"Nourish your skin with every wash."</em>
+                        </p>
+                        <p class="tile-paragraph" data-aos="flip-left">
+                            <em
+                                >"Gentle, radiant, and refreshing - for the glow
+                                you were born to shine."</em
+                            >
+                        </p>
+                        <div class="mt-3">
+                            <a
+                                href="precious bath glow.html"
+                                class="btn"
+                                data-aos="flip-left"
+                            >
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Precious Power Wash -->
+                <article class="tile">
+                    <div class="tile-content">
+                        <h2 class="tile-header" data-aos="flip-left">
+                            <em>PRECIOUS POWER WASH</em>
+                        </h2>
+                        <p class="tile-paragraph" data-aos="flip-left">
+                            <em>"Engineered on stains, made for families."</em>
+                        </p>
+                        <p class="tile-paragraph" data-aos="flip-left">
+                            <em
+                                >"Precious Power Wash is your trusted solution
+                                for tough stains - powerful, safe, and perfect
+                                for both home and industrial use."</em
+                            >
+                        </p>
+                        <div class="mt-3">
+                            <a
+                                href="precious powerwash.html"
+                                class="btn"
+                                data-aos="flip-left"
+                            >
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
+                    <div class="tile-content tile-image">
+                        <img
+                            src="/images/power 2.webp"
+                            alt="Precious Power Wash"
+                            data-aos="fade-up"
+                            data-aos-delay="00"
+                        />
+                    </div>
+                </article>
+
+                <!-- Precious Pure Bleach -->
+                <article class="tile">
+                    <div class="tile-content tile-image">
+                        <img
+                            src="/images/javel1.webp"
+                            alt="Precious Pure Bleach"
+                            data-aos="fade-down"
+                            data-aos-delay="900"
+                        />
+                    </div>
+                    <div class="tile-content">
+                        <h2 class="tile-header" data-aos="flip-left">
+                            <em>PRECIOUS PURE BLEACH</em>
+                        </h2>
+                        <p class="tile-paragraph" data-aos="flip-left">
+                            <em>"Gentle on fabrics, tough on dirt."</em>
+                        </p>
+                        <p class="tile-paragraph" data-aos="flip-left">
+                            <em
+                                >"Precious Pure Bleach delivers a pure, powerful
+                                clean that's safe for your family and strong
+                                enough for heavy-duty use."</em
+                            >
+                        </p>
+                        <div class="mt-3">
+                            <a
+                                href="precious purebleach.html"
+                                class="btn"
+                                data-aos="flip-left"
+                            >
+                                Learn More
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <!-- Featured Products Section -->
+        <section class="section-hero">
+            <div class="container">
+                <h2 data-aos="flip-left">Featured Products</h2>
+                <div
+                    class="line"
+                    style="
+                        width: 8.75rem;
+                        height: 0.3125rem;
+                        background-color: var(--primary-color);
+                        margin: 0.5rem auto 0;
+                    "
+                ></div>
+            </div>
+        </section>
+
+        <!-- Product Cards -->
+        <section class="content-section">
+            <div class="container">
+                <div class="grid grid-3">
+                    <div class="product-card card">
+                        <img
+                            src="/images/500.png"
+                            alt="Precious Liquid Soap 500ml"
+                            data-aos="flip-right"
+                            data-aos-duration="1900"
+                        />
+                        <h3 data-aos="flip-right" data-aos-duration="1900">
+                            Precious Liquid Soap
+                        </h3>
+                        <p data-aos="flip-right" data-aos-duration="1900">
+                            Deep cleans clothes and keeps fabrics fresh and
+                            soft.
+                        </p>
+                        <p
+                            class="price"
+                            data-aos="flip-right"
+                            data-aos-duration="1900"
+                        >
+                            1/2L - 500 FCFA
+                        </p>
+                        <a
+                            href="Clients (2).html"
+                            class="btn"
+                            data-aos="flip-right"
+                            data-aos-duration="1900"
+                        >
+                            Buy Now
+                        </a>
+                    </div>
+
+                    <div class="product-card card">
+                        <img
+                            src="/images/1000.png"
+                            alt="Precious Liquid Soap 1000ml"
+                            data-aos="flip-right"
+                            data-aos-duration="1900"
+                        />
+                        <h3 data-aos="flip-right" data-aos-duration="1900">
+                            Precious Liquid Soap
+                        </h3>
+                        <p data-aos="flip-right" data-aos-duration="1900">
+                            Deep cleans clothes and keeps fabrics fresh and
+                            soft.
+                        </p>
+                        <p
+                            class="price"
+                            data-aos="flip-right"
+                            data-aos-duration="1900"
+                        >
+                            1L - 1000 FCFA
+                        </p>
+                        <a
+                            href="Clients (2).html"
+                            class="btn"
+                            data-aos="flip-right"
+                            data-aos-duration="1900"
+                        >
+                            Buy Now
+                        </a>
+                    </div>
+
+                    <div class="product-card card">
+                        <img
+                            src="/images/5000.png"
+                            alt="Precious Liquid Soap 5000ml"
+                            data-aos="flip-right"
+                            data-aos-duration="1900"
+                        />
+                        <h3 data-aos="flip-right" data-aos-duration="1900">
+                            Precious Liquid Soap
+                        </h3>
+                        <p data-aos="flip-right" data-aos-duration="1900">
+                            Deep cleans clothes and keeps fabrics fresh and
+                            soft.
+                        </p>
+                        <p
+                            class="price"
+                            data-aos="flip-right"
+                            data-aos-duration="1900"
+                        >
+                            5L - 5000 FCFA
+                        </p>
+                        <a
+                            href="Clients (2).html"
+                            class="btn"
+                            data-aos="flip-right"
+                            data-aos-duration="1900"
+                        >
+                            Buy Now
+                        </a>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <a
+                        href="product.html"
+                        class="btn btn-outline"
+                        data-aos="flip-right"
+                        data-aos-duration="1900"
+                    >
+                        View More Products
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>+237 651-586-004</p>
+                    <p>+237 687-719-778</p>
+                    <p>+237 681-719-198</p>
+                    <br />
+                    <p>mankeforcosmeticproduction@gmail.com</p>
+                    <p>preciousliquidsaop@gmail.com</p>
+                    <br />
+                    <p>MILE 2 BAMENDA, CAMEROON</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About</a></li>
+                        <li><a href="product.html">Product</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Follow Us</h3>
+                    <div class="social-icons">
+                        <a href="#" aria-label="Facebook">
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                        <a href="#" aria-label="Twitter">
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                        <a href="#" aria-label="Instagram">
+                            <i class="fa fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>
+                    &copy; 2024 All rights reserved. Built by
+                    <em>MANKEFOR PRECIOUS</em>
+                </p>
+            </div>
+        </footer>
+
+        <!-- Scripts -->
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="js/main.js"></script>
+    </body>
 </html>

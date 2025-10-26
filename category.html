@@ -4,12 +4,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <title>MANKEFOR COSMETIC PRODUCTION</title>
-    <link rel="stylesheet" href="precious bath glow.css" />
+    <link rel="stylesheet" href="category.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    <!-- <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" /> -->
 
     <style>
       @import url("https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,100..900;1,100..900&display=swap");
@@ -680,6 +680,7 @@
     <div class="product-detail">
       <div class="product-image1">
         <img
+          id="feature-image"
           class="product-image"
           src="/images/bathing 4.jpg"
           width="600"
@@ -687,27 +688,21 @@
           data-aos="fade-down"
           data-aos-delay="900"
         />
-        <!-- <h1 data-aos="fade-down" data-aos-delay="900">Precious Bath Glow</h1> -->
       </div>
-      <div class="product-description">
-        <h2 data-aos="flip-left">PRECIOUS BATH GLOW</h2>
-        <p class="tagline" data-aos="flip-left">"Glow Beyond Clean".</p>
+      <div class="product-description" id="category-info">
+        <h2 data-aos="flip-left">Loading...</h2>
+        <p class="tagline" data-aos="flip-left">Loading description...</p>
         <p data-aos="flip-left">
-          Precious Bath Glow is crafted to pamper your skin with every wash. Its
-          rich lather gently cleanses while locking in moisture, leaving your
-          skin soft, radiant, and delicately scented. Start and end your with a
-          glow.
+          Loading product details...
         </p>
-        <ul class="features">
-          <li data-aos="flip-left">Gently cleanses the skin</li>
-          <li data-aos="flip-left">Leaves a Long-lasting fresh scent</li>
-          <li data-aos="flip-left">Enriched with moisturizing ingredients</li>
-          <li data-aos="flip-left">Perfect for all skin types</li>
-          <li data-aos="flip-left">Gives your skin a natural glow</li>
-        </ul>
-        <p data-aos="flip-left"><strong>Price:</strong> <b>5000 CFA</b></p>
-        <p><strong>Available Sizes:</strong> 500ml, 1L, 5L</p>
-        <button class="buy-btn" data-aos="flip-left">Buy Now</button>
+      </div>
+    </div>
+
+    <!-- Products Grid -->
+    <div style="max-width: 1200px; margin: 2rem auto; padding: 2rem;">
+      <h2 style="text-align: center; margin-bottom: 2rem; color: #ff7200;">Available Products</h2>
+      <div id="products-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 2rem;">
+        <p class="text-center">Loading products...</p>
       </div>
     </div>
   </body>
@@ -733,10 +728,19 @@
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </div>
-      <div class="social-icons">
-        <h3>Follow Us</h3>
-        <i href="#" class="fa fa-facebook"></i>
-        <span style="color: white">Facebook</span> <br />
+      <div class="footer-section">
+          <h3>Follow Us</h3>
+          <div class="social-icons">
+              <a href="#" aria-label="Facebook">
+                  <i class="fa fa-facebook"></i>
+              </a>
+              <a href="#" aria-label="Twitter">
+                  <i class="fa fa-twitter"></i>
+              </a>
+              <a href="#" aria-label="Instagram">
+                  <i class="fa fa-instagram"></i>
+              </a>
+          </div>
       </div>
     </div>
     <div class="footer-closing">
@@ -744,7 +748,68 @@
     </div>
   </footer>
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script src="js/data-manager.js"></script>
+  <script src="js/app.js"></script>
   <script>
     AOS.init();
+
+    // Load category data and products
+    document.addEventListener('DOMContentLoaded', function() {
+      // Get category ID from URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const categoryId = urlParams.get('id');
+      
+      if (!categoryId) {
+        window.location.href = 'index.html';
+        return;
+      }
+
+      // Get category data
+      const category = dataManager.getCategoryById(categoryId);
+      
+      if (!category) {
+        document.body.innerHTML = '<div style="padding: 20px; text-align: center;"><h1>Category not found</h1><a href="index.html">Go back home</a></div>';
+        return;
+      }
+
+      // Update page title
+      document.title = category.name + ' - MANKEFOR COSMETIC PRODUCTION';
+
+      // Load category info into the page
+      const categoryInfo = document.getElementById('category-info');
+      if (categoryInfo) {
+        categoryInfo.innerHTML = `
+          <h2 data-aos="flip-left">${category.name}</h2>
+          <p class="tagline" data-aos="flip-left">"${category.tagline}"</p>
+          <p data-aos="flip-left">${category.description}</p>
+        `;
+      }
+
+      // Get products for this category
+      const products = dataManager.getProducts({ categoryId: categoryId });
+      
+      // Display products
+      const productsContainer = document.getElementById('products-container');
+      if (productsContainer && products.length > 0) {
+        productsContainer.innerHTML = products.map((product, index) => `
+          <div class="product-card" data-aos="fade-up" data-aos-delay="${index * 100}" style="box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1); padding: 1.5rem; border-radius: 12px; text-align: center; transition: transform 0.3s;">
+            <img src="${product.image}" alt="${product.name}" style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem;" />
+            <h3 style="color: #333; margin-bottom: 0.5rem;">${product.name}</h3>
+            <p style="color: #666; margin-bottom: 0.5rem;"><strong>Size:</strong> ${product.size}</p>
+            <p class="price" style="color: #ff7200; font-size: 1.5rem; font-weight: bold; margin-bottom: 1rem;">${dataManager.formatPrice(product.price)}</p>
+            <a href="login.html" class="btn" onclick="localStorage.setItem('pendingProduct', '${product.id}');" style="background: linear-gradient(135deg, #ff7200, #ff9500); color: white; padding: 0.8rem 2rem; border-radius: 8px; text-decoration: none; display: inline-block; transition: all 0.3s; box-shadow: 0 4px 15px rgba(255, 114, 0, 0.3);">Buy Now</a>
+          </div>
+        `).join('');
+      } else if (productsContainer) {
+        productsContainer.innerHTML = '<p class="text-center" style="grid-column: 1 / -1; padding: 2rem; color: #666;">No products available for this category yet.</p>';
+      }
+
+      // Update featured image if present
+      const featureImage = document.getElementById('feature-image');
+      if (featureImage) {
+        featureImage.src = category.image;
+        featureImage.alt = category.name;
+      }
+    });
   </script>
 </html>

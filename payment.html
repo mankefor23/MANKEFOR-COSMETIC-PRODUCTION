@@ -1,29 +1,265 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="payment.css" />
-    <title>MANKEFOR COSMETIC PRODUCTION</title>
-  </head>
-  <body>
-    <div class="payment-container">
-      <h2>Make a Payment</h2>
-      <form id="payment-form">
-        <label for="amount">Amount (XAF)</label>
-        <input type="number" id="amount" name="amount" required />
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" name="phone" required />
-        <label for="method">Payment Method:</label>
-        <!-- <select id="method" name="method" required> -->
-        <!-- <option value="">--select--</option> -->
-        <!-- <option value="mtn">MTN</option> -->
-        <!-- <option value="orange">Orange</option> -->
-        <!-- </select> -->
-        <button style="background-color: yellow; color: black">MTN</button>
-        <button style="background-color: #ff7200; color: black">ORANGE</button>
-        <!-- <button type="submit">Pay Now</button> -->
-      </form>
-    </div>
-  </body>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Place Order - MANKEFOR COSMETIC PRODUCTION</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <link rel="stylesheet" href="styles.css" />
+        <style>
+            .order-container {
+                max-width: 800px;
+                margin: 8rem auto 2rem;
+                padding: 2rem;
+            }
+            .order-summary {
+                background: white;
+                padding: 2rem;
+                border-radius: var(--border-radius);
+                box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1);
+                margin-bottom: 2rem;
+            }
+            .order-item {
+                display: flex;
+                justify-content: space-between;
+                padding: 1rem;
+                border-bottom: 1px solid #eee;
+            }
+            .order-total {
+                display: flex;
+                justify-content: space-between;
+                padding: 1rem;
+                font-size: 1.2rem;
+                font-weight: bold;
+                background: var(--bg-light);
+                margin-top: 1rem;
+            }
+            .form-section {
+                background: white;
+                padding: 2rem;
+                border-radius: var(--border-radius);
+                box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1);
+                margin-bottom: 2rem;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar" id="navbar">
+            <div class="navbar-brand">
+                <div class="logo">
+                    <img src="/images/prelogo.png" alt="Mankefor Logo" />
+                </div>
+                <div class="brand-text">
+                    <p class="brand-name">MANKEFOR</p>
+                    <p class="brand-subtitle">COSMETIC</p>
+                </div>
+            </div>
+            <button
+                class="menu-toggle"
+                id="mobile-menu"
+                aria-label="Toggle mobile menu"
+            >
+                <span></span><span></span><span></span>
+            </button>
+            <div class="navbar-nav" id="nav-menu">
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="customer-dashboard.html">DASHBOARD</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Order Form -->
+        <main class="order-container">
+            <h1>Place Your Order</h1>
+
+            <!-- Order Summary -->
+            <div class="order-summary" id="orderSummary">
+                <h2>Order Summary</h2>
+                <div id="orderItems">
+                    <p class="text-center">Loading order items...</p>
+                </div>
+                <div class="order-total" id="orderTotal">
+                    <span>Total: XAF 0</span>
+                </div>
+            </div>
+
+            <!-- Customer Information -->
+            <form id="orderForm" class="form-section">
+                <h2>Delivery Information</h2>
+                <div class="form-group">
+                    <label class="form-label" for="fullName">Full Name</label>
+                    <input
+                        type="text"
+                        class="form-input"
+                        id="fullName"
+                        name="fullName"
+                        required
+                    />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="phone">Phone Number</label>
+                    <input
+                        type="tel"
+                        class="form-input"
+                        id="phone"
+                        name="phone"
+                        required
+                    />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="address"
+                        >Delivery Address</label
+                    >
+                    <input
+                        type="text"
+                        class="form-input"
+                        id="address"
+                        name="address"
+                        required
+                    />
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="city">City</label>
+                    <input
+                        type="text"
+                        class="form-input"
+                        id="city"
+                        name="city"
+                        required
+                    />
+                </div>
+                <button
+                    type="submit"
+                    class="btn"
+                    style="width: 100%; margin-top: 1rem"
+                >
+                    Confirm Order
+                </button>
+            </form>
+        </main>
+
+        <script src="js/data-manager.js"></script>
+        <script src="js/app.js"></script>
+        <script>
+            let currentOrder = {
+                items: [],
+                total: 0,
+            };
+
+            document.addEventListener("DOMContentLoaded", function () {
+                // Get product ID from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const productId = urlParams.get("id");
+
+                if (productId) {
+                    const product = dataManager.getProductById(productId);
+                    if (product) {
+                        currentOrder.items = [
+                            {
+                                product: product.id,
+                                name: product.name,
+                                quantity: 1,
+                                price: product.price,
+                                total: product.price,
+                            },
+                        ];
+                        currentOrder.total = product.price;
+                    }
+                }
+
+                // Load user info
+                const user = dataManager.getCurrentUser();
+                if (user) {
+                    document.getElementById(
+                        "fullName"
+                    ).value = `${user.firstName} ${user.lastName}`;
+                    document.getElementById("phone").value = user.phone || "";
+                }
+
+                updateOrderSummary();
+            });
+
+            function updateOrderSummary() {
+                const orderItems = document.getElementById("orderItems");
+                const orderTotal = document.getElementById("orderTotal");
+
+                if (currentOrder.items.length === 0) {
+                    orderItems.innerHTML =
+                        '<p class="text-center">No items in order</p>';
+                } else {
+                    orderItems.innerHTML = currentOrder.items
+                        .map(
+                            (item) => `
+                        <div class="order-item">
+                            <div>
+                                <strong>${item.name}</strong>
+                                <p style="margin: 0.25rem 0;">Quantity: ${
+                                    item.quantity
+                                }</p>
+                                <p style="margin: 0;">Unit Price: ${dataManager.formatPrice(
+                                    item.price
+                                )}</p>
+                            </div>
+                            <strong>${dataManager.formatPrice(
+                                item.total
+                            )}</strong>
+                        </div>
+                    `
+                        )
+                        .join("");
+                }
+
+                orderTotal.innerHTML = `
+                    <span>Total:</span>
+                    <span>${dataManager.formatPrice(currentOrder.total)}</span>
+                `;
+            }
+
+            document
+                .getElementById("orderForm")
+                .addEventListener("submit", function (e) {
+                    e.preventDefault();
+
+                    if (currentOrder.items.length === 0) {
+                        alert("Please add items to your order");
+                        return;
+                    }
+
+                    const formData = new FormData(this);
+                    const orderData = {
+                        items: currentOrder.items,
+                        shippingAddress: {
+                            fullName: formData.get("fullName"),
+                            phone: formData.get("phone"),
+                            address: formData.get("address"),
+                            city: formData.get("city"),
+                            country: "Cameroon",
+                        },
+                        pricing: {
+                            subtotal: currentOrder.total,
+                            shipping: 1000,
+                            tax: currentOrder.total * 0.1,
+                            total:
+                                currentOrder.total +
+                                1000 +
+                                currentOrder.total * 0.1,
+                        },
+                        paymentMethod: "cash",
+                    };
+
+                    try {
+                        const order = dataManager.createOrder(orderData);
+                        alert("Order placed successfully!");
+                        window.location.href = "customer-dashboard.html";
+                    } catch (error) {
+                        alert("Failed to place order. Please try again.");
+                    }
+                });
+        </script>
+    </body>
 </html>

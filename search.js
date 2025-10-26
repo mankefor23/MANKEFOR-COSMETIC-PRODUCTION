@@ -227,8 +227,14 @@ class ProductSearch {
             return;
         }
 
-        const filteredProducts = this.filterProducts(query);
-        this.displayProducts(filteredProducts, query);
+        // Use dataManager if available
+        if (typeof dataManager !== "undefined") {
+            const products = dataManager.getProducts({ search: query });
+            this.displayProducts(products, query);
+        } else {
+            const filteredProducts = this.filterProducts(query);
+            this.displayProducts(filteredProducts, query);
+        }
     }
 
     filterProducts(query) {
@@ -250,7 +256,13 @@ class ProductSearch {
     }
 
     displayAllProducts() {
-        this.displayProducts(products, "");
+        // Use dataManager if available
+        if (typeof dataManager !== "undefined") {
+            const products = dataManager.getProducts();
+            this.displayProducts(products, "");
+        } else {
+            this.displayProducts(products, "");
+        }
     }
 
     displayProducts(productsToShow, searchQuery) {
@@ -270,24 +282,7 @@ class ProductSearch {
             return;
         }
 
-        // Group products by category
-        const groupedProducts = this.groupProductsByCategory(productsToShow);
-
-        Object.keys(groupedProducts).forEach((category) => {
-            const categorySection = document.createElement("div");
-            categorySection.style.gridColumn = "1 / -1";
-            categorySection.innerHTML = `
-        <h3 class="text-center mb-3" style="color: var(--primary-color);">${category}</h3>
-        <div class="grid grid-3 mb-4">
-          ${groupedProducts[category]
-              .map((product) => this.createProductCard(product))
-              .join("")}
-        </div>
-      `;
-            this.productGrid.appendChild(categorySection);
-        });
-
-        // Add search results summary
+        // Add search results summary if searching
         if (searchQuery) {
             const summary = document.createElement("div");
             summary.style.gridColumn = "1 / -1";
@@ -296,8 +291,25 @@ class ProductSearch {
         <h3>Search Results for "${searchQuery}"</h3>
         <p>Found ${productsToShow.length} product(s)</p>
       `;
-            this.productGrid.insertBefore(summary, this.productGrid.firstChild);
+            this.productGrid.appendChild(summary);
         }
+
+        // Group products by category
+        const groupedProducts = this.groupProductsByCategory(productsToShow);
+
+        Object.keys(groupedProducts).forEach((category) => {
+            const categorySection = document.createElement("div");
+            categorySection.style.gridColumn = "1 / -1";
+            categorySection.innerHTML = `
+        <h2 class="text-center mb-3" style="color: var(--primary-color); font-size: 1.8rem; margin-top: 2rem;">${category}</h2>
+        <div class="grid grid-3">
+          ${groupedProducts[category]
+              .map((product) => this.createProductCard(product))
+              .join("")}
+        </div>
+      `;
+            this.productGrid.appendChild(categorySection);
+        });
     }
 
     groupProductsByCategory(products) {
@@ -312,18 +324,21 @@ class ProductSearch {
     }
 
     createProductCard(product) {
+        // Format price properly
+        let priceDisplay =
+            typeof product.price === "number"
+                ? dataManager
+                    ? dataManager.formatPrice(product.price)
+                    : `${product.price} FCFA`
+                : product.price;
+
         return `
-      <div class="product-card card" data-aos="fade-up">
-        <img src="${product.image}" alt="${product.name}" loading="lazy" />
-        <h3>${product.name}</h3>
-        <p class="price">${product.size} - ${product.price}</p>
-        <p class="mb-2">${product.description}</p>
-        <div class="tags mb-2">
-          ${product.tags
-              .map((tag) => `<span class="tag">${tag}</span>`)
-              .join("")}
-        </div>
-        <a href="payment.html" class="btn">Buy Now</a>
+      <div class="product-card card" data-aos="flip-right" data-aos-duration="1900">
+        <img src="${product.image}" alt="${product.name}" loading="lazy" data-aos="flip-right" data-aos-duration="1900" />
+        <h3 data-aos="flip-right" data-aos-duration="1900">${product.name}</h3>
+        <p data-aos="flip-right" data-aos-duration="1900">${product.description}</p>
+        <p class="price" data-aos="flip-right" data-aos-duration="1900">${product.size} - ${priceDisplay}</p>
+        <a href="login.html" class="btn" data-aos="flip-right" data-aos-duration="1900" onclick="localStorage.setItem('pendingProduct', '${product.id}');">Buy Now</a>
       </div>
     `;
     }

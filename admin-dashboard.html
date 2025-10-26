@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Admin Dashboard - MANKEFOR COSMETIC PRODUCTION</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <link rel="stylesheet" href="styles.css" />
+        <style>
+            .dashboard-header {
+                background: linear-gradient(
+                    135deg,
+                    var(--primary-color),
+                    var(--accent-color)
+                );
+                color: white;
+                padding: 2rem;
+                margin-top: 7.5rem;
+            }
+            .dashboard-container {
+                max-width: 1400px;
+                margin: 0 auto;
+                padding: 2rem;
+            }
+            .dashboard-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+                margin-bottom: 2rem;
+            }
+            .dashboard-card {
+                background: white;
+                padding: 1.5rem;
+                border-radius: var(--border-radius);
+                box-shadow: 0 0.25rem 0.625rem rgba(0, 0, 0, 0.1);
+            }
+            .status-badge {
+                display: inline-block;
+                padding: 0.25rem 0.75rem;
+                border-radius: 1rem;
+                font-size: 0.875rem;
+                font-weight: bold;
+            }
+            .status-pending {
+                background: #fff3cd;
+                color: #856404;
+            }
+            .status-new {
+                background: #cfe2ff;
+                color: #084298;
+            }
+            .status-resolved {
+                background: #d4edda;
+                color: #155724;
+            }
+            .table {
+                width: 100%;
+                border-collapse: collapse;
+            }
+            .table th,
+            .table td {
+                padding: 0.75rem;
+                text-align: left;
+                border-bottom: 1px solid #ddd;
+            }
+            .table th {
+                background: var(--bg-light);
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Navigation -->
+        <nav class="navbar" id="navbar">
+            <div class="navbar-brand">
+                <div class="logo">
+                    <img src="/images/prelogo.png" alt="Mankefor Logo" />
+                </div>
+                <div class="brand-text">
+                    <p class="brand-name">MANKEFOR ADMIN</p>
+                    <p class="brand-subtitle">DASHBOARD</p>
+                </div>
+            </div>
+            <button
+                class="menu-toggle"
+                id="mobile-menu"
+                aria-label="Toggle mobile menu"
+            >
+                <span></span><span></span><span></span>
+            </button>
+            <div class="navbar-nav" id="nav-menu">
+                <ul>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="admin-dashboard.html">ADMIN PANEL</a></li>
+                    <li><a href="#" onclick="logout()">LOGOUT</a></li>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Dashboard Header -->
+        <header class="dashboard-header">
+            <div class="container">
+                <h1>Admin Dashboard</h1>
+                <p>Manage products, orders, and customers</p>
+            </div>
+        </header>
+
+        <!-- Dashboard Content -->
+        <main class="dashboard-container">
+            <!-- Quick Stats -->
+            <section class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3><i class="fa fa-users"></i> Total Customers</h3>
+                    <p
+                        style="font-size: 2rem; color: var(--primary-color)"
+                        id="customerCount"
+                    >
+                        0
+                    </p>
+                </div>
+                <div class="dashboard-card">
+                    <h3><i class="fa fa-shopping-cart"></i> Total Orders</h3>
+                    <p
+                        style="font-size: 2rem; color: var(--accent-color)"
+                        id="totalOrders"
+                    >
+                        0
+                    </p>
+                </div>
+                <div class="dashboard-card">
+                    <h3><i class="fa fa-cube"></i> Total Products</h3>
+                    <p
+                        style="font-size: 2rem; color: #28a745"
+                        id="productCount"
+                    >
+                        0
+                    </p>
+                </div>
+                <div class="dashboard-card">
+                    <h3><i class="fa fa-envelope"></i> Contact Messages</h3>
+                    <p
+                        style="font-size: 2rem; color: #dc3545"
+                        id="contactCount"
+                    >
+                        0
+                    </p>
+                </div>
+            </section>
+
+            <!-- Recent Orders -->
+            <section class="dashboard-card">
+                <h2>Recent Orders</h2>
+                <div
+                    id="ordersList"
+                    style="max-height: 400px; overflow-y: auto"
+                >
+                    <p class="text-center">Loading orders...</p>
+                </div>
+            </section>
+
+            <!-- Recent Contacts -->
+            <section class="dashboard-card">
+                <h2>Recent Contact Messages</h2>
+                <div
+                    id="contactsList"
+                    style="max-height: 300px; overflow-y: auto"
+                >
+                    <p class="text-center">No messages yet.</p>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="dashboard-grid mt-4">
+                <a
+                    href="search.html"
+                    class="dashboard-card btn"
+                    style="text-decoration: none; text-align: center"
+                >
+                    <h3><i class="fa fa-cube"></i> Manage Products</h3>
+                    <p>View and edit products</p>
+                </a>
+                <a
+                    href="contact.html"
+                    class="dashboard-card btn"
+                    style="text-decoration: none; text-align: center"
+                >
+                    <h3><i class="fa fa-envelope"></i> View Contacts</h3>
+                    <p>Manage customer inquiries</p>
+                </a>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>+237 651-586-004</p>
+                    <p>mankeforcosmeticproduction@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MANKEFOR COSMETIC PRODUCTION</p>
+            </div>
+        </footer>
+
+        <script src="js/data-manager.js"></script>
+        <script src="js/app.js"></script>
+        <script>
+            // Load admin dashboard data
+            document.addEventListener("DOMContentLoaded", function () {
+                const user = dataManager.getCurrentUser();
+
+                if (!user || user.role !== "admin") {
+                    alert("Access denied. Admin access only.");
+                    window.location.href = "login.html";
+                    return;
+                }
+
+                // Load dashboard data
+                loadAdminDashboard();
+            });
+
+            function loadAdminDashboard() {
+                // Get all data
+                const users = JSON.parse(
+                    localStorage.getItem("mankefor_users") || "[]"
+                );
+                const orders = JSON.parse(
+                    localStorage.getItem("mankefor_orders") || "[]"
+                );
+                const products = JSON.parse(
+                    localStorage.getItem("mankefor_products") || "[]"
+                );
+                const contacts = JSON.parse(
+                    localStorage.getItem("mankefor_contacts") || "[]"
+                );
+
+                // Update counts
+                document.getElementById("customerCount").textContent =
+                    users.filter((u) => u.role === "customer").length;
+                document.getElementById("totalOrders").textContent =
+                    orders.length;
+                document.getElementById("productCount").textContent =
+                    products.length;
+                document.getElementById("contactCount").textContent =
+                    contacts.length;
+
+                // Display recent orders
+                const ordersList = document.getElementById("ordersList");
+                if (orders.length === 0) {
+                    ordersList.innerHTML =
+                        '<p class="text-center">No orders yet.</p>';
+                } else {
+                    ordersList.innerHTML = `
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Order #</th>
+                                    <th>Customer</th>
+                                    <th>Date</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${orders
+                                    .slice(0, 10)
+                                    .map(
+                                        (order) => `
+                                    <tr>
+                                        <td>${
+                                            order.orderNumber || order.id
+                                        }</td>
+                                        <td>Customer</td>
+                                        <td>${new Date(
+                                            order.createdAt
+                                        ).toLocaleDateString()}</td>
+                                        <td>${dataManager.formatPrice(
+                                            order.pricing?.total || 0
+                                        )}</td>
+                                        <td><span class="status-badge status-${
+                                            order.status
+                                        }">${order.status}</span></td>
+                                    </tr>
+                                `
+                                    )
+                                    .join("")}
+                            </tbody>
+                        </table>
+                    `;
+                }
+
+                // Display recent contacts
+                const contactsList = document.getElementById("contactsList");
+                if (contacts.length === 0) {
+                    contactsList.innerHTML =
+                        '<p class="text-center">No messages yet.</p>';
+                } else {
+                    contactsList.innerHTML = contacts
+                        .slice(0, 10)
+                        .map(
+                            (contact) => `
+                        <div style="padding: 1rem; border-bottom: 1px solid #eee;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <div>
+                                    <strong>${contact.name}</strong> - ${
+                                contact.email
+                            }
+                                    <p style="margin: 0.5rem 0;">${
+                                        contact.subject || "Inquiry"
+                                    }</p>
+                                    <p style="margin: 0;">${contact.message.substring(
+                                        0,
+                                        100
+                                    )}...</p>
+                                </div>
+                                <span class="status-badge status-${
+                                    contact.status
+                                }">${contact.status}</span>
+                            </div>
+                        </div>
+                    `
+                        )
+                        .join("");
+                }
+            }
+        </script>
+    </body>
+</html>

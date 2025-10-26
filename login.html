@@ -87,33 +87,33 @@
   <body>
     <div class="container">
       <!-- Signup Form -->
-      <div class="form" id="signupForm">
+      <form class="form" id="signupForm" onsubmit="return false;">
         <h2>Signup</h2>
-        <input type="text" placeholder="Full Name" required />
-        <input type="email" placeholder="Email" required />
-        <input type="tel" placeholder="Phone Number" required />
-        <input type="password" placeholder="Password" required />
-        <a href="Clients (2).html"> <button type="button">Signup</button></a>
+        <input type="text" name="firstName" placeholder="First Name" required />
+        <input type="text" name="lastName" placeholder="Last Name" required />
+        <input type="email" name="email" placeholder="Email" required />
+        <input type="tel" name="phone" placeholder="Phone Number" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <button type="submit">Signup</button>
         <div class="toggle-link">
           Already have an account?
           <a onclick="toggleForm('loginForm')">Login here</a>
         </div>
-      </div>
+      </form>
 
       <!-- Login Form -->
-      <div class="form active" id="loginForm">
+      <form class="form active" id="loginForm" onsubmit="return false;">
         <h2>Login</h2>
         <label for="email"> Email</label><br>
-           <input type="text" placeholder="Email" required />
+        <input type="email" name="email" id="loginEmail" placeholder="Email" required />
         <label for="password">Password</label><br>
-
-         <input  placeholder="Password" required />
-        <a href="Clients (2).html"> <button type="button">Login</button></a>
+        <input type="password" name="password" id="loginPassword" placeholder="Password" required />
+        <button type="submit">Login</button>
         <div class="toggle-link">
         Don't have account?
           <a onclick="toggleForm('signupForm')">Signup here</a>
         </div>
-      </div>
+      </form>
 
       
       </div>
@@ -126,6 +126,67 @@
         });
         document.getElementById(formId).classList.add("active");
       }
+    </script>
+    <script src="js/data-manager.js"></script>
+
+    <script>
+
+      console.log(localStorage.getItem("mankefor_currentUser"));
+    </script>
+    <script>
+      
+      // Check if user is already logged in
+      if (localStorage.getItem('loggedInUser')) {
+        const user = JSON.parse(localStorage.getItem("mankefor_currentUser"));
+        if (user.role === 'customer') {
+          window.location.href = 'customer-dashboard.html';
+        } else if (user.role === 'admin') {
+          window.location.href = 'admin-dashboard.html';
+        }
+      } else {
+        // Handle form submissions
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+          e.preventDefault();
+          const email = document.getElementById('loginEmail').value;
+          const password = document.getElementById('loginPassword').value;
+          
+          const user = dataManager.login(email, password);
+          
+          if (user) {
+            localStorage.setItem('loggedInUser', email);
+            if (user.role === 'customer') {
+              window.location.href = 'customer-dashboard.html';
+            } else if (user.role === 'admin') {
+              window.location.href = 'admin-dashboard.html';
+            }
+          } else {
+            alert('Invalid email or password');
+          }
+        });
+      }
+    
+      
+      document.getElementById('signupForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(this);
+        const userData = {
+          firstName: formData.get('firstName'),
+          lastName: formData.get('lastName'),
+          email: formData.get('email'),
+          phone: formData.get('phone'),
+          password: formData.get('password')
+        };
+        
+        try {
+            dataManager.registerUser(userData);
+          alert('Registration successful! Please login.');
+          toggleForm('loginForm');
+          this.reset();
+        } catch (error) {
+          alert('Registration failed. Please try again.');
+        }
+      });
+    
     </script>
   </body>
 </html>

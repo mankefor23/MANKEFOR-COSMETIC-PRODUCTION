@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Customer Dashboard - MANKEFOR COSMETIC PRODUCTION</title>
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+        />
+        <link rel="stylesheet" href="styles.css" />
+        <style>
+            :root {
+                --dark-blue: #1a237e;
+                --medium-blue: #283593;
+                --light-blue: #3949ab;
+                --orange: #ff7200;
+                --dark-orange: #f57c00;
+            }
+
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                margin: 0;
+                background: #f4f6f9;
+            }
+
+            /* Sidebar */
+            .sidebar {
+                width: 220px;
+                background: var(--dark-blue);
+                color: white;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+            }
+            .sidebar h2 {
+                text-align: center;
+                padding: 20px 0;
+                background: var(--medium-blue);
+                margin: 0;
+            }
+            .sidebar a {
+                color: white;
+                text-decoration: none;
+                padding: 12px 20px;
+                display: block;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+            .sidebar a:hover {
+                background: var(--light-blue);
+            }
+
+            /* Main Content */
+            .main {
+                flex: 1;
+                padding: 20px;
+            }
+            header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                background: white;
+                padding: 15px 20px;
+                border-radius: 10px;
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            }
+            header h1 {
+                font-size: 22px;
+                color: var(--dark-blue);
+                margin: 0;
+            }
+
+            /* Tabs */
+            .tabs {
+                display: flex;
+                margin-top: 20px;
+                border-bottom: 2px solid var(--dark-blue);
+            }
+            .tab {
+                padding: 10px 20px;
+                cursor: pointer;
+                background: #e0e0e0;
+                margin-right: 5px;
+                border-radius: 5px 5px 0 0;
+                font-weight: bold;
+            }
+            .tab.active {
+                background: var(--dark-blue);
+                color: white;
+            }
+            .tab-content {
+                display: none;
+            }
+            .tab-content.active {
+                display: block;
+            }
+
+            /* Orders Table */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                margin-top: 20px;
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+                border-radius: 10px;
+                overflow: hidden;
+            }
+            th,
+            td {
+                padding: 12px;
+                border: 1px solid #ddd;
+                text-align: center;
+            }
+            th {
+                background: var(--dark-blue);
+                color: white;
+            }
+            tr:nth-child(even) {
+                background: #f8f9fa;
+            }
+            tr:hover {
+                background: #e9ecef;
+            }
+            button.confirm {
+                background: #27ae60;
+                border: none;
+                color: white;
+                padding: 6px 10px;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            /* Place Order Form */
+            .place-order {
+                margin-top: 20px;
+                background: #fff;
+                padding: 20px;
+                border-radius: 10px;
+                box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+            }
+            .place-order h3 {
+                color: var(--dark-blue);
+                margin-top: 0;
+            }
+            .place-order label {
+                display: block;
+                margin-top: 15px;
+                font-weight: bold;
+                color: var(--dark-blue);
+            }
+            .place-order input,
+            .place-order select {
+                width: 100%;
+                padding: 10px;
+                margin-top: 6px;
+                border-radius: 6px;
+                border: 1px solid #ccc;
+                box-sizing: border-box;
+            }
+            .place-order button {
+                margin-top: 20px;
+                width: 100%;
+                padding: 12px;
+                border: none;
+                background: var(--orange);
+                color: white;
+                border-radius: 6px;
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 16px;
+            }
+            .place-order button:hover {
+                background: var(--dark-orange);
+            }
+
+            /* Order Items Section */
+            .order-items {
+                margin-top: 15px;
+            }
+            .item-row {
+                display: flex;
+                gap: 10px;
+                margin-bottom: 10px;
+            }
+            .item-row select {
+                flex: 1;
+            }
+            .item-row input {
+                width: 80px;
+            }
+            .item-row button {
+                background: #e74c3c;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                padding: 10px;
+            }
+
+            /* Receipt Modal */
+            .modal {
+                display: none;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
+            }
+            .modal-content {
+                background: white;
+                padding: 30px;
+                border-radius: 10px;
+                width: 80%;
+                max-width: 600px;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+            .receipt-header {
+                text-align: center;
+                margin-bottom: 20px;
+                border-bottom: 2px solid var(--orange);
+                padding-bottom: 15px;
+            }
+            .receipt-total {
+                text-align: right;
+                font-weight: bold;
+                font-size: 18px;
+                margin-top: 15px;
+                border-top: 2px solid var(--orange);
+                padding-top: 10px;
+            }
+
+            @media (max-width: 768px) {
+                body {
+                    flex-direction: column;
+                }
+                .sidebar {
+                    width: 100%;
+                    min-height: auto;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h2>MANKEFOR</h2>
+            <a href="#" onclick="showTab('home')">🏠 Home</a>
+            <a href="#" onclick="showTab('orders')">🛒 My Orders</a>
+            <a href="#" onclick="showTab('receipts')">📑 Receipts</a>
+            <a href="#" onclick="logout()">🚪 Logout</a>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main">
+            <header>
+                <h1 id="welcomeMessage">Welcome to Your Dashboard</h1>
+            </header>
+
+            <div class="tabs">
+                <div class="tab active" onclick="showTab('home')">
+                    Place Order
+                </div>
+                <div class="tab" onclick="showTab('orders')">My Orders</div>
+                <div class="tab" onclick="showTab('receipts')">Receipts</div>
+            </div>
+
+            <!-- Home Tab - Place Order -->
+            <div id="home" class="tab-content active">
+                <div class="place-order">
+                    <h3>Place New Order</h3>
+
+                    <label>Customer Name</label>
+                    <input type="text" id="customerNameInput" />
+
+                    <label>Phone Number</label>
+                    <input type="tel" id="phoneNumberInput" />
+
+                    <label>Location/Address</label>
+                    <input type="text" id="locationInput" />
+
+                    <label>Delivery Date</label>
+                    <input type="date" id="deliveryDate" />
+
+                    <div class="order-items">
+                        <h4>Order Items</h4>
+                        <div id="itemsContainer">
+                            <div class="item-row">
+                                <select
+                                    class="productSelect"
+                                    onchange="updateProductPrice(this)"
+                                >
+                                    <option value="">
+                                        -- Select Product --
+                                    </option>
+                                </select>
+                                <input
+                                    type="number"
+                                    class="quantityInput"
+                                    placeholder="Qty"
+                                    value="1"
+                                    min="1"
+                                    onchange="updateItemTotal(this)"
+                                />
+                                <input
+                                    type="text"
+                                    class="priceInput"
+                                    readonly
+                                    placeholder="Price"
+                                />
+                                <input
+                                    type="text"
+                                    class="totalInput"
+                                    readonly
+                                    placeholder="Total"
+                                />
+                            </div>
+                        </div>
+                        <button
+                            onclick="addItemRow()"
+                            style="
+                                background: #3498db;
+                                width: auto;
+                                margin-top: 10px;
+                            "
+                        >
+                            + Add Item
+                        </button>
+                    </div>
+
+                    <button onclick="placeOrder()">Place Order</button>
+                </div>
+            </div>
+
+            <!-- Orders Tab -->
+            <div id="orders" class="tab-content">
+                <h3>My Orders</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Product(s)</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTable"></tbody>
+                </table>
+            </div>
+
+            <!-- Receipts Tab -->
+            <div id="receipts" class="tab-content">
+                <h3>Order Receipts</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Receipt ID</th>
+                            <th>Order ID</th>
+                            <th>Date</th>
+                            <th>Total Amount</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="receiptsTable"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Receipt Modal -->
+        <div id="receiptModal" class="modal">
+            <div class="modal-content">
+                <div class="receipt-header">
+                    <h2>MANKEFOR COSMETICS</h2>
+                    <p>MILE 2 BAMENDA, CAMEROON</p>
+                    <p>Phone: +237 651-586-004</p>
+                    <h3>ORDER RECEIPT</h3>
+                </div>
+
+                <div class="receipt-details">
+                    <p>
+                        <strong>Receipt ID:</strong>
+                        <span id="receiptId"></span>
+                    </p>
+                    <p><strong>Order ID:</strong> <span id="orderId"></span></p>
+                    <p>
+                        <strong>Customer:</strong>
+                        <span id="receiptCustomer"></span>
+                    </p>
+                    <p><strong>Date:</strong> <span id="receiptDate"></span></p>
+                </div>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Unit Price</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="receiptItems"></tbody>
+                </table>
+
+                <div class="receipt-total">
+                    Total: <span id="receiptTotal">0.00</span> XAF
+                </div>
+
+                <div style="margin-top: 20px; text-align: right">
+                    <button
+                        onclick="closeReceipt()"
+                        class="btn"
+                        style="width: auto; margin-right: 10px"
+                    >
+                        Close
+                    </button>
+                    <button
+                        onclick="downloadReceipt()"
+                        class="btn"
+                        style="width: auto"
+                    >
+                        Download
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script src="js/data-manager.js"></script>
+        <script src="js/app.js"></script>
+        <script>
+            let products = [];
+            let user = null;
+
+            document.addEventListener("DOMContentLoaded", function () {
+                user = dataManager.getCurrentUser();
+
+                if (!user) {
+                    window.location.href = "login.html";
+                    return;
+                }
+
+                // Update welcome message
+                document.getElementById(
+                    "welcomeMessage"
+                ).textContent = `Welcome, ${user.firstName} ${user.lastName}!`;
+
+                // Pre-fill user info
+                document.getElementById(
+                    "customerNameInput"
+                ).value = `${user.firstName} ${user.lastName}`;
+                document.getElementById("phoneNumberInput").value =
+                    user.phone || "";
+                document.getElementById("locationInput").value =
+                    user.address || "";
+
+                // Load products
+                products = dataManager.getProducts();
+                populateProductDropdown();
+
+                // Check if there's a pending product
+                const pendingProduct = localStorage.getItem("pendingProduct");
+                if (pendingProduct) {
+                    localStorage.removeItem("pendingProduct");
+                    // Pre-select the product
+                    setTimeout(() => {
+                        const select = document.querySelector(".productSelect");
+                        select.value = pendingProduct;
+                        updateProductPrice(select);
+                    }, 100);
+                }
+
+                // Load orders and receipts
+                loadOrders();
+                loadReceipts();
+            });
+
+            function populateProductDropdown() {
+                const selects = document.querySelectorAll(".productSelect");
+                selects.forEach((select) => {
+                    select.innerHTML =
+                        '<option value="">-- Select Product --</option>';
+                    products.forEach((product) => {
+                        const option = document.createElement("option");
+                        option.value = product.id;
+                        option.textContent = `${product.name} (${
+                            product.size
+                        }) - ${dataManager.formatPrice(product.price)}`;
+                        option.dataset.price = product.price;
+                        select.appendChild(option);
+                    });
+                });
+            }
+
+            function updateProductPrice(select) {
+                const selectedOption = select.options[select.selectedIndex];
+                const price = selectedOption.dataset.price || 0;
+                const row = select.closest(".item-row");
+                const priceInput = row.querySelector(".priceInput");
+                const quantity = row.querySelector(".quantityInput").value || 1;
+                priceInput.value = dataManager.formatPrice(parseFloat(price));
+                updateItemTotal(row.querySelector(".quantityInput"));
+            }
+
+            function updateItemTotal(input) {
+                const row = input.closest(".item-row");
+                const price =
+                    parseFloat(
+                        row
+                            .querySelector(".priceInput")
+                            .value.replace(/[^\d]/g, "")
+                    ) || 0;
+                const quantity = parseInt(input.value) || 1;
+                const total = price * quantity;
+                row.querySelector(".totalInput").value =
+                    dataManager.formatPrice(total);
+            }
+
+            function addItemRow() {
+                const container = document.getElementById("itemsContainer");
+                const newRow = document.createElement("div");
+                newRow.className = "item-row";
+                newRow.innerHTML = `
+                    <select class="productSelect" onchange="updateProductPrice(this)">
+                        <option value="">-- Select Product --</option>
+                    </select>
+                    <input type="number" class="quantityInput" placeholder="Qty" value="1" min="1" onchange="updateItemTotal(this)" />
+                    <input type="text" class="priceInput" readonly placeholder="Price" />
+                    <input type="text" class="totalInput" readonly placeholder="Total" />
+                    <button onclick="removeItemRow(this)">Remove</button>
+                `;
+                container.appendChild(newRow);
+                populateProductDropdown();
+            }
+
+            function removeItemRow(button) {
+                if (document.querySelectorAll(".item-row").length > 1) {
+                    button.closest(".item-row").remove();
+                } else {
+                    alert("You must have at least one item");
+                }
+            }
+
+            function showTab(tabName) {
+                document
+                    .querySelectorAll(".tab")
+                    .forEach((tab) => tab.classList.remove("active"));
+                document
+                    .querySelectorAll(".tab-content")
+                    .forEach((content) => content.classList.remove("active"));
+
+                event.target.classList.add("active");
+                document.getElementById(tabName).classList.add("active");
+            }
+
+            function placeOrder() {
+                const customerName =
+                    document.getElementById("customerNameInput").value;
+                const phone = document.getElementById("phoneNumberInput").value;
+                const location = document.getElementById("locationInput").value;
+                const deliveryDate =
+                    document.getElementById("deliveryDate").value;
+
+                if (!customerName || !phone || !location) {
+                    alert("Please fill in all required fields");
+                    return;
+                }
+
+                const items = [];
+                let total = 0;
+
+                document.querySelectorAll(".item-row").forEach((row) => {
+                    const select = row.querySelector(".productSelect");
+                    const quantity =
+                        parseInt(row.querySelector(".quantityInput").value) ||
+                        1;
+                    const priceInput = row.querySelector(".priceInput");
+                    const price =
+                        parseFloat(priceInput.value.replace(/[^\d]/g, "")) || 0;
+
+                    if (select.value) {
+                        const product = products.find(
+                            (p) => p.id === select.value
+                        );
+                        items.push({
+                            product: product.id,
+                            name: product.name,
+                            quantity: quantity,
+                            price: price / 100,
+                            total: (price * quantity) / 100,
+                        });
+                        total += (price * quantity) / 100;
+                    }
+                });
+
+                if (items.length === 0) {
+                    alert("Please add at least one product");
+                    return;
+                }
+
+                const orderData = {
+                    items: items,
+                    shippingAddress: {
+                        fullName: customerName,
+                        phone: phone,
+                        address: location,
+                        country: "Cameroon",
+                    },
+                    pricing: {
+                        subtotal: total,
+                        shipping: 1000,
+                        tax: total * 0.1,
+                        total: total + 1000 + total * 0.1,
+                    },
+                    paymentMethod: "cash",
+                    deliveryDate: deliveryDate,
+                };
+
+                try {
+                    const order = dataManager.createOrder(orderData);
+                    alert("Order placed successfully!");
+
+                    // Create receipt
+                    createReceipt(order);
+
+                    // Reset form
+                    document.querySelectorAll(".item-row").forEach((row) => {
+                        row.querySelector(".productSelect").value = "";
+                        row.querySelector(".quantityInput").value = 1;
+                        row.querySelector(".priceInput").value = "";
+                        row.querySelector(".totalInput").value = "";
+                    });
+                    document.getElementById("locationInput").value = "";
+                    document.getElementById("deliveryDate").value = "";
+
+                    // Reload orders and receipts
+                    loadOrders();
+                    loadReceipts();
+                } catch (error) {
+                    alert("Failed to place order. Please try again.");
+                }
+            }
+
+            function createReceipt(order) {
+                const receipts = JSON.parse(
+                    localStorage.getItem("mankefor_receipts") || "[]"
+                );
+                const receipt = {
+                    id: "REC-" + Date.now(),
+                    orderId: order.id,
+                    customerName: order.shippingAddress.fullName,
+                    date: new Date(order.createdAt).toLocaleDateString(),
+                    items: order.items,
+                    total: order.pricing.total,
+                };
+                receipts.push(receipt);
+                localStorage.setItem(
+                    "mankefor_receipts",
+                    JSON.stringify(receipts)
+                );
+            }
+
+            function loadOrders() {
+                const orders = dataManager.getOrders();
+                const userOrders = orders.filter((o) => o.customer === user.id);
+
+                const tbody = document.getElementById("ordersTable");
+                if (userOrders.length === 0) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="6" style="text-align: center;">No orders yet</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = userOrders
+                    .map((order) => {
+                        const productList = order.items
+                            .map((item) => item.name)
+                            .join(", ");
+                        return `
+                        <tr>
+                            <td>${order.orderNumber || order.id}</td>
+                            <td>${productList}</td>
+                            <td>${dataManager.formatPrice(
+                                order.pricing?.total || 0
+                            )}</td>
+                            <td>${order.status || "pending"}</td>
+                            <td>${new Date(
+                                order.createdAt
+                            ).toLocaleDateString()}</td>
+                            <td><button class="confirm" onclick="viewReceipt('${
+                                order.id
+                            }')">View Receipt</button></td>
+                        </tr>
+                    `;
+                    })
+                    .join("");
+            }
+
+            function loadReceipts() {
+                const receipts = JSON.parse(
+                    localStorage.getItem("mankefor_receipts") || "[]"
+                );
+                const userReceipts = receipts.filter((r) => {
+                    const orders = dataManager.getOrders();
+                    return orders.some(
+                        (o) => o.id === r.orderId && o.customer === user.id
+                    );
+                });
+
+                const tbody = document.getElementById("receiptsTable");
+                if (userReceipts.length === 0) {
+                    tbody.innerHTML =
+                        '<tr><td colspan="5" style="text-align: center;">No receipts found</td></tr>';
+                    return;
+                }
+
+                tbody.innerHTML = userReceipts
+                    .map(
+                        (receipt) => `
+                    <tr>
+                        <td>${receipt.id}</td>
+                        <td>${receipt.orderId}</td>
+                        <td>${receipt.date}</td>
+                        <td>${dataManager.formatPrice(receipt.total)}</td>
+                        <td>
+                            <button class="confirm" onclick="viewReceipt('${
+                                receipt.orderId
+                            }')">View</button>
+                            <button class="confirm" onclick="downloadReceipt('${
+                                receipt.orderId
+                            }')" style="margin-left: 5px;">Download</button>
+                        </td>
+                    </tr>
+                `
+                    )
+                    .join("");
+            }
+
+            function viewReceipt(orderId) {
+                const orders = dataManager.getOrders();
+                const order = orders.find((o) => o.id === orderId);
+
+                if (!order) return;
+
+                const receipts = JSON.parse(
+                    localStorage.getItem("mankefor_receipts") || "[]"
+                );
+                const receipt = receipts.find((r) => r.orderId === orderId) || {
+                    id: "REC-" + Date.now(),
+                    orderId: order.id,
+                    customerName: order.shippingAddress.fullName,
+                    date: new Date(order.createdAt).toLocaleDateString(),
+                    items: order.items,
+                    total: order.pricing.total,
+                };
+
+                document.getElementById("receiptId").textContent = receipt.id;
+                document.getElementById("orderId").textContent =
+                    receipt.orderId;
+                document.getElementById("receiptCustomer").textContent =
+                    receipt.customerName;
+                document.getElementById("receiptDate").textContent =
+                    receipt.date;
+
+                const itemsBody = document.getElementById("receiptItems");
+                itemsBody.innerHTML = receipt.items
+                    .map(
+                        (item) => `
+                    <tr>
+                        <td>${item.name}</td>
+                        <td>${item.quantity}</td>
+                        <td>${dataManager.formatPrice(item.price)}</td>
+                        <td>${dataManager.formatPrice(item.total)}</td>
+                    </tr>
+                `
+                    )
+                    .join("");
+
+                document.getElementById("receiptTotal").textContent =
+                    dataManager.formatPrice(receipt.total);
+
+                document.getElementById("receiptModal").style.display = "flex";
+            }
+
+            function closeReceipt() {
+                document.getElementById("receiptModal").style.display = "none";
+            }
+
+            function downloadReceipt(orderId) {
+                viewReceipt(orderId);
+                alert("Receipt download feature coming soon!");
+            }
+
+            function logout() {
+                dataManager.logout();
+                window.location.href = "login.html";
+            }
+        </script>
+    </body>
+</html>

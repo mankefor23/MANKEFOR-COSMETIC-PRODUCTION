@@ -392,6 +392,18 @@ p {
   flex-direction: column;
 }
 
+/* Main Content */
+.main {
+  margin-top: 7.5rem;
+  padding-top: 2rem;
+}
+
+.main h1 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+  line-height: 1.3;
+}
+
 /* Content Sections */
 .content-section {
   width: 100%;
@@ -727,7 +739,6 @@ p {
   .section-hero h1 {
     font-size: 1.8rem;
   }
-
   .tile-header {
     font-size: 1.5rem;
   }

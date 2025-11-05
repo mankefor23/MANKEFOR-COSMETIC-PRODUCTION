@@ -157,22 +157,41 @@ class FormHandler {
 
             try {
                 const formData = new FormData(form);
-                const contactData = {
-                    name: formData.get("name"),
-                    email: formData.get("email"),
-                    phone: formData.get("phone"),
-                    subject: formData.get("subject") || "Inquiry",
-                    message: formData.get("message"),
-                    category: "general",
-                };
 
-                dataManager.saveContact(contactData);
-                dataManager.showNotification(
-                    "Message sent successfully!",
-                    "success"
+                // Submit to Web3Forms API
+                const response = await fetch(
+                    "https://api.web3forms.com/submit",
+                    {
+                        method: "POST",
+                        body: formData,
+                    }
                 );
-                form.reset();
+
+                const result = await response.json();
+
+                if (result.success) {
+                    // Save to localStorage as backup
+                    const contactData = {
+                        name: formData.get("name"),
+                        email: formData.get("email"),
+                        phone: formData.get("phone"),
+                        subject: formData.get("subject") || "Inquiry",
+                        message: formData.get("message"),
+                        category: "general",
+                        timestamp: new Date().toISOString(),
+                    };
+
+                    dataManager.saveContact(contactData);
+                    dataManager.showNotification(
+                        "Message sent successfully!",
+                        "success"
+                    );
+                    form.reset();
+                } else {
+                    throw new Error(result.message || "Form submission failed");
+                }
             } catch (error) {
+                console.error("Form submission error:", error);
                 dataManager.showNotification(
                     "An error occurred. Please try again.",
                     "error"

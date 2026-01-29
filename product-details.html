@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Details - MANKEFOR COSMETIC PRODUCTION</title>
+    <meta name="description" content="View detailed information about MANKEFOR premium cleaning products. Quality products made with care." />
+    
+    <!-- External Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/images/prelogo.png" />
+    
+    <style>
+        /* Product Details Page Specific Styles */
+        .product-hero {
+            background: linear-gradient(135deg, var(--secondary-color), #613d2069, var(--secondary-color));
+            padding: 2rem 1rem;
+            margin-top: 7.5rem;
+            text-align: center;
+        }
+        
+        .product-hero h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 0.5rem;
+        }
+        
+        .product-hero .tagline {
+            font-style: italic;
+            color: var(--text-dark);
+            font-size: 1.1rem;
+        }
+        
+        /* Product Detail Section */
+        .product-detail-section {
+            padding: 3rem 1rem;
+            background: var(--white);
+        }
+        
+        .product-detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        
+        @media (min-width: 768px) {
+            .product-detail-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        /* Product Image Gallery */
+        .product-gallery {
+            position: relative;
+        }
+        
+        .product-main-image {
+            width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .product-main-image:hover {
+            transform: scale(1.02);
+        }
+        
+        .product-thumbnails {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .product-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .product-thumbnail:hover,
+        .product-thumbnail.active {
+            border-color: var(--primary-color);
+        }
+        
+        /* Product Info */
+        .product-info {
+            padding: 1rem 0;
+        }
+        
+        .product-info h2 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .product-info .tagline {
+            font-style: italic;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-info .description {
+            color: var(--text-light);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Features List */
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .features-list li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: var(--text-dark);
+            border-bottom: 1px solid #eee;
+        }
+        
+        .features-list li::before {
+            content: '\f00c';
+            font-family: FontAwesome;
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+        
+        /* Price Display */
+        .price-display {
+            background: linear-gradient(135deg, #fff5eb, #fff);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .price-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+        
+        .price-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .price-note {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+        
+        /* Size Options */
+        .size-options {
+            margin-bottom: 2rem;
+        }
+        
+        .size-options h4 {
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+        
+        .size-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .size-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #ddd;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .size-btn:hover,
+        .size-btn.active {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        
+        /* CTA Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .cta-buttons .btn {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            padding: 1rem 2rem;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        
+        /* Product Tabs */
+        .product-tabs {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-light);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1rem 0;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Specifications Table */
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .specs-table tr {
+            border-bottom: 1px solid #eee;
+        }
+        
+        .specs-table th,
+        .specs-table td {
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        .specs-table th {
+            width: 40%;
+            color: var(--text-light);
+            font-weight: normal;
+        }
+        
+        .specs-table td {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        
+        /* Related Products */
+        .related-products {
+            background: var(--bg-light);
+            padding: 4rem 1rem;
+        }
+        
+        .related-products h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .related-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        /* Navigation between products */
+        .product-nav {
+            background: var(--bg-light);
+            padding: 1rem;
+            margin-top: 7.5rem;
+        }
+        
+        .product-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .product-nav-link {
+            padding: 0.75rem 1.5rem;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .product-nav-link:hover,
+        .product-nav-link.active {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-brand">
+            <div class="logo">
+                <img src="/images/prelogo.png" alt="Mankefor Logo" />
+            </div>
+            <div class="brand-text">
+                <p class="brand-name">MANKEFOR</p>
+                <p class="brand-subtitle">COSMETIC</p>
+            </div>
+        </div>
+
+        <button class="menu-toggle" id="mobile-menu" aria-label="Toggle mobile menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="navbar-nav" id="nav-menu">
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="product.html">PRODUCT</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+                <li class="search-container">
+                    <a href="search.html">
+                        <button class="search-btn">Search</button>
+                    </a>
+                </li>
+                <li class="cart-icon-container">
+                    <a href="cart.html" class="cart-link">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span class="cart-badge">0</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Product Category Navigation -->
+    <nav class="product-nav">
+        <div class="product-nav-container">
+            <a href="#liquid-soap" class="product-nav-link active">Liquid Soap</a>
+            <a href="#essence" class="product-nav-link">Essence</a>
+            <a href="#bath-glow" class="product-nav-link">Bath Glow</a>
+            <a href="#power-wash" class="product-nav-link">Power Wash</a>
+            <a href="#pure-bleach" class="product-nav-link">Pure Bleach</a>
+        </div>
+    </nav>
+
+    <!-- ============================================
+         PRODUCT 1: PRECIOUS LIQUID SOAP
+         ============================================ -->
+    <section id="liquid-soap">
+        <header class="product-hero">
+            <h1 data-aos="fade-up">PRECIOUS LIQUID SOAP</h1>
+            <p class="tagline" data-aos="fade-up" data-aos-delay="100">"Gentle on hands, tough on dirt"</p>
+        </header>
+
+        <div class="product-detail-section">
+            <div class="product-detail-container">
+                <!-- Product Gallery -->
+                <div class="product-gallery" data-aos="fade-right">
+                    <img src="/images/liquid1.webp" alt="Precious Liquid Soap" class="product-main-image" />
+                    <div class="product-thumbnails">
+                        <img src="/images/500.png" alt="500ml bottle" class="product-thumbnail active" />
+                        <img src="/images/1000.png" alt="1L bottle" class="product-thumbnail" />
+                        <img src="/images/5000.png" alt="5L container" class="product-thumbnail" />
+                    </div>
+                </div>
+
+                <!-- Product Info -->
+                <div class="product-info" data-aos="fade-left">
+                    <h2>Precious Liquid Soap</h2>
+                    <p class="tagline">"Gentle on hands, tough on dirt"</p>
+                    
+                    <p class="description">
+                        This powerful yet skin-friendly soap is perfect for daily cleaning—whether in the kitchen, 
+                        bathroom, or laundry. Our formula is designed to provide effective cleaning while being 
+                        gentle on your skin and fabrics.
+                    </p>
+
+                    <ul class="features-list">
+                        <li>Antibacterial formula for deep cleaning</li>
+                        <li>Long-lasting fresh scent</li>
+                        <li>Gentle on hands and fabrics</li>
+                        <li>Ideal for home and commercial use</li>
+                        <li>Biodegradable and eco-friendly</li>
+                    </ul>
+
+                    <div class="size-options">
+                        <h4>Available Sizes:</h4>
+                        <div class="size-buttons">
+                            <button class="size-btn" data-price="500">500ml - 500 FCFA</button>
+                            <button class="size-btn active" data-price="1000">1L - 1,000 FCFA</button>
+                            <button class="size-btn" data-price="5000">5L - 5,000 FCFA</button>
+                        </div>
+                    </div>
+
+                    <div class="price-display">
+                        <p class="price-label">Price</p>
+                        <p class="price-value">1,000 FCFA</p>
+                        <p class="price-note">Prices may vary for bulk orders. Contact us for wholesale pricing.</p>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <a href="contact.html" class="btn">Order Now</a>
+                        <a href="contact.html" class="btn btn-secondary">
+                            <i class="fa fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Product Tabs -->
+        <div class="product-tabs">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="details-1">Details</button>
+                <button class="tab-btn" data-tab="specs-1">Specifications</button>
+                <button class="tab-btn" data-tab="usage-1">How to Use</button>
+            </div>
+
+            <div class="tab-content active" id="details-1">
+                <h3>Product Details</h3>
+                <p>Precious Liquid Soap is formulated with a unique blend of cleaning agents that effectively 
+                   remove dirt, grease, and stains while being gentle on your skin. Perfect for everyday use 
+                   in households, offices, and commercial establishments.</p>
+                <p>Our liquid soap produces rich, long-lasting foam that provides excellent cleaning power 
+                   with less product usage, making it economical and efficient.</p>
+            </div>
+
+            <div class="tab-content" id="specs-1">
+                <table class="specs-table">
+                    <tr>
+                        <th>Product Type</th>
+                        <td>Liquid Soap</td>
+                    </tr>
+                    <tr>
+                        <th>Available Sizes</th>
+                        <td>500ml, 1L, 5L</td>
+                    </tr>
+                    <tr>
+                        <th>Scent</th>
+                        <td>Fresh Floral</td>
+                    </tr>
+                    <tr>
+                        <th>pH Level</th>
+                        <td>Neutral (7.0)</td>
+                    </tr>
+                    <tr>
+                        <th>Shelf Life</th>
+                        <td>24 months</td>
+                    </tr>
+                    <tr>
+                        <th>Made In</th>
+                        <td>Cameroon</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="tab-content" id="usage-1">
+                <h3>How to Use</h3>
+                <ol style="padding-left: 1.5rem; line-height: 2;">
+                    <li>For hand washing: Apply a small amount to wet hands and lather well.</li>
+                    <li>For dishes: Add a few drops to warm water and wash as usual.</li>
+                    <li>For laundry: Use 50ml per load for hand washing or machine washing.</li>
+                    <li>Rinse thoroughly with clean water.</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         PRODUCT 2: PRECIOUS ESSENCE
+         ============================================ -->
+    <section id="essence" style="background: var(--bg-light);">
+        <header class="product-hero" style="margin-top: 0;">
+            <h1 data-aos="fade-up">PRECIOUS ESSENCE</h1>
+            <p class="tagline" data-aos="fade-up" data-aos-delay="100">"A timeless fragrance for elegance and confidence"</p>
+        </header>
+
+        <div class="product-detail-section" style="background: var(--bg-light);">
+            <div class="product-detail-container">
+                <div class="product-gallery" data-aos="fade-right">
+                    <img src="/images/perfume 7.jpg" alt="Precious Essence" class="product-main-image" />
+                </div>
+
+                <div class="product-info" data-aos="fade-left">
+                    <h2>Precious Essence</h2>
+                    <p class="tagline">"Indulge in the luxury you deserve"</p>
+                    
+                    <p class="description">
+                        Precious Essence is a captivating fragrance crafted for those who appreciate elegance, 
+                        confidence, and an unforgettable presence. This luxurious scent combines floral and 
+                        woody notes for a truly sophisticated experience.
+                    </p>
+
+                    <ul class="features-list">
+                        <li>Long-lasting fragrance</li>
+                        <li>Premium quality ingredients</li>
+                        <li>Elegant and sophisticated scent profile</li>
+                        <li>Perfect for special occasions</li>
+                        <li>Unisex appeal</li>
+                    </ul>
+
+                    <div class="price-display">
+                        <p class="price-label">Price</p>
+                        <p class="price-value">Contact for Pricing</p>
+                        <p class="price-note">Available in various sizes. Contact us for details.</p>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <a href="contact.html" class="btn">Inquire Now</a>
+                        <a href="contact.html" class="btn btn-secondary">
+                            <i class="fa fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         PRODUCT 3: PRECIOUS BATH GLOW
+         ============================================ -->
+    <section id="bath-glow">
+        <header class="product-hero" style="margin-top: 0;">
+            <h1 data-aos="fade-up">PRECIOUS BATH GLOW</h1>
+            <p class="tagline" data-aos="fade-up" data-aos-delay="100">"Nourish your skin with every wash"</p>
+        </header>
+
+        <div class="product-detail-section">
+            <div class="product-detail-container">
+                <div class="product-gallery" data-aos="fade-right">
+                    <img src="/images/bathing 4.jpg" alt="Precious Bath Glow" class="product-main-image" />
+                </div>
+
+                <div class="product-info" data-aos="fade-left">
+                    <h2>Precious Bath Glow</h2>
+                    <p class="tagline">"For the glow you were born to shine"</p>
+                    
+                    <p class="description">
+                        Precious Bath Glow is designed to nourish and revitalize your skin with every wash. 
+                        Our gentle formula leaves your skin feeling soft, radiant, and refreshed. 
+                        Experience the perfect blend of cleansing and skincare.
+                    </p>
+
+                    <ul class="features-list">
+                        <li>Nourishing formula for radiant skin</li>
+                        <li>Gentle and suitable for all skin types</li>
+                        <li>Moisturizing properties</li>
+                        <li>Refreshing scent</li>
+                        <li>Daily use recommended</li>
+                    </ul>
+
+                    <div class="price-display">
+                        <p class="price-label">Price</p>
+                        <p class="price-value">Contact for Pricing</p>
+                        <p class="price-note">Available in various sizes. Contact us for details.</p>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <a href="contact.html" class="btn">Order Now</a>
+                        <a href="contact.html" class="btn btn-secondary">
+                            <i class="fa fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         PRODUCT 4: PRECIOUS POWER WASH
+         ============================================ -->
+    <section id="power-wash" style="background: var(--bg-light);">
+        <header class="product-hero" style="margin-top: 0;">
+            <h1 data-aos="fade-up">PRECIOUS POWER WASH</h1>
+            <p class="tagline" data-aos="fade-up" data-aos-delay="100">"Engineered on stains, made for families"</p>
+        </header>
+
+        <div class="product-detail-section" style="background: var(--bg-light);">
+            <div class="product-detail-container">
+                <div class="product-gallery" data-aos="fade-right">
+                    <img src="/images/power 2.webp" alt="Precious Power Wash" class="product-main-image" />
+                </div>
+
+                <div class="product-info" data-aos="fade-left">
+                    <h2>Precious Power Wash</h2>
+                    <p class="tagline">"Powerful, safe, and perfect for tough stains"</p>
+                    
+                    <p class="description">
+                        Precious Power Wash is your trusted solution for tough stains. Whether for home 
+                        or industrial use, our powerful formula tackles the most stubborn dirt and grime 
+                        while remaining safe for your family and the environment.
+                    </p>
+
+                    <ul class="features-list">
+                        <li>Heavy-duty stain removal</li>
+                        <li>Safe for family use</li>
+                        <li>Suitable for home and industrial applications</li>
+                        <li>Effective on grease and oil</li>
+                        <li>Concentrated formula - use less, clean more</li>
+                    </ul>
+
+                    <div class="price-display">
+                        <p class="price-label">Price</p>
+                        <p class="price-value">Contact for Pricing</p>
+                        <p class="price-note">Available in various sizes. Contact us for wholesale pricing.</p>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <a href="contact.html" class="btn">Order Now</a>
+                        <a href="contact.html" class="btn btn-secondary">
+                            <i class="fa fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================
+         PRODUCT 5: PRECIOUS PURE BLEACH
+         ============================================ -->
+    <section id="pure-bleach">
+        <header class="product-hero" style="margin-top: 0;">
+            <h1 data-aos="fade-up">PRECIOUS PURE BLEACH</h1>
+            <p class="tagline" data-aos="fade-up" data-aos-delay="100">"Gentle on fabrics, tough on dirt"</p>
+        </header>
+
+        <div class="product-detail-section">
+            <div class="product-detail-container">
+                <div class="product-gallery" data-aos="fade-right">
+                    <img src="/images/javel1.webp" alt="Precious Pure Bleach" class="product-main-image" />
+                </div>
+
+                <div class="product-info" data-aos="fade-left">
+                    <h2>Precious Pure Bleach</h2>
+                    <p class="tagline">"Pure, powerful clean that's safe for your family"</p>
+                    
+                    <p class="description">
+                        Precious Pure Bleach delivers a pure, powerful clean that's safe for your family 
+                        and strong enough for heavy-duty use. Perfect for whitening, disinfecting, and 
+                        removing tough stains from fabrics and surfaces.
+                    </p>
+
+                    <ul class="features-list">
+                        <li>Powerful whitening action</li>
+                        <li>Disinfects and sanitizes</li>
+                        <li>Gentle on white fabrics</li>
+                        <li>Removes tough stains</li>
+                        <li>Multi-surface compatible</li>
+                    </ul>
+
+                    <div class="price-display">
+                        <p class="price-label">Price</p>
+                        <p class="price-value">Contact for Pricing</p>
+                        <p class="price-note">Available in various sizes. Contact us for bulk orders.</p>
+                    </div>
+
+                    <div class="cta-buttons">
+                        <a href="contact.html" class="btn">Order Now</a>
+                        <a href="contact.html" class="btn btn-secondary">
+                            <i class="fa fa-whatsapp"></i> WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="section-hero" style="margin-top: 0;">
+        <div class="container">
+            <h2 data-aos="fade-up">Ready to Order?</h2>
+            <p data-aos="fade-up" data-aos-delay="100">Contact us today for pricing and availability</p>
+            <div class="mt-3" data-aos="fade-up" data-aos-delay="200">
+                <a href="contact.html" class="btn">Contact Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fa fa-phone"></i> +237 651-586-004</p>
+                <p><i class="fa fa-phone"></i> +237 687-719-778</p>
+                <p><i class="fa fa-phone"></i> +237 681-719-198</p>
+                <br />
+                <p><i class="fa fa-envelope"></i> mankeforcosmeticproduction@gmail.com</p>
+                <br />
+                <p><i class="fa fa-map-marker"></i> MILE 2 BAMENDA, CAMEROON</p>
+            </div>
+
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="product.html">Products</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Our Products</h3>
+                <ul class="footer-links">
+                    <li><a href="#liquid-soap">Precious Liquid Soap</a></li>
+                    <li><a href="#essence">Precious Essence</a></li>
+                    <li><a href="#bath-glow">Precious Bath Glow</a></li>
+                    <li><a href="#power-wash">Precious Power Wash</a></li>
+                    <li><a href="#pure-bleach">Precious Pure Bleach</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-icons">
+                    <a href="#" aria-label="Facebook"><i class="fa fa-facebook"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fa fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fa fa-instagram"></i></a>
+                    <a href="https://wa.me/237651586004" aria-label="WhatsApp"><i class="fa fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 All rights reserved. Built by <em>MANKEFOR PRECIOUS</em></p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animations
+        AOS.init({ duration: 800, once: true });
+        
+        // Mobile menu toggle
+        document.getElementById('mobile-menu').addEventListener('click', function() {
+            document.getElementById('nav-menu').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Tab functionality
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const tabId = this.getAttribute('data-tab');
+                const section = this.closest('section');
+                
+                // Update buttons
+                section.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                // Update content
+                section.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Size button selection
+        document.querySelectorAll('.size-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const container = this.closest('.size-buttons');
+                container.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Product nav highlighting
+        document.querySelectorAll('.product-nav-link').forEach(link => {
+            link.addEventListener('click', function() {
+                document.querySelectorAll('.product-nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

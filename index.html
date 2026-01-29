@@ -34,14 +34,10 @@
           <img src="/images/prelogo.png" alt="Mankefor Logo" />
         </div>
         <div class="brand-text">
-          <p class="brand-name" data-aos="fade-down" data-aos-duration="1400">
+          <p class="brand-name">
             MANKEFOR
           </p>
-          <p
-            class="brand-subtitle"
-            data-aos="fade-down"
-            data-aos-duration="1000"
-          >
+          <p class="brand-subtitle">
             COSMETIC
           </p>
         </div>
@@ -59,27 +55,29 @@
 
       <div class="navbar-nav" id="nav-menu">
         <ul>
-          <li data-aos="zoom-in-right" data-aos-duration="1500">
+          <li>
             <a href="index.html">HOME</a>
           </li>
-          <li data-aos="fade-up" data-aos-duration="1600">
+          <li>
             <a href="about.html">ABOUT</a>
           </li>
-          <li data-aos="fade-up" data-aos-duration="1700">
+          <li>
             <a href="product.html">PRODUCT</a>
           </li>
-          <li data-aos="fade-up" data-aos-duration="1800">
+          <li>
             <a href="contact.html">CONTACT</a>
           </li>
           <li class="search-container">
             <a href="search.html">
-              <button
-                class="search-btn"
-                data-aos="zoom-out-left"
-                data-aos-duration="1800"
-              >
+              <button class="search-btn">
                 Search
               </button>
+            </a>
+          </li>
+          <li class="cart-icon-container">
+            <a href="cart.html" class="cart-link">
+              <i class="fa fa-shopping-cart"></i>
+              <span class="cart-badge">0</span>
             </a>
           </li>
         </ul>
@@ -180,11 +178,11 @@
             </p>
             <div class="mt-3">
               <a
-                href="category.html?id=liquid-soap"
+                href="product-details.html?id=liquid-soap"
                 class="btn"
                 data-aos="flip-left"
               >
-                Learn More
+                View More
               </a>
             </div>
           </div>
@@ -494,9 +492,17 @@
       </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Scripts - AOS Animation Library Only -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="js/data-manager.js"></script>
-    <script src="js/app.js"></script>
+    <script>
+      // Initialize animations
+      AOS.init({ duration: 800, once: true });
+      
+      // Simple mobile menu toggle
+      document.getElementById('mobile-menu').addEventListener('click', function() {
+        document.getElementById('nav-menu').classList.toggle('active');
+        this.classList.toggle('active');
+      });
+    </script>
   </body>
 </html>

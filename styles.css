@@ -260,6 +260,48 @@ p {
   background: #e65a00;
 }
 
+/* Cart Icon */
+.cart-icon-container {
+  position: relative;
+}
+
+.cart-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  transition: var(--transition);
+}
+
+.cart-link i {
+  font-size: 1.5rem;
+  color: var(--text-dark);
+  transition: var(--transition);
+}
+
+.cart-link:hover i {
+  color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+.cart-badge {
+  position: absolute;
+  top: -0.25rem;
+  right: -0.5rem;
+  background: var(--primary-color);
+  color: var(--white);
+  border-radius: 50%;
+  width: 1.25rem;
+  height: 1.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
 /* Buttons */
 .btn {
   display: inline-block;

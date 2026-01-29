@@ -33,28 +33,12 @@
                     <img src="/images/prelogo.png" alt="Mankefor Logo" />
                 </div>
                 <div class="brand-text">
-                    <p
-                        class="brand-name"
-                        data-aos="fade-down"
-                        data-aos-duration="1400"
-                    >
-                        MANKEFOR
-                    </p>
-                    <p
-                        class="brand-subtitle"
-                        data-aos="fade-down"
-                        data-aos-duration="1000"
-                    >
-                        COSMETIC
-                    </p>
+                    <p class="brand-name">MANKEFOR</p>
+                    <p class="brand-subtitle">COSMETIC</p>
                 </div>
             </div>
 
-            <button
-                class="menu-toggle"
-                id="mobile-menu"
-                aria-label="Toggle mobile menu"
-            >
+            <button class="menu-toggle" id="mobile-menu" aria-label="Toggle mobile menu">
                 <span></span>
                 <span></span>
                 <span></span>
@@ -62,34 +46,21 @@
 
             <div class="navbar-nav" id="nav-menu">
                 <ul>
-                    <li data-aos="zoom-in-right" data-aos-duration="1500">
-                        <a href="index.html">HOME</a>
-                    </li>
-                    <li data-aos="fade-up" data-aos-duration="1600">
-                        <a href="about.html">ABOUT</a>
-                    </li>
-                    <li data-aos="fade-up" data-aos-duration="1700">
-                        <a href="product.html">PRODUCT</a>
-                    </li>
-                    <li data-aos="fade-up" data-aos-duration="1800">
-                        <a href="contact.html">CONTACT</a>
-                    </li>
+                    <li><a href="index.html">HOME</a></li>
+                    <li><a href="about.html">ABOUT</a></li>
+                    <li><a href="product.html">PRODUCT</a></li>
+                    <li><a href="contact.html">CONTACT</a></li>
                     <li class="search-container">
                         <a href="search.html">
-                            <button
-                                class="search-btn"
-                                data-aos="zoom-out-left"
-                                data-aos-duration="1800"
-                            >
-                                Search
-                            </button>
+                            <button class="search-btn">Search</button>
                         </a>
                     </li>
-                </ul>
-            </div>
-        </nav>
-
-        <!-- Hero Section -->
+          <li class="cart-icon-container">
+            <a href="cart.html" class="cart-link">
+              <i class="fa fa-shopping-cart"></i>
+              <span class="cart-badge">0</span>
+            </a>
+          </li>
         <header class="section-hero">
             <div class="container">
                 <h1 data-aos="zoom-out-left" data-aos-duration="1800">
@@ -107,33 +78,78 @@
                 <!-- Search Form -->
                 <section class="card mb-4">
                     <div class="search-form">
-                        <div
-                            class="search-container"
-                            style="max-width: 600px; margin: 0 auto"
-                        >
+                        <div class="search-container" style="max-width: 600px; margin: 0 auto; display: flex; gap: 1rem;">
                             <input
                                 type="text"
                                 class="search-input"
                                 id="searchInput"
                                 placeholder="Search for products..."
-                                style="width: 70%"
+                                style="flex: 1; padding: 1rem; border: 2px solid #ddd; border-radius: 8px; font-size: 1rem;"
                             />
-                            <button
-                                class="search-btn"
-                                id="searchButton"
-                                style="width: 30%"
-                            >
+                            <button class="search-btn btn" id="searchButton">
                                 Search
                             </button>
                         </div>
                     </div>
                 </section>
 
-                <!-- Search Results -->
+                <!-- Products Grid -->
                 <section id="searchResults">
-                    <h2 class="text-center mb-3">All Products</h2>
+                    <h2 class="text-center mb-3">Our Products</h2>
                     <div class="grid grid-3" id="productGrid">
-                        <!-- Products will be populated by JavaScript -->
+                        <!-- Product Card 1 -->
+                        <div class="product-card card" data-aos="fade-up">
+                            <img src="/images/500.png" alt="Precious Liquid Soap 500ml" />
+                            <h3>Precious Liquid Soap</h3>
+                            <p>Deep cleans clothes and keeps fabrics fresh and soft.</p>
+                            <p class="price">500ml - 500 FCFA</p>
+                            <a href="contact.html" class="btn">Order Now</a>
+                        </div>
+                        
+                        <!-- Product Card 2 -->
+                        <div class="product-card card" data-aos="fade-up" data-aos-delay="100">
+                            <img src="/images/1000.png" alt="Precious Liquid Soap 1L" />
+                            <h3>Precious Liquid Soap</h3>
+                            <p>Deep cleans clothes and keeps fabrics fresh and soft.</p>
+                            <p class="price">1L - 1,000 FCFA</p>
+                            <a href="contact.html" class="btn">Order Now</a>
+                        </div>
+                        
+                        <!-- Product Card 3 -->
+                        <div class="product-card card" data-aos="fade-up" data-aos-delay="200">
+                            <img src="/images/5000.png" alt="Precious Liquid Soap 5L" />
+                            <h3>Precious Liquid Soap</h3>
+                            <p>Deep cleans clothes and keeps fabrics fresh and soft.</p>
+                            <p class="price">5L - 5,000 FCFA</p>
+                            <a href="contact.html" class="btn">Order Now</a>
+                        </div>
+                        
+                        <!-- Product Card 4 -->
+                        <div class="product-card card" data-aos="fade-up" data-aos-delay="300">
+                            <img src="/images/perfume 7.jpg" alt="Precious Essence" />
+                            <h3>Precious Essence</h3>
+                            <p>A timeless fragrance crafted for elegance and confidence.</p>
+                            <p class="price">Contact for pricing</p>
+                            <a href="contact.html" class="btn">Order Now</a>
+                        </div>
+                        
+                        <!-- Product Card 5 -->
+                        <div class="product-card card" data-aos="fade-up" data-aos-delay="400">
+                            <img src="/images/power 2.webp" alt="Precious Power Wash" />
+                            <h3>Precious Power Wash</h3>
+                            <p>Engineered for tough stains, safe for families.</p>
+                            <p class="price">Contact for pricing</p>
+                            <a href="contact.html" class="btn">Order Now</a>
+                        </div>
+                        
+                        <!-- Product Card 6 -->
+                        <div class="product-card card" data-aos="fade-up" data-aos-delay="500">
+                            <img src="/images/javel1.webp" alt="Precious Pure Bleach" />
+                            <h3>Precious Pure Bleach</h3>
+                            <p>Gentle on fabrics, tough on dirt.</p>
+                            <p class="price">Contact for pricing</p>
+                            <a href="contact.html" class="btn">Order Now</a>
+                        </div>
                     </div>
                 </section>
             </div>
@@ -188,10 +204,14 @@
             </div>
         </footer>
 
-        <!-- Scripts -->
+        <!-- Scripts - AOS Animation Library Only -->
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-        <script src="js/data-manager.js"></script>
-        <script src="js/app.js"></script>
-        <script src="search.js"></script>
+        <script>
+            AOS.init({ duration: 800, once: true });
+            document.getElementById('mobile-menu').addEventListener('click', function() {
+                document.getElementById('nav-menu').classList.toggle('active');
+                this.classList.toggle('active');
+            });
+        </script>
     </body>
 </html>

@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Customer Login & Signup</title>
+    <title>Login / Signup - MANKEFOR COSMETIC PRODUCTION</title>
+    <link rel="icon" type="image/png" href="/images/prelogo.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="styles.css" />
     <style>
       * {
         margin: 0;
@@ -13,11 +16,17 @@
       }
 
       body {
+        background: linear-gradient(135deg, #b7ddec, #613d2069, #b7ddec);
+        min-height: 100vh;
+      }
+
+      .login-wrapper {
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100vh;
-        /* background: #f2f2f2; */
+        min-height: calc(100vh - 7.5rem);
+        margin-top: 7.5rem;
+        padding: 2rem 1rem;
       }
 
       .container {
@@ -85,6 +94,46 @@
     </style>
   </head>
   <body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="navbar-brand">
+            <div class="logo">
+                <img src="/images/prelogo.png" alt="Mankefor Logo" />
+            </div>
+            <div class="brand-text">
+                <p class="brand-name">MANKEFOR</p>
+                <p class="brand-subtitle">COSMETIC</p>
+            </div>
+        </div>
+
+        <button class="menu-toggle" id="mobile-menu" aria-label="Toggle mobile menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="navbar-nav" id="nav-menu">
+            <ul>
+                <li><a href="index.html">HOME</a></li>
+                <li><a href="about.html">ABOUT</a></li>
+                <li><a href="product.html">PRODUCT</a></li>
+                <li><a href="contact.html">CONTACT</a></li>
+                <li class="search-container">
+                    <a href="search.html">
+                        <button class="search-btn">Search</button>
+                    </a>
+                </li>
+                <li class="cart-icon-container">
+                    <a href="cart.html" class="cart-link">
+                        <i class="fa fa-shopping-cart"></i>
+                        <span class="cart-badge">0</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="login-wrapper">
     <div class="container">
       <!-- Signup Form -->
       <form class="form" id="signupForm" onsubmit="return false;">
@@ -118,8 +167,16 @@
       
       </div>
     </div>
+    </div>
 
     <script>
+      // Mobile menu toggle
+      document.getElementById('mobile-menu').addEventListener('click', function() {
+        document.getElementById('nav-menu').classList.toggle('active');
+        this.classList.toggle('active');
+      });
+
+      // Toggle between login and signup forms
       function toggleForm(formId) {
         document.querySelectorAll(".form").forEach((form) => {
           form.classList.remove("active");
@@ -127,66 +184,8 @@
         document.getElementById(formId).classList.add("active");
       }
     </script>
-    <script src="js/data-manager.js"></script>
-
-    <script>
-
-      console.log(localStorage.getItem("mankefor_currentUser"));
-    </script>
-    <script>
-      
-      // Check if user is already logged in
-      if (localStorage.getItem('loggedInUser')) {
-        const user = JSON.parse(localStorage.getItem("mankefor_currentUser"));
-        if (user.role === 'customer') {
-          window.location.href = 'customer-dashboard.html';
-        } else if (user.role === 'admin') {
-          window.location.href = 'admin-dashboard.html';
-        }
-      } else {
-        // Handle form submissions
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-          e.preventDefault();
-          const email = document.getElementById('loginEmail').value;
-          const password = document.getElementById('loginPassword').value;
-          
-          const user = dataManager.login(email, password);
-          
-          if (user) {
-            localStorage.setItem('loggedInUser', email);
-            if (user.role === 'customer') {
-              window.location.href = 'customer-dashboard.html';
-            } else if (user.role === 'admin') {
-              window.location.href = 'admin-dashboard.html';
-            }
-          } else {
-            alert('Invalid email or password');
-          }
-        });
-      }
     
-      
-      document.getElementById('signupForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(this);
-        const userData = {
-          firstName: formData.get('firstName'),
-          lastName: formData.get('lastName'),
-          email: formData.get('email'),
-          phone: formData.get('phone'),
-          password: formData.get('password')
-        };
-        
-        try {
-            dataManager.registerUser(userData);
-          alert('Registration successful! Please login.');
-          toggleForm('loginForm');
-          this.reset();
-        } catch (error) {
-          alert('Registration failed. Please try again.');
-        }
-      });
-    
-    </script>
+    <!-- Note: Login functionality requires JavaScript backend integration -->
+    <!-- Forms will work once backend is implemented -->
   </body>
 </html>

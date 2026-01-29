@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Dashboard - MANKEFOR COSMETIC PRODUCTION</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" type="image/png" href="/images/prelogo.png" />
+    
+    <style>
+        /* Admin Dashboard Specific Styles */
+        body {
+            background: var(--bg-light);
+        }
+
+        .admin-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .admin-sidebar {
+            width: 250px;
+            background: var(--bg-dark);
+            color: var(--white);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .admin-sidebar .logo-section {
+            padding: 1.5rem;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .admin-sidebar .logo-section img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-sidebar .logo-section h3 {
+            font-size: 1rem;
+            color: var(--white);
+            margin: 0;
+        }
+
+        .admin-nav {
+            padding: 1rem 0;
+        }
+
+        .admin-nav-item {
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--white);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+        }
+
+        .admin-nav-item:hover,
+        .admin-nav-item.active {
+            background: rgba(255, 114, 0, 0.1);
+            border-left-color: var(--primary-color);
+        }
+
+        .admin-nav-item i {
+            font-size: 1.2rem;
+            width: 25px;
+        }
+
+        /* Main Content */
+        .admin-main {
+            margin-left: 250px;
+            flex: 1;
+            padding: 2rem;
+            width: calc(100% - 250px);
+        }
+
+        .admin-header {
+            background: var(--white);
+            padding: 1.5rem 2rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .admin-header h1 {
+            font-size: 1.8rem;
+            color: var(--text-dark);
+            margin: 0;
+        }
+
+        .admin-user {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .admin-user .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: bold;
+        }
+
+        /* Content Sections */
+        .admin-section {
+            display: none;
+        }
+
+        .admin-section.active {
+            display: block;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card-admin {
+            background: var(--white);
+            border: 1px solid #eee;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card-admin:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .stat-card-admin .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .stat-card-admin.orange .stat-icon {
+            background: rgba(255, 114, 0, 0.1);
+            color: var(--primary-color);
+        }
+
+        .stat-card-admin.blue .stat-icon {
+            background: rgba(69, 183, 209, 0.1);
+            color: #45B7D1;
+        }
+
+        .stat-card-admin.green .stat-icon {
+            background: rgba(150, 206, 180, 0.1);
+            color: #96CEB4;
+        }
+
+        .stat-card-admin.purple .stat-icon {
+            background: rgba(162, 155, 254, 0.1);
+            color: #A29BFE;
+        }
+
+        .stat-card-admin h3 {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card-admin .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        /* Charts Placeholder */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: var(--white);
+            border: 1px solid #eee;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .chart-card h3 {
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .chart-placeholder {
+            height: 250px;
+            background: var(--bg-light);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-style: italic;
+        }
+
+        /* Activity Feed */
+        .activity-card {
+            background: var(--white);
+            border: 1px solid #eee;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .activity-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            gap: 1rem;
+            transition: background 0.3s ease;
+        }
+
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-item:hover {
+            background: var(--bg-light);
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .activity-icon.new {
+            background: rgba(255, 114, 0, 0.1);
+            color: var(--primary-color);
+        }
+
+        .activity-icon.success {
+            background: rgba(150, 206, 180, 0.1);
+            color: #96CEB4;
+        }
+
+        .activity-icon.warning {
+            background: rgba(255, 203, 107, 0.1);
+            color: #FFCB6B;
+        }
+
+        .activity-details {
+            flex: 1;
+        }
+
+        .activity-details h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+            color: var(--text-dark);
+        }
+
+        .activity-details p {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin: 0;
+        }
+
+        /* Tables */
+        .table-controls {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .filter-group select {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+        }
+
+        .data-table {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        .data-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background: var(--bg-light);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-dark);
+            border-bottom: 2px solid #ddd;
+        }
+
+        .data-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .data-table tr:hover {
+            background: var(--bg-light);
+        }
+
+        .status-badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-badge.pending {
+            background: rgba(255, 203, 107, 0.2);
+            color: #d68910;
+        }
+
+        .status-badge.processing {
+            background: rgba(69, 183, 209, 0.2);
+            color: #2980b9;
+        }
+
+        .status-badge.completed {
+            background: rgba(150, 206, 180, 0.2);
+            color: #27ae60;
+        }
+
+        .status-badge.cancelled {
+            background: rgba(255, 107, 107, 0.2);
+            color: #c0392b;
+        }
+
+        .status-badge.in-stock {
+            background: rgba(150, 206, 180, 0.2);
+            color: #27ae60;
+        }
+
+        .status-badge.low-stock {
+            background: rgba(255, 203, 107, 0.2);
+            color: #d68910;
+        }
+
+        .status-badge.out-of-stock {
+            background: rgba(255, 107, 107, 0.2);
+            color: #c0392b;
+        }
+
+        .status-badge.new {
+            background: rgba(255, 114, 0, 0.2);
+            color: var(--primary-color);
+        }
+
+        .status-badge.read {
+            background: rgba(150, 206, 180, 0.2);
+            color: #27ae60;
+        }
+
+        .action-btns {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            padding: 0.5rem 0.75rem;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn.view {
+            background: rgba(69, 183, 209, 0.1);
+            color: #45B7D1;
+        }
+
+        .action-btn.edit {
+            background: rgba(255, 114, 0, 0.1);
+            color: var(--primary-color);
+        }
+
+        .action-btn.delete {
+            background: rgba(255, 107, 107, 0.1);
+            color: #FF6B6B;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Forms */
+        .form-card {
+            background: var(--white);
+            border: 1px solid #eee;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            margin-bottom: 2rem;
+        }
+
+        .form-card h3 {
+            margin-bottom: 1.5rem;
+            color: var(--text-dark);
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--white);
+            border-radius: var(--border-radius);
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            color: var(--text-dark);
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 2rem;
+            cursor: pointer;
+            color: var(--text-light);
+            transition: color 0.3s ease;
+        }
+
+        .modal-close:hover {
+            color: var(--text-dark);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .detail-row {
+            display: grid;
+            grid-template-columns: 150px 1fr;
+            gap: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .detail-value {
+            color: var(--text-dark);
+        }
+
+        /* Mobile Sidebar Toggle */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            z-index: 1001;
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 0.75rem;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .admin-sidebar {
+                transform: translateX(-100%);
+            }
+
+            .admin-sidebar.active {
+                transform: translateX(0);
+            }
+
+            .admin-main {
+                margin-left: 0;
+                width: 100%;
+                padding: 1rem;
+            }
+
+            .sidebar-toggle {
+                display: block;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .table-controls {
+                flex-direction: column;
+            }
+
+            .data-table {
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="logo-section">
+                <img src="/images/prelogo.png" alt="Logo" />
+                <h3>MANKEFOR Admin</h3>
+            </div>
+            <nav class="admin-nav">
+                <a class="admin-nav-item active" data-section="dashboard">
+                    <i class="fa fa-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a class="admin-nav-item" data-section="orders">
+                    <i class="fa fa-shopping-bag"></i>
+                    <span>Orders</span>
+                </a>
+                <a class="admin-nav-item" data-section="products">
+                    <i class="fa fa-cube"></i>
+                    <span>Products</span>
+                </a>
+                <a class="admin-nav-item" data-section="inventory">
+                    <i class="fa fa-archive"></i>
+                    <span>Inventory</span>
+                </a>
+                <a class="admin-nav-item" data-section="customers">
+                    <i class="fa fa-users"></i>
+                    <span>Customers</span>
+                </a>
+                <a class="admin-nav-item" data-section="messages">
+                    <i class="fa fa-envelope"></i>
+                    <span>Messages</span>
+                </a>
+                <a class="admin-nav-item" href="index.html">
+                    <i class="fa fa-external-link"></i>
+                    <span>View Website</span>
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <button class="sidebar-toggle" id="sidebarToggle">
+                <i class="fa fa-bars"></i>
+            </button>
+
+            <!-- Header -->
+            <div class="admin-header">
+                <h1 id="pageTitle">Dashboard Overview</h1>
+                <div class="admin-user">
+                    <div class="user-avatar">AP</div>
+                    <div>
+                        <div style="font-weight: 600;">Admin User</div>
+                        <div style="font-size: 0.85rem; color: var(--text-light);">Administrator</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SECTION 1: Dashboard Overview -->
+            <section class="admin-section active" id="dashboard">
+                <!-- Stats Cards -->
+                <div class="stats-grid">
+                    <div class="stat-card-admin orange">
+                        <div class="stat-icon">
+                            <i class="fa fa-shopping-cart"></i>
+                        </div>
+                        <h3>Today's Orders</h3>
+                        <div class="stat-value">12</div>
+                        <p style="margin: 0; color: var(--text-light); font-size: 0.9rem;">35,000 FCFA</p>
+                    </div>
+                    <div class="stat-card-admin blue">
+                        <div class="stat-icon">
+                            <i class="fa fa-clock-o"></i>
+                        </div>
+                        <h3>Pending Orders</h3>
+                        <div class="stat-value">5</div>
+                        <p style="margin: 0; color: var(--text-light); font-size: 0.9rem;">Awaiting Processing</p>
+                    </div>
+                    <div class="stat-card-admin green">
+                        <div class="stat-icon">
+                            <i class="fa fa-money"></i>
+                        </div>
+                        <h3>Weekly Revenue</h3>
+                        <div class="stat-value">245K</div>
+                        <p style="margin: 0; color: var(--text-light); font-size: 0.9rem;">FCFA</p>
+                    </div>
+                    <div class="stat-card-admin purple">
+                        <div class="stat-icon">
+                            <i class="fa fa-cubes"></i>
+                        </div>
+                        <h3>Products in Stock</h3>
+                        <div class="stat-value">47</div>
+                        <p style="margin: 0; color: var(--text-light); font-size: 0.9rem;">5 Categories</p>
+                    </div>
+                </div>
+
+                <!-- Charts -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <h3>Sales Trend (Last 7 Days)</h3>
+                        <div class="chart-placeholder">
+                            <p>📈 Chart will be integrated with backend</p>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Top Selling Products</h3>
+                        <div class="chart-placeholder">
+                            <p>📊 Chart will be integrated with backend</p>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Order Status Breakdown</h3>
+                        <div class="chart-placeholder">
+                            <p>🥧 Pie chart will be integrated with backend</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="activity-card">
+                    <h3 style="margin-bottom: 1.5rem;">Recent Activity</h3>
+                    <div class="activity-item">
+                        <div class="activity-icon new">
+                            <i class="fa fa-shopping-cart"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>New Order #1234</h4>
+                            <p>John Doe ordered 3 items - 15,000 FCFA • 5 minutes ago</p>
+                        </div>
+                        <span class="status-badge pending">Pending</span>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon success">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Order Completed #1230</h4>
+                            <p>Jane Smith - 25,000 FCFA • 1 hour ago</p>
+                        </div>
+                        <span class="status-badge completed">Completed</span>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon new">
+                            <i class="fa fa-envelope"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>New Contact Message</h4>
+                            <p>From: Mike Johnson • 2 hours ago</p>
+                        </div>
+                        <span class="status-badge new">New</span>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon warning">
+                            <i class="fa fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Low Stock Alert</h4>
+                            <p>Precious Liquid Soap (1L) - Only 5 units left • 3 hours ago</p>
+                        </div>
+                        <span class="status-badge low-stock">Low Stock</span>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon success">
+                            <i class="fa fa-truck"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Order Delivered #1225</h4>
+                            <p>Sarah Williams - Bamenda • 4 hours ago</p>
+                        </div>
+                        <span class="status-badge completed">Delivered</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 2: Order Management -->
+            <section class="admin-section" id="orders">
+                <!-- Table Controls -->
+                <div class="table-controls">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search by Order ID, Customer Name, or Phone..." />
+                    </div>
+                    <div class="filter-group">
+                        <label>Status:</label>
+                        <select>
+                            <option>All Orders</option>
+                            <option>Pending</option>
+                            <option>Processing</option>
+                            <option>Completed</option>
+                            <option>Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Date:</label>
+                        <input type="date" style="padding: 0.75rem; border: 1px solid #ddd; border-radius: var(--border-radius);" />
+                    </div>
+                </div>
+
+                <!-- Orders Table -->
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Customer</th>
+                                <th>Phone</th>
+                                <th>Total Amount</th>
+                                <th>Status</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>#ORD-1234</strong></td>
+                                <td>John Doe</td>
+                                <td>+237 651-586-004</td>
+                                <td><strong>15,000 FCFA</strong></td>
+                                <td><span class="status-badge pending">Pending</span></td>
+                                <td>Jan 29, 2026</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewOrderDetails()">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#ORD-1233</strong></td>
+                                <td>Jane Smith</td>
+                                <td>+237 687-719-778</td>
+                                <td><strong>25,000 FCFA</strong></td>
+                                <td><span class="status-badge processing">Processing</span></td>
+                                <td>Jan 29, 2026</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewOrderDetails()">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#ORD-1232</strong></td>
+                                <td>Mike Johnson</td>
+                                <td>+237 681-719-198</td>
+                                <td><strong>10,000 FCFA</strong></td>
+                                <td><span class="status-badge completed">Completed</span></td>
+                                <td>Jan 28, 2026</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewOrderDetails()">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#ORD-1231</strong></td>
+                                <td>Sarah Williams</td>
+                                <td>+237 651-586-005</td>
+                                <td><strong>30,000 FCFA</strong></td>
+                                <td><span class="status-badge completed">Completed</span></td>
+                                <td>Jan 28, 2026</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewOrderDetails()">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>#ORD-1230</strong></td>
+                                <td>David Brown</td>
+                                <td>+237 687-719-779</td>
+                                <td><strong>8,000 FCFA</strong></td>
+                                <td><span class="status-badge cancelled">Cancelled</span></td>
+                                <td>Jan 27, 2026</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewOrderDetails()">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn delete">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECTION 3: Product Management -->
+            <section class="admin-section" id="products">
+                <!-- Add Product Button -->
+                <div style="margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;">
+                    <h2 style="margin: 0;">Products</h2>
+                    <button class="btn" onclick="showAddProduct()">
+                        <i class="fa fa-plus"></i> Add New Product
+                    </button>
+                </div>
+
+                <!-- Table Controls -->
+                <div class="table-controls">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search products..." />
+                    </div>
+                    <div class="filter-group">
+                        <label>Category:</label>
+                        <select>
+                            <option>All Categories</option>
+                            <option>Liquid Soap</option>
+                            <option>Essence</option>
+                            <option>Bath Glow</option>
+                            <option>Power Wash</option>
+                            <option>Pure Bleach</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Stock:</label>
+                        <select>
+                            <option>All</option>
+                            <option>In Stock</option>
+                            <option>Low Stock</option>
+                            <option>Out of Stock</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Products Table -->
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Image</th>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Pricing</th>
+                                <th>Stock</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img src="/images/500.png" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" /></td>
+                                <td><strong>Precious Liquid Soap</strong></td>
+                                <td>Liquid Soap</td>
+                                <td>
+                                    500ml: 500 FCFA<br>
+                                    1L: 1,000 FCFA<br>
+                                    5L: 5,000 FCFA
+                                </td>
+                                <td>125</td>
+                                <td><span class="status-badge in-stock">In Stock</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="/images/perfume 7.jpg" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" /></td>
+                                <td><strong>Precious Essence</strong></td>
+                                <td>Essence</td>
+                                <td>Contact for pricing</td>
+                                <td>45</td>
+                                <td><span class="status-badge in-stock">In Stock</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="/images/bathing 4.jpg" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" /></td>
+                                <td><strong>Precious Bath Glow</strong></td>
+                                <td>Bath Glow</td>
+                                <td>Contact for pricing</td>
+                                <td>8</td>
+                                <td><span class="status-badge low-stock">Low Stock</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="/images/power 2.webp" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" /></td>
+                                <td><strong>Precious Power Wash</strong></td>
+                                <td>Power Wash</td>
+                                <td>Contact for pricing</td>
+                                <td>67</td>
+                                <td><span class="status-badge in-stock">In Stock</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="/images/javel1.webp" style="width: 50px; height: 50px; object-fit: cover; border-radius: 5px;" /></td>
+                                <td><strong>Precious Pure Bleach</strong></td>
+                                <td>Pure Bleach</td>
+                                <td>Contact for pricing</td>
+                                <td>0</td>
+                                <td><span class="status-badge out-of-stock">Out of Stock</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-edit"></i>
+                                        </button>
+                                        <button class="action-btn delete">
+                                            <i class="fa fa-trash"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Add/Edit Product Form (Hidden by default) -->
+                <div class="form-card" style="display: none;" id="productForm">
+                    <h3>Add New Product</h3>
+                    <form>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Product Name *</label>
+                                <input type="text" class="form-input" required />
+                            </div>
+                            <div class="form-group">
+                                <label>Category *</label>
+                                <select class="form-input" required>
+                                    <option value="">Select Category</option>
+                                    <option>Liquid Soap</option>
+                                    <option>Essence</option>
+                                    <option>Bath Glow</option>
+                                    <option>Power Wash</option>
+                                    <option>Pure Bleach</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Description</label>
+                            <textarea class="form-textarea" rows="4"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Features (one per line)</label>
+                            <textarea class="form-textarea" rows="4" placeholder="Enter features, one per line"></textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Price (500ml) - FCFA</label>
+                                <input type="number" class="form-input" />
+                            </div>
+                            <div class="form-group">
+                                <label>Price (1L) - FCFA</label>
+                                <input type="number" class="form-input" />
+                            </div>
+                            <div class="form-group">
+                                <label>Price (5L) - FCFA</label>
+                                <input type="number" class="form-input" />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Stock Quantity</label>
+                                <input type="number" class="form-input" value="0" />
+                            </div>
+                            <div class="form-group">
+                                <label>Product Images</label>
+                                <input type="file" class="form-input" multiple accept="image/*" />
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" />
+                                    Featured Product
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                                    <input type="checkbox" checked />
+                                    Active
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn">Save Product</button>
+                            <button type="button" class="btn btn-secondary" onclick="hideAddProduct()">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- SECTION 4: Inventory Management -->
+            <section class="admin-section" id="inventory">
+                <h2 style="margin-bottom: 1.5rem;">Inventory Management</h2>
+
+                <!-- Stock Alerts -->
+                <div class="stats-grid" style="margin-bottom: 2rem;">
+                    <div class="stat-card-admin orange">
+                        <div class="stat-icon">
+                            <i class="fa fa-exclamation-triangle"></i>
+                        </div>
+                        <h3>Low Stock Items</h3>
+                        <div class="stat-value">3</div>
+                    </div>
+                    <div class="stat-card-admin blue">
+                        <div class="stat-icon">
+                            <i class="fa fa-times-circle"></i>
+                        </div>
+                        <h3>Out of Stock</h3>
+                        <div class="stat-value">1</div>
+                    </div>
+                    <div class="stat-card-admin green">
+                        <div class="stat-icon">
+                            <i class="fa fa-check-circle"></i>
+                        </div>
+                        <h3>In Stock</h3>
+                        <div class="stat-value">43</div>
+                    </div>
+                </div>
+
+                <!-- Stock Levels Table -->
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Category</th>
+                                <th>Current Stock</th>
+                                <th>Low Stock Alert</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Precious Liquid Soap (500ml)</strong></td>
+                                <td>Liquid Soap</td>
+                                <td>125</td>
+                                <td>10</td>
+                                <td><span class="status-badge in-stock">In Stock</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn edit" onclick="adjustStock('add')">
+                                            <i class="fa fa-plus"></i> Add
+                                        </button>
+                                        <button class="action-btn delete" onclick="adjustStock('remove')">
+                                            <i class="fa fa-minus"></i> Remove
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Precious Bath Glow</strong></td>
+                                <td>Bath Glow</td>
+                                <td>8</td>
+                                <td>10</td>
+                                <td><span class="status-badge low-stock">Low Stock</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn edit" onclick="adjustStock('add')">
+                                            <i class="fa fa-plus"></i> Add
+                                        </button>
+                                        <button class="action-btn delete" onclick="adjustStock('remove')">
+                                            <i class="fa fa-minus"></i> Remove
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Precious Pure Bleach</strong></td>
+                                <td>Pure Bleach</td>
+                                <td>0</td>
+                                <td>10</td>
+                                <td><span class="status-badge out-of-stock">Out of Stock</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn edit" onclick="adjustStock('add')">
+                                            <i class="fa fa-plus"></i> Add
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Precious Essence</strong></td>
+                                <td>Essence</td>
+                                <td>45</td>
+                                <td>10</td>
+                                <td><span class="status-badge in-stock">In Stock</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn edit" onclick="adjustStock('add')">
+                                            <i class="fa fa-plus"></i> Add
+                                        </button>
+                                        <button class="action-btn delete" onclick="adjustStock('remove')">
+                                            <i class="fa fa-minus"></i> Remove
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Stock History -->
+                <div class="activity-card" style="margin-top: 2rem;">
+                    <h3 style="margin-bottom: 1.5rem;">Recent Stock Adjustments</h3>
+                    <div class="activity-item">
+                        <div class="activity-icon success">
+                            <i class="fa fa-plus"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Stock Added - Precious Liquid Soap</h4>
+                            <p>+50 units (Production Batch #123) • 2 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon warning">
+                            <i class="fa fa-minus"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Stock Removed - Precious Bath Glow</h4>
+                            <p>-5 units (Damaged) • 1 day ago</p>
+                        </div>
+                    </div>
+                    <div class="activity-item">
+                        <div class="activity-icon success">
+                            <i class="fa fa-plus"></i>
+                        </div>
+                        <div class="activity-details">
+                            <h4>Stock Added - Precious Power Wash</h4>
+                            <p>+30 units (Production Batch #122) • 2 days ago</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION 5: Customer Management -->
+            <section class="admin-section" id="customers">
+                <h2 style="margin-bottom: 1.5rem;">Customer Management</h2>
+
+                <!-- Table Controls -->
+                <div class="table-controls">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search customers by name, phone, or email..." />
+                    </div>
+                    <div class="filter-group">
+                        <label>Sort By:</label>
+                        <select>
+                            <option>Most Recent</option>
+                            <option>Total Spent (High to Low)</option>
+                            <option>Total Orders (High to Low)</option>
+                            <option>Name (A-Z)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Customers Table -->
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Customer Name</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Total Orders</th>
+                                <th>Total Spent</th>
+                                <th>Last Order</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>John Doe</strong></td>
+                                <td>+237 651-586-004</td>
+                                <td>john.doe@email.com</td>
+                                <td>8</td>
+                                <td><strong>85,000 FCFA</strong></td>
+                                <td>Jan 29, 2026</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewCustomerDetails()">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-phone"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Jane Smith</strong></td>
+                                <td>+237 687-719-778</td>
+                                <td>jane.smith@email.com</td>
+                                <td>12</td>
+                                <td><strong>145,000 FCFA</strong></td>
+                                <td>Jan 29, 2026</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewCustomerDetails()">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-phone"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mike Johnson</strong></td>
+                                <td>+237 681-719-198</td>
+                                <td>mike.j@email.com</td>
+                                <td>5</td>
+                                <td><strong>52,000 FCFA</strong></td>
+                                <td>Jan 28, 2026</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewCustomerDetails()">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-phone"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Sarah Williams</strong></td>
+                                <td>+237 651-586-005</td>
+                                <td>sarah.w@email.com</td>
+                                <td>15</td>
+                                <td><strong>230,000 FCFA</strong></td>
+                                <td>Jan 28, 2026</td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewCustomerDetails()">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-phone"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SECTION 6: Messages/Inquiries -->
+            <section class="admin-section" id="messages">
+                <h2 style="margin-bottom: 1.5rem;">Messages & Inquiries</h2>
+
+                <!-- Stats -->
+                <div class="stats-grid" style="margin-bottom: 2rem;">
+                    <div class="stat-card-admin orange">
+                        <div class="stat-icon">
+                            <i class="fa fa-envelope"></i>
+                        </div>
+                        <h3>New Messages</h3>
+                        <div class="stat-value">7</div>
+                    </div>
+                    <div class="stat-card-admin green">
+                        <div class="stat-icon">
+                            <i class="fa fa-check"></i>
+                        </div>
+                        <h3>Read Messages</h3>
+                        <div class="stat-value">23</div>
+                    </div>
+                    <div class="stat-card-admin blue">
+                        <div class="stat-icon">
+                            <i class="fa fa-phone"></i>
+                        </div>
+                        <h3>Pricing Inquiries</h3>
+                        <div class="stat-value">12</div>
+                    </div>
+                </div>
+
+                <!-- Table Controls -->
+                <div class="table-controls">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search messages..." />
+                    </div>
+                    <div class="filter-group">
+                        <label>Status:</label>
+                        <select>
+                            <option>All Messages</option>
+                            <option>New</option>
+                            <option>Read</option>
+                            <option>Replied</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Messages Table -->
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>From</th>
+                                <th>Phone</th>
+                                <th>Email</th>
+                                <th>Message Preview</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Mike Johnson</strong></td>
+                                <td>+237 681-719-198</td>
+                                <td>mike.j@email.com</td>
+                                <td>Hi, I would like to inquire about bulk pricing for...</td>
+                                <td>Jan 29, 2026<br><small>2:30 PM</small></td>
+                                <td><span class="status-badge new">New</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewMessage()">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-reply"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Alice Cooper</strong></td>
+                                <td>+237 651-586-006</td>
+                                <td>alice@email.com</td>
+                                <td>What are the delivery charges to Douala region?</td>
+                                <td>Jan 29, 2026<br><small>1:15 PM</small></td>
+                                <td><span class="status-badge new">New</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewMessage()">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-reply"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>David Brown</strong></td>
+                                <td>+237 687-719-780</td>
+                                <td>david.b@email.com</td>
+                                <td>Do you have Precious Essence in stock? What sizes...</td>
+                                <td>Jan 28, 2026<br><small>5:45 PM</small></td>
+                                <td><span class="status-badge read">Read</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewMessage()">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-reply"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Emma Wilson</strong></td>
+                                <td>+237 651-586-007</td>
+                                <td>emma.w@email.com</td>
+                                <td>I'm interested in becoming a wholesale partner...</td>
+                                <td>Jan 28, 2026<br><small>3:20 PM</small></td>
+                                <td><span class="status-badge read">Read</span></td>
+                                <td>
+                                    <div class="action-btns">
+                                        <button class="action-btn view" onclick="viewMessage()">
+                                            <i class="fa fa-eye"></i>
+                                        </button>
+                                        <button class="action-btn edit">
+                                            <i class="fa fa-reply"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Order Details Modal -->
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Order Details - #ORD-1234</h2>
+                <button class="modal-close" onclick="closeModal('orderModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <!-- Customer Info -->
+                <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Customer Information</h3>
+                <div class="detail-row">
+                    <div class="detail-label">Name:</div>
+                    <div class="detail-value">John Doe</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Phone:</div>
+                    <div class="detail-value">+237 651-586-004</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Email:</div>
+                    <div class="detail-value">john.doe@email.com</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Address:</div>
+                    <div class="detail-value">Mile 2, Bamenda, Northwest Region</div>
+                </div>
+
+                <!-- Order Items -->
+                <h3 style="margin: 2rem 0 1rem; color: var(--primary-color);">Order Items</h3>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Size</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Precious Liquid Soap</td>
+                                <td>1L</td>
+                                <td>2</td>
+                                <td>1,000 FCFA</td>
+                                <td><strong>2,000 FCFA</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Precious Power Wash</td>
+                                <td>5L</td>
+                                <td>1</td>
+                                <td>5,000 FCFA</td>
+                                <td><strong>5,000 FCFA</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Order Summary -->
+                <h3 style="margin: 2rem 0 1rem; color: var(--primary-color);">Order Summary</h3>
+                <div class="detail-row">
+                    <div class="detail-label">Subtotal:</div>
+                    <div class="detail-value">7,000 FCFA</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Delivery:</div>
+                    <div class="detail-value">Contact for rates</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Payment Method:</div>
+                    <div class="detail-value">Mobile Money (MTN)</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Order Notes:</div>
+                    <div class="detail-value">Please deliver before 5 PM</div>
+                </div>
+                <div class="detail-row" style="border-bottom: 2px solid var(--primary-color); padding: 1rem 0;">
+                    <div class="detail-label"><strong>Total:</strong></div>
+                    <div class="detail-value"><strong style="font-size: 1.3rem; color: var(--primary-color);">7,000 FCFA</strong></div>
+                </div>
+
+                <!-- Actions -->
+                <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button class="btn">
+                        <i class="fa fa-check"></i> Mark as Processing
+                    </button>
+                    <button class="btn btn-secondary" style="background: #96CEB4; color: white; border: none;">
+                        <i class="fa fa-check-circle"></i> Mark as Completed
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fa fa-print"></i> Print Invoice
+                    </button>
+                    <button class="btn btn-secondary" style="background: #45B7D1; color: white; border: none;">
+                        <i class="fa fa-whatsapp"></i> Contact Customer
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Customer Details Modal -->
+    <div class="modal-overlay" id="customerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Customer Details</h2>
+                <button class="modal-close" onclick="closeModal('customerModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Contact Information</h3>
+                <div class="detail-row">
+                    <div class="detail-label">Name:</div>
+                    <div class="detail-value">John Doe</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Phone:</div>
+                    <div class="detail-value">+237 651-586-004</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Email:</div>
+                    <div class="detail-value">john.doe@email.com</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Customer Since:</div>
+                    <div class="detail-value">June 15, 2025</div>
+                </div>
+
+                <h3 style="margin: 2rem 0 1rem; color: var(--primary-color);">Statistics</h3>
+                <div class="detail-row">
+                    <div class="detail-label">Total Orders:</div>
+                    <div class="detail-value"><strong>8</strong></div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Total Spent:</div>
+                    <div class="detail-value"><strong>85,000 FCFA</strong></div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Last Order:</div>
+                    <div class="detail-value">Jan 29, 2026</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Customer Tag:</div>
+                    <div class="detail-value"><span class="status-badge completed">VIP Customer</span></div>
+                </div>
+
+                <h3 style="margin: 2rem 0 1rem; color: var(--primary-color);">Order History</h3>
+                <div class="data-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#ORD-1234</td>
+                                <td>Jan 29, 2026</td>
+                                <td>15,000 FCFA</td>
+                                <td><span class="status-badge pending">Pending</span></td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-1198</td>
+                                <td>Jan 20, 2026</td>
+                                <td>8,000 FCFA</td>
+                                <td><span class="status-badge completed">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>#ORD-1145</td>
+                                <td>Jan 10, 2026</td>
+                                <td>12,000 FCFA</td>
+                                <td><span class="status-badge completed">Completed</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Message Details Modal -->
+    <div class="modal-overlay" id="messageModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Message Details</h2>
+                <button class="modal-close" onclick="closeModal('messageModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="detail-row">
+                    <div class="detail-label">From:</div>
+                    <div class="detail-value"><strong>Mike Johnson</strong></div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Phone:</div>
+                    <div class="detail-value">+237 681-719-198</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Email:</div>
+                    <div class="detail-value">mike.j@email.com</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Date:</div>
+                    <div class="detail-value">Jan 29, 2026 - 2:30 PM</div>
+                </div>
+                <div class="detail-row">
+                    <div class="detail-label">Status:</div>
+                    <div class="detail-value"><span class="status-badge new">New</span></div>
+                </div>
+
+                <h3 style="margin: 2rem 0 1rem; color: var(--primary-color);">Message</h3>
+                <div style="background: var(--bg-light); padding: 1.5rem; border-radius: var(--border-radius); line-height: 1.8;">
+                    <p>Hi, I would like to inquire about bulk pricing for Precious Liquid Soap. I run a cleaning business and would need regular supplies of about 50 liters per month. Could you provide wholesale pricing and delivery options to Douala?</p>
+                    <p>Also, do you offer any discount for long-term contracts?</p>
+                    <p>Thank you!</p>
+                </div>
+
+                <div style="margin-top: 2rem; display: flex; gap: 1rem;">
+                    <button class="btn">
+                        <i class="fa fa-reply"></i> Reply via Email
+                    </button>
+                    <button class="btn btn-secondary" style="background: #45B7D1; color: white; border: none;">
+                        <i class="fa fa-whatsapp"></i> Reply via WhatsApp
+                    </button>
+                    <button class="btn btn-secondary">
+                        <i class="fa fa-check"></i> Mark as Read
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Navigation
+        document.querySelectorAll('.admin-nav-item').forEach(item => {
+            item.addEventListener('click', function(e) {
+                if (!this.getAttribute('href')) {
+                    e.preventDefault();
+                    const section = this.getAttribute('data-section');
+                    
+                    // Update active nav item
+                    document.querySelectorAll('.admin-nav-item').forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Show section
+                    document.querySelectorAll('.admin-section').forEach(sec => sec.classList.remove('active'));
+                    document.getElementById(section).classList.add('active');
+                    
+                    // Update page title
+                    const titles = {
+                        'dashboard': 'Dashboard Overview',
+                        'orders': 'Order Management',
+                        'products': 'Product Management',
+                        'inventory': 'Inventory Management',
+                        'customers': 'Customer Management',
+                        'messages': 'Messages & Inquiries'
+                    };
+                    document.getElementById('pageTitle').textContent = titles[section];
+                }
+            });
+        });
+
+        // Mobile sidebar toggle
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('adminSidebar').classList.toggle('active');
+        });
+
+        // Modal functions
+        function viewOrderDetails() {
+            document.getElementById('orderModal').classList.add('active');
+        }
+
+        function viewCustomerDetails() {
+            document.getElementById('customerModal').classList.add('active');
+        }
+
+        function viewMessage() {
+            document.getElementById('messageModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+        }
+
+        // Close modal on overlay click
+        document.querySelectorAll('.modal-overlay').forEach(modal => {
+            modal.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    this.classList.remove('active');
+                }
+            });
+        });
+
+        // Product form functions
+        function showAddProduct() {
+            document.getElementById('productForm').style.display = 'block';
+            window.scrollTo({ top: document.getElementById('productForm').offsetTop - 100, behavior: 'smooth' });
+        }
+
+        function hideAddProduct() {
+            document.getElementById('productForm').style.display = 'none';
+        }
+
+        // Stock adjustment placeholder
+        function adjustStock(action) {
+            const quantity = prompt(`Enter quantity to ${action}:`);
+            if (quantity) {
+                alert(`Stock ${action === 'add' ? 'added' : 'removed'}: ${quantity} units`);
+            }
+        }
+
+        // Prevent form submissions (for demo)
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Form submitted! (This is a demo)');
+            });
+        });
+    </script>
+</body>
+</html>

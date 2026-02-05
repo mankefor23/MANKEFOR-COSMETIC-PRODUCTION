@@ -539,6 +539,72 @@
         document.getElementById('nav-menu').classList.toggle('active');
         this.classList.toggle('active');
       });
+
+      // Load Featured Products
+      async function loadFeaturedProducts() {
+        try {
+          const response = await API.getFeaturedProducts();
+          const products = response.data.products;
+          
+          console.log('Featured products loaded:', products);
+          
+          // Update the 3 product cards with API data
+          const productCards = document.querySelectorAll('.product-card');
+          
+          products.slice(0, 3).forEach((product, index) => {
+            if (productCards[index]) {
+              updateProductCard(productCards[index], product);
+            }
+          });
+          
+        } catch (error) {
+          console.error('Error loading featured products:', error);
+          // Fallback: keep static products (no action needed)
+        }
+      }
+
+      function updateProductCard(card, product) {
+        // Update image
+        const img = card.querySelector('img');
+        if (img && product.images && product.images[0]) {
+          img.src = product.images[0];
+          img.alt = product.name;
+        }
+        
+        // Update name
+        const title = card.querySelector('h3');
+        if (title) {
+          title.textContent = product.name;
+        }
+        
+        // Update description
+        const paragraphs = card.querySelectorAll('p');
+        if (paragraphs.length > 0) {
+          paragraphs[0].textContent = product.shortDescription || product.description || 'Premium quality product';
+        }
+        
+        // Update price
+        const priceElement = card.querySelector('.price');
+        if (priceElement && product.price) {
+          priceElement.textContent = `${product.price} FCFA`;
+        }
+        
+        // Update links to point to product details
+        const links = card.querySelectorAll('a.btn');
+        links.forEach(link => {
+          const isAddToCart = link.textContent.includes('Add to Cart');
+          if (isAddToCart) {
+            link.href = `cart.html?add=${product.id}`;
+          } else {
+            link.href = `product-details.html?id=${product.id}`;
+          }
+        });
+      }
+
+      // Load featured products on page load
+      document.addEventListener('DOMContentLoaded', function() {
+        loadFeaturedProducts();
+      });
     </script>
   </body>
 </html>

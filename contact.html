@@ -114,7 +114,12 @@
                     <!-- Contact Form -->
                     <section class="card">
                         <h2 class="mb-3">Send us a Message</h2>
+                        
+                        <!-- Success/Error Messages -->
+                        <div id="contactMessage" style="display: none; padding: 1rem; margin-bottom: 1rem; border-radius: 8px;"></div>
+                        
                         <form
+                            id="contactForm"
                             class="contact-form"
                             action="https://api.web3forms.com/submit"
                             method="POST"
@@ -177,7 +182,7 @@
                                 ></textarea>
                             </div>
 
-                            <button type="submit" class="btn">
+                            <button type="submit" class="btn" id="submitBtn">
                                 Send Message
                             </button>
                         </form>
@@ -353,6 +358,75 @@
             document.getElementById('mobile-menu').addEventListener('click', function() {
                 document.getElementById('nav-menu').classList.toggle('active');
                 this.classList.toggle('active');
+            });
+
+            // Message display functions
+            function showContactMessage(message, type = 'success') {
+                const messageDiv = document.getElementById('contactMessage');
+                messageDiv.textContent = message;
+                messageDiv.style.display = 'block';
+                messageDiv.style.backgroundColor = type === 'success' ? '#d4edda' : '#f8d7da';
+                messageDiv.style.color = type === 'success' ? '#155724' : '#721c24';
+                messageDiv.style.border = type === 'success' ? '1px solid #c3e6cb' : '1px solid #f5c6cb';
+                
+                // Auto-hide after 5 seconds
+                setTimeout(() => {
+                    messageDiv.style.display = 'none';
+                }, 5000);
+            }
+
+            // Handle contact form submission
+            const contactForm = document.getElementById('contactForm');
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const submitBtn = document.getElementById('submitBtn');
+                const originalText = submitBtn.textContent;
+                submitBtn.textContent = 'Sending...';
+                submitBtn.disabled = true;
+
+                // Get form data
+                const formData = new FormData(this);
+                const contactData = {
+                    name: formData.get('name'),
+                    email: formData.get('email'),
+                    phone: formData.get('phone'),
+                    message: formData.get('message'),
+                    subject: 'Contact Form Submission' // Default subject
+                };
+
+                try {
+                    // 1. Submit to backend (store in database)
+                    try {
+                        await API.submitContact(contactData);
+                        console.log('Contact saved to backend successfully');
+                    } catch (backendError) {
+                        console.error('Backend storage failed (continuing with email):', backendError);
+                        // Don't stop - still send email even if backend fails
+                    }
+
+                    // 2. Submit to Web3Forms (send email)
+                    // const web3Response = await fetch(this.action, {
+                    //     method: 'POST',
+                    //     body: formData
+                    // });
+
+                    // const web3Result = await web3Response.json();
+
+                    // if (web3Result.success) {
+                    //     showContactMessage('Thank you for contacting us! We will get back to you soon.', 'success');
+                    //     this.reset(); // Clear form
+                    // } else {
+                    //     throw new Error('Email sending failed');
+                    // }
+
+                } catch (error) {
+                    console.error('Contact form error:', error);
+                    showContactMessage('Sorry, there was an error sending your message. Please try again or contact us directly.', 'error');
+                } finally {
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
             });
         </script>
     </body>

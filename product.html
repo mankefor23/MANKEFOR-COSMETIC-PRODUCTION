@@ -109,6 +109,18 @@
         <!-- Products Section -->
         <main class="content-section">
             <div class="container">
+                <!-- Products will be dynamically loaded here -->
+                <div id="products-container">
+                    <!-- Static products as fallback (will be replaced by API data) -->
+                </div>
+                
+                <!-- Pagination -->
+                <div class="pagination" id="pagination" style="display: none; text-align: center; margin: 2rem 0;">
+                    <button id="prev-btn" class="btn btn-secondary" style="margin: 0 0.5rem;" disabled>Previous</button>
+                    <span id="page-info" style="margin: 0 1rem;">Page 1</span>
+                    <button id="next-btn" class="btn btn-secondary" style="margin: 0 0.5rem;">Next</button>
+                </div>
+                
                 <!-- Liquid Soap Products -->
                 <section class="mb-4">
                     <h2 class="text-center mb-3" data-aos="fade-up">
@@ -661,6 +673,135 @@
             document.getElementById('mobile-menu').addEventListener('click', function() {
                 document.getElementById('nav-menu').classList.toggle('active');
                 this.classList.toggle('active');
+            });
+
+            // Product loading state
+            let currentPage = 1;
+            let totalPages = 1;
+            const limit = 12;
+
+            // Load products from API
+            async function loadProducts(page = 1, category = null) {
+                try {
+                    const params = { page, limit };
+                    
+                    const response = category 
+                        ? await API.getProductsByCategory(category, params)
+                        : await API.getProducts(params);
+                    
+                    const { products, pagination } = response.data;
+                    
+                    console.log('Products loaded:', products);
+                    
+                    // Update pagination state
+                    currentPage = pagination.page;
+                    totalPages = pagination.totalPages;
+                    
+                    // Render products
+                    renderProducts(products);
+                    
+                    // Update pagination UI
+                    updatePagination(pagination);
+                    
+                } catch (error) {
+                    console.error('Error loading products:', error);
+                    // Fallback: keep static products
+                    document.getElementById('products-container').style.display = 'none';
+                }
+            }
+
+            function renderProducts(products) {
+                const container = document.getElementById('products-container');
+                
+                if (products.length === 0) {
+                    container.innerHTML = '<p class="text-center">No products found.</p>';
+                    return;
+                }
+
+                // Group products by category
+                const categories = {};
+                products.forEach(product => {
+                    const category = product.category || 'Other';
+                    if (!categories[category]) {
+                        categories[category] = [];
+                    }
+                    categories[category].push(product);
+                });
+
+                // Build HTML
+                let html = '';
+                for (const [category, items] of Object.entries(categories)) {
+                    html += `
+                        <section class="mb-4">
+                            <h2 class="text-center mb-3" data-aos="fade-up">${category}</h2>
+                            <div class="grid grid-3">
+                    `;
+                    
+                    items.forEach(product => {
+                        html += createProductCard(product);
+                    });
+                    
+                    html += `
+                            </div>
+                        </section>
+                    `;
+                }
+
+                container.innerHTML = html;
+                container.style.display = 'block';
+                
+                // Hide static products when API loads successfully
+                const staticSections = document.querySelectorAll('main.content-section > .container > section.mb-4');
+                staticSections.forEach(section => {
+                    if (!section.closest('#products-container')) {
+                        section.style.display = 'none';
+                    }
+                });
+            }
+
+            function createProductCard(product) {
+                const image = product.images && product.images[0] ? product.images[0] : '/images/default-product.png';
+                const price = product.price || 'Contact for price';
+                const description = product.shortDescription || product.description || 'Premium quality product';
+                
+                return `
+                    <div class="product-card card">
+                        <img src="${image}" alt="${product.name}" />
+                        <h3>${product.name}</h3>
+                        <p>${description}</p>
+                        <div class="price">${price} FCFA</div>
+                        <div class="card-buttons">
+                            <a href="product-details.html?id=${product.id}" class="btn btn-secondary">View Details</a>
+                            <a href="cart.html?add=${product.id}" class="btn btn-primary">Add to Cart</a>
+                        </div>
+                    </div>
+                `;
+            }
+
+            function updatePagination(pagination) {
+                const paginationDiv = document.getElementById('pagination');
+                const prevBtn = document.getElementById('prev-btn');
+                const nextBtn = document.getElementById('next-btn');
+                const pageInfo = document.getElementById('page-info');
+
+                if (pagination.totalPages > 1) {
+                    paginationDiv.style.display = 'block';
+                    
+                    prevBtn.disabled = !pagination.hasPrevPage;
+                    nextBtn.disabled = !pagination.hasNextPage;
+                    
+                    pageInfo.textContent = `Page ${pagination.page} of ${pagination.totalPages}`;
+                    
+                    prevBtn.onclick = () => loadProducts(pagination.page - 1);
+                    nextBtn.onclick = () => loadProducts(pagination.page + 1);
+                } else {
+                    paginationDiv.style.display = 'none';
+                }
+            }
+
+            // Load products on page load
+            document.addEventListener('DOMContentLoaded', function() {
+                loadProducts();
             });
         </script>
     </body>

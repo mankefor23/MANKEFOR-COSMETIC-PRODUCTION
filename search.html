@@ -225,6 +225,131 @@
                 document.getElementById('nav-menu').classList.toggle('active');
                 this.classList.toggle('active');
             });
+
+            // Search functionality
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            const productGrid = document.getElementById('productGrid');
+            const searchResults = document.getElementById('searchResults');
+
+            // Get query from URL
+            function getSearchQuery() {
+                const urlParams = new URLSearchParams(window.location.search);
+                return urlParams.get('q') || '';
+            }
+
+            // Search products
+            async function searchProducts(query) {
+                if (!query || query.trim() === '') {
+                    loadAllProducts();
+                    return;
+                }
+
+                try {
+                    const response = await API.searchProducts(query);
+                    const products = response.data.products;
+                    
+                    console.log('Search results:', products);
+                    
+                    if (products.length === 0) {
+                        productGrid.innerHTML = `
+                            <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+                                <h3>No products found for "${query}"</h3>
+                                <p>Try searching with different keywords</p>
+                            </div>
+                        `;
+                        searchResults.querySelector('h2').textContent = `Search Results for "${query}"`;
+                        return;
+                    }
+
+                    renderProducts(products);
+                    searchResults.querySelector('h2').textContent = `Search Results for "${query}" (${products.length} found)`;
+                    
+                } catch (error) {
+                    console.error('Error searching products:', error);
+                    productGrid.innerHTML = `
+                        <div style="grid-column: 1/-1; text-align: center; padding: 3rem;">
+                            <h3>Error loading search results</h3>
+                            <p>Please try again later</p>
+                        </div>
+                    `;
+                }
+            }
+
+            // Load all products
+            async function loadAllProducts() {
+                try {
+                    const response = await API.getProducts({ limit: 12 });
+                    const products = response.data.products;
+                    
+                    renderProducts(products);
+                    searchResults.querySelector('h2').textContent = 'Our Products';
+                    
+                } catch (error) {
+                    console.error('Error loading products:', error);
+                    // Keep static products as fallback
+                }
+            }
+
+            // Render products in grid
+            function renderProducts(products) {
+                const productsHTML = products.map((product, index) => {
+                    const image = product.images && product.images[0] ? product.images[0] : '/images/default-product.png';
+                    const price = product.price ? `${product.price} FCFA` : 'Contact for pricing';
+                    const description = product.shortDescription || product.description || 'Premium quality product';
+                    
+                    return `
+                        <div class="product-card card" data-aos="fade-up" data-aos-delay="${index * 100}">
+                            <img src="${image}" alt="${product.name}" />
+                            <h3>${product.name}</h3>
+                            <p>${description}</p>
+                            <p class="price">${price}</p>
+                            <div class="card-buttons">
+                                <a href="product-details.html?id=${product.id}" class="btn btn-secondary">View Details</a>
+                                <a href="cart.html?add=${product.id}" class="btn">Add to Cart</a>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                productGrid.innerHTML = productsHTML;
+                
+                // Re-initialize AOS for new elements
+                AOS.refresh();
+            }
+
+            // Search button click
+            searchButton.addEventListener('click', function() {
+                const query = searchInput.value.trim();
+                if (query) {
+                    // Update URL with search query
+                    const url = new URL(window.location);
+                    url.searchParams.set('q', query);
+                    window.history.pushState({}, '', url);
+                    
+                    // Perform search
+                    searchProducts(query);
+                }
+            });
+
+            // Search on Enter key
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchButton.click();
+                }
+            });
+
+            // Load products on page load
+            document.addEventListener('DOMContentLoaded', function() {
+                const query = getSearchQuery();
+                
+                if (query) {
+                    searchInput.value = query;
+                    searchProducts(query);
+                } else {
+                    loadAllProducts();
+                }
+            });
         </script>
     </body>
 </html>

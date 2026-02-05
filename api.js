@@ -1,5 +1,5 @@
 // API Configuration
-const API_BASE_URL = 'http://localhost:3000';
+const API_BASE_URL = 'https://cosmetic-backend-zna0.onrender.com';
 
 // Token Management
 function getToken() {
@@ -282,6 +282,188 @@ function isAdmin() {
 }
 
 // ============================================
+// CONTACT ENDPOINTS
+// ============================================
+
+/**
+ * Submit contact form
+ * @param {Object} contactData - { name, email, phone, message, subject }
+ * @returns {Promise<Object>} - { success, message, data }
+ */
+async function submitContact(contactData) {
+    try {
+        console.log('Submitting contact form:', contactData);
+        const response = await fetchAPI('/api/contact', {
+            method: 'POST',
+            body: JSON.stringify(contactData)
+        });
+
+        console.log('Contact form response:', response);
+        return response;
+    } catch (error) {
+        console.error('Contact form error:', error);
+        throw error;
+    }
+}
+
+// ============================================
+// PRODUCTS ENDPOINTS
+// ============================================
+
+/**
+ * Get all products with optional filters
+ * @param {Object} params - Query parameters (page, limit, q, category, minPrice, maxPrice, etc.)
+ * @returns {Promise<Object>} - { success, data: { products, pagination } }
+ */
+async function getProducts(params = {}) {
+    try {
+        // Build query string from params
+        const queryString = new URLSearchParams(params).toString();
+        const endpoint = queryString ? `/api/products?${queryString}` : '/api/products';
+        
+        console.log('Fetching products:', endpoint);
+        const response = await fetchAPI(endpoint, {
+            method: 'GET'
+        });
+
+        console.log('Products response:', response);
+        return response;
+    } catch (error) {
+        console.error('Get products error:', error);
+        throw error;
+    }
+}
+
+/**
+ * Get single product by ID
+ * @param {string} productId - Product ID
+ * @returns {Promise<Object>} - { success, data: { product } }
+ */
+async function getProduct(productId) {
+    try {
+        console.log('Fetching product:', productId);
+        const response = await fetchAPI(`/api/products/${productId}`, {
+            method: 'GET'
+        });
+
+        console.log('Product response:', response);
+        return response;
+    } catch (error) {
+        console.error('Get product error:', error);
+        throw error;
+    }
+}
+
+/**
+ * Get featured products
+ * @returns {Promise<Object>} - { success, data: { products } }
+ */
+async function getFeaturedProducts() {
+    try {
+        console.log('Fetching featured products');
+        const response = await fetchAPI('/api/products/featured', {
+            method: 'GET'
+        });
+
+        console.log('Featured products response:', response);
+        return response;
+    } catch (error) {
+        console.error('Get featured products error:', error);
+        throw error;
+    }
+}
+
+/**
+ * Get products by category
+ * @param {string} category - Category name
+ * @param {Object} params - Query parameters (page, limit)
+ * @returns {Promise<Object>} - { success, data: { products, pagination } }
+ */
+async function getProductsByCategory(category, params = {}) {
+    try {
+        const queryString = new URLSearchParams(params).toString();
+        const endpoint = queryString 
+            ? `/api/products/category/${category}?${queryString}` 
+            : `/api/products/category/${category}`;
+        
+        console.log('Fetching products by category:', endpoint);
+        const response = await fetchAPI(endpoint, {
+            method: 'GET'
+        });
+
+        console.log('Products by category response:', response);
+        return response;
+    } catch (error) {
+        console.error('Get products by category error:', error);
+        throw error;
+    }
+}
+
+/**
+ * Search products
+ * @param {string} query - Search query
+ * @param {Object} params - Additional query parameters
+ * @returns {Promise<Object>} - { success, data: { products, pagination } }
+ */
+async function searchProducts(query, params = {}) {
+    try {
+        const searchParams = { q: query, ...params };
+        return await getProducts(searchParams);
+    } catch (error) {
+        console.error('Search products error:', error);
+        throw error;
+    }
+}
+
+/**
+ * Add review to product
+ * @param {string} productId - Product ID
+ * @param {Object} reviewData - { rating, comment }
+ * @returns {Promise<Object>} - { success, message, data: { review } }
+ */
+async function addProductReview(productId, reviewData) {
+    try {
+        console.log('Adding review to product:', productId, reviewData);
+        const response = await fetchAPI(`/api/products/${productId}/reviews`, {
+            method: 'POST',
+            body: JSON.stringify(reviewData)
+        });
+
+        console.log('Add review response:', response);
+        return response;
+    } catch (error) {
+        console.error('Add review error:', error);
+        throw error;
+    }
+}
+
+/**
+ * Get product reviews
+ * @param {string} productId - Product ID
+ * @param {Object} params - Query parameters (page, limit)
+ * @returns {Promise<Object>} - { success, data: { reviews, rating, pagination } }
+ */
+async function getProductReviews(productId, params = {}) {
+    try {
+        const queryString = new URLSearchParams(params).toString();
+        const endpoint = queryString 
+            ? `/api/products/${productId}/reviews?${queryString}` 
+            : `/api/products/${productId}/reviews`;
+        
+        console.log('Fetching product reviews:', endpoint);
+        const response = await fetchAPI(endpoint, {
+            method: 'GET'
+        });
+
+        console.log('Product reviews response:', response);
+        return response;
+    } catch (error) {
+        console.error('Get product reviews error:', error);
+        throw error;
+    }
+}
+
+// ============================================
 // EXPORT API FUNCTIONS
 // ============================================
 
@@ -292,6 +474,18 @@ const API = {
     refreshAccessToken,
     getCurrentUser,
     logout,
+    
+    // Contact endpoints
+    submitContact,
+    
+    // Products endpoints
+    getProducts,
+    getProduct,
+    getFeaturedProducts,
+    getProductsByCategory,
+    searchProducts,
+    addProductReview,
+    getProductReviews,
     
     // Token management
     getToken,

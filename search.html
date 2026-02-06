@@ -246,10 +246,11 @@
                 }
 
                 try {
+                    console.log('Searching for:', query);
                     const response = await API.searchProducts(query);
                     const products = response.data.products;
                     
-                    console.log('Search results:', products);
+                    console.log('✅ Search results:', products.length, 'products found');
                     
                     if (products.length === 0) {
                         productGrid.innerHTML = `
@@ -279,14 +280,17 @@
             // Load all products
             async function loadAllProducts() {
                 try {
+                    console.log('Loading all products from API...');
                     const response = await API.getProducts({ limit: 12 });
                     const products = response.data.products;
                     
+                    console.log('✅ Products loaded:', products.length, 'products');
                     renderProducts(products);
                     searchResults.querySelector('h2').textContent = 'Our Products';
                     
                 } catch (error) {
-                    console.error('Error loading products:', error);
+                    console.error('❌ Error loading products:', error);
+                    console.warn('⚠️ Showing static fallback products. Start backend on http://localhost:3000 for search functionality.');
                     // Keep static products as fallback
                 }
             }
@@ -298,6 +302,9 @@
                     const price = product.price ? `${product.price} FCFA` : 'Contact for pricing';
                     const description = product.shortDescription || product.description || 'Premium quality product';
                     
+                    // Handle both MongoDB _id and regular id
+                    const productId = product.id || product._id;
+                    
                     return `
                         <div class="product-card card" data-aos="fade-up" data-aos-delay="${index * 100}">
                             <img src="${image}" alt="${product.name}" />
@@ -305,8 +312,8 @@
                             <p>${description}</p>
                             <p class="price">${price}</p>
                             <div class="card-buttons">
-                                <a href="product-details.html?id=${product.id}" class="btn btn-secondary">View Details</a>
-                                <a href="cart.html?add=${product.id}" class="btn">Add to Cart</a>
+                                <a href="product-details.html?id=${productId}" class="btn btn-secondary">View Details</a>
+                                <a href="cart.html?add=${productId}" class="btn">Add to Cart</a>
                             </div>
                         </div>
                     `;

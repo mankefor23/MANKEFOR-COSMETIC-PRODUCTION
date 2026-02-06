@@ -1,0 +1,461 @@
+
+    <style>
+        /* Product Details Page Specific Styles */
+        .product-hero {
+            background: linear-gradient(135deg, var(--secondary-color), #613d2069, var(--secondary-color));
+            padding: 2rem 1rem;
+            text-align: center;
+        }
+        
+        .product-hero h1 {
+            font-size: clamp(1.8rem, 4vw, 2.5rem);
+            margin-bottom: 0.5rem;
+            color: #2c3e50 !important;
+            font-weight: bold;
+        }
+        
+        .product-hero .tagline {
+            font-style: italic;
+            color: #2c3e50 !important;
+            font-size: 1.1rem;
+        }
+        
+        /* Product Detail Section */
+        .product-detail-section {
+            padding: 3rem 1rem;
+            background: #ffffff;
+        }
+        
+        .product-detail-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        
+        @media (min-width: 768px) {
+            .product-detail-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        
+        /* Product Image Gallery */
+        .product-gallery {
+            position: relative;
+        }
+        
+        .product-main-image {
+            width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .product-main-image:hover {
+            transform: scale(1.02);
+        }
+        
+        .product-thumbnails {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .product-thumbnail {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .product-thumbnail:hover,
+        .product-thumbnail.active {
+            border-color: var(--primary-color);
+        }
+        
+        /* Product Info */
+        .product-info {
+            padding: 1rem 0;
+        }
+        
+        .product-info h2 {
+            font-size: clamp(1.5rem, 4vw, 2rem);
+            color: #2c3e50 !important;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+        
+        .product-info .tagline {
+            font-style: italic;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .product-info .description {
+            color: #555555 !important;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Features List */
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .features-list li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: #2c3e50 !important;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .features-list li::before {
+            content: '\f00c';
+            font-family: FontAwesome;
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+        
+        /* Price Display */
+        .price-display {
+            background: linear-gradient(135deg, #fff5eb, #fff);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-color);
+        }
+        
+        .price-label {
+            font-size: 0.9rem;
+            color: #666666 !important;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .price-note {
+            font-size: 0.85rem;
+            color: #666666 !important;
+            margin-top: 0.5rem;
+        }
+        
+        /* Size Options */
+        .size-options {
+            margin-bottom: 2rem;
+        }
+        
+        .size-options h4 {
+            margin-bottom: 1rem;
+            color: #2c3e50 !important;
+        }
+        
+        .size-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .size-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #ddd;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .size-btn:hover,
+        .size-btn.active {
+            border-color: var(--primary-color);
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        
+        /* CTA Buttons */
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .cta-buttons .btn {
+            flex: 1;
+            min-width: 150px;
+            text-align: center;
+            padding: 1rem 2rem;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-secondary:hover {
+            background: var(--primary-color);
+            color: var(--white);
+        }
+        
+        /* Product Tabs */
+        .product-tabs {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 1rem;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-light);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1rem 0;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* Specifications Table */
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .specs-table tr {
+            border-bottom: 1px solid #eee;
+        }
+        
+        .specs-table th,
+        .specs-table td {
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        .specs-table th {
+            width: 40%;
+            color: var(--text-light);
+            font-weight: normal;
+        }
+        
+        .specs-table td {
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+        
+        /* Related Products */
+        .related-products {
+            background: var(--bg-light);
+            padding: 4rem 1rem;
+        }
+        
+        .related-products h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .related-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        /* Navigation between products */
+        .product-nav {
+            background: var(--bg-light);
+            padding: 1rem;
+            margin-top: 7.5rem;
+        }
+        
+        .product-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .product-nav-link {
+            padding: 0.75rem 1.5rem;
+            background: var(--white);
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .product-nav-link:hover,
+        .product-nav-link.active {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+    </style>
+
+
+<section id="dynamic-product">
+  <header class="product-hero">
+      <h1 data-aos="fade-up">${product.name.toUpperCase()}</h1>
+      <p class="tagline" data-aos="fade-up" data-aos-delay="100">"${product.shortDescription || 'Premium quality product'}"</p>
+  </header>
+
+  <div class="product-detail-section">
+      <div class="product-detail-container">
+          <!-- Product Gallery -->
+          <div class="product-gallery" data-aos="fade-right">
+              <img src="${mainImage}" alt="${product.name}" class="product-main-image" id="main-image" />
+              ${thumbnails ? `<div class="product-thumbnails">${thumbnails}</div>` : ''}
+          </div>
+
+          <!-- Product Info -->
+          <div class="product-info" data-aos="fade-left">
+              <h2>${product.name}</h2>
+              ${product.shortDescription ? `<p class="tagline">"${product.shortDescription}"</p>` : ''}
+              
+              <p class="description">${product.description || 'Premium quality product from MANKEFOR.'}</p>
+
+              ${featuresList}
+
+              ${sizeButtons ? `
+              <div class="size-options">
+                  <h4>Available Sizes:</h4>
+                  <div class="size-buttons">
+                      ${sizeButtons}
+                  </div>
+              </div>
+              ` : ''}
+
+              <div class="price-display">
+                  <p class="price-label">Price</p>
+                  <p class="price-value" id="selected-price">${defaultPrice} FCFA</p>
+                  <p class="price-note">Prices may vary for bulk orders. Contact us for wholesale pricing.</p>
+              </div>
+
+              <div class="cta-buttons">
+                  <a href="cart.html?add=${product.id}" class="btn">Add to Cart</a>
+                  <a href="https://wa.me/237651586004" class="btn btn-secondary">
+                      <i class="fa fa-whatsapp"></i> WhatsApp
+                  </a>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Product Tabs -->
+  <div class="product-tabs">
+      <div class="tab-buttons">
+          <button class="tab-btn active" data-tab="details-dynamic">Details</button>
+          <button class="tab-btn" data-tab="specs-dynamic">Specifications</button>
+          <button class="tab-btn" data-tab="reviews-dynamic">Reviews</button>
+      </div>
+
+      <div class="tab-content active" id="details-dynamic">
+          <h3>Product Details</h3>
+          <p>${product.description || 'Premium quality product from MANKEFOR.'}</p>
+      </div>
+
+      <div class="tab-content" id="specs-dynamic">
+          <h3>Specifications</h3>
+          <table class="specs-table">
+              <tr>
+                  <th>Product Type</th>
+                  <td>${product.category || 'Cleaning Product'}</td>
+              </tr>
+              <tr>
+                  <th>Brand</th>
+                  <td>MANKEFOR PRECIOUS</td>
+              </tr>
+              ${product.stock !== undefined ? `
+              <tr>
+                  <th>Availability</th>
+                  <td>${product.stock > 0 ? `In Stock (${product.stock} units)` : 'Out of Stock'}</td>
+              </tr>
+              ` : ''}
+              <tr>
+                  <th>Made In</th>
+                  <td>Cameroon</td>
+              </tr>
+          </table>
+      </div>
+
+      <div class="tab-content" id="reviews-dynamic">
+          <div id="reviews-container">
+              <p>Loading reviews...</p>
+          </div>
+          
+          ${API.isAuthenticated() ? `
+          <div class="review-form" style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px;">
+              <h3>Write a Review</h3>
+              <form id="review-form" onsubmit="submitReview(event)">
+                  <div style="margin-bottom: 1rem;">
+                      <label>Rating:</label>
+                      <select id="review-rating" required style="padding: 0.5rem; margin-left: 0.5rem;">
+                          <option value="5">⭐⭐⭐⭐⭐ Excellent</option>
+                          <option value="4">⭐⭐⭐⭐ Very Good</option>
+                          <option value="3">⭐⭐⭐ Good</option>
+                          <option value="2">⭐⭐ Fair</option>
+                          <option value="1">⭐ Poor</option>
+                      </select>
+                  </div>
+                  <div style="margin-bottom: 1rem;">
+                      <textarea id="review-comment" placeholder="Share your experience..." required 
+                          style="width: 100%; padding: 0.75rem; border: 1px solid #ddd; border-radius: 4px; min-height: 100px;"></textarea>
+                  </div>
+                  <button type="submit" class="btn">Submit Review</button>
+              </form>
+          </div>
+          ` : `
+          <p style="margin-top: 2rem; padding: 1rem; background: #f0f0f0; border-radius: 4px;">
+              <a href="login.html">Login</a> to write a review.
+          </p>
+          `}
+      </div>
+  </div>
+</section>

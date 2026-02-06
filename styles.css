@@ -436,7 +436,38 @@ p {
 }
 
 .grid-3 {
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+.products-flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 1.5rem;
+}
+
+.products-flex > * {
+  flex: 0 1 calc((100% - 4.5rem) / 4);
+  min-width: 200px;
+}
+
+@media (max-width: 1200px) {
+  .products-flex > * {
+    flex: 0 1 calc((100% - 3rem) / 3);
+  }
+}
+
+@media (max-width: 768px) {
+  .products-flex > * {
+    flex: 0 1 calc((100% - 1.5rem) / 2);
+  }
+}
+
+@media (max-width: 480px) {
+  .products-flex > * {
+    flex: 0 1 100%;
+  }
 }
 
 .grid-4 {
@@ -562,48 +593,76 @@ p {
   line-height: 1.8;
 }
 
-/* Product Cards */
+/* Product Cards - Compact Portrait Style */
 .product-card {
   background: var(--white);
   border: 1px solid #eee;
   border-radius: var(--border-radius);
-  padding: 1.5rem;
+  padding: 1rem;
   transition: var(--transition);
   text-align: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .product-card:hover {
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-3px);
   border-color: var(--primary-color);
 }
 
 .product-card img {
   width: 100%;
-  height: 250px;
+  height: 180px;
   object-fit: cover;
   border-radius: var(--border-radius);
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .product-card h3 {
   color: var(--text-dark);
-  font-size: 1.3rem;
+  font-size: 1rem;
   margin-bottom: 0.5rem;
+  line-height: 1.3;
+  min-height: 2.6rem;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .product-card p {
   color: var(--text-light);
-  margin-bottom: 1rem;
-  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  flex-grow: 1;
 }
 
 .product-card .price {
   color: var(--primary-color);
-  font-size: 1.3rem;
+  font-size: 1.1rem;
   font-weight: bold;
-  margin: 1rem 0;
+  margin: 0.5rem 0;
+}
+
+.product-card .card-buttons {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.product-card .card-buttons .btn {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.85rem;
+  min-width: 100px;
+  white-space: nowrap;
 }
 
 /* Enhanced Tiles */

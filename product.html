@@ -683,7 +683,10 @@
             // Load products from API
             async function loadProducts(page = 1, category = null) {
                 try {
+                    // limit = 50;
                     const params = { page, limit };
+                    // return;
+                    console.log('Attempting to load products from API...');
                     
                     const response = category 
                         ? await API.getProductsByCategory(category, params)
@@ -691,7 +694,8 @@
                     
                     const { products, pagination } = response.data;
                     
-                    console.log('Products loaded:', products);
+                    console.log('✅ Products loaded from API:', products.length, 'products');
+                    console.log('First product:', products[0]); // Debug: Check first product structure
                     
                     // Update pagination state
                     currentPage = pagination.page;
@@ -704,14 +708,41 @@
                     updatePagination(pagination);
                     
                 } catch (error) {
-                    console.error('Error loading products:', error);
-                    // Fallback: keep static products
+                    console.error('❌ Error loading products from API:', error);
+                    console.warn('⚠️ Showing static fallback products. Static products do not have IDs and cannot open detail pages.');
+                    console.warn('⚠️ Please ensure your backend server is running on: http://localhost:3000');
+                    console.info('💡 Once the backend is running, refresh this page to load products with clickable details.');
+                    
+                    // Show warning banner
+                    showAPIWarningBanner();
+                    
+                    // Fallback: keep static products visible
                     document.getElementById('products-container').style.display = 'none';
+                }
+            }
+
+            function showAPIWarningBanner() {
+                const container = document.querySelector('main.content-section .container');
+                if (container) {
+                    const banner = document.createElement('div');
+                    banner.style.cssText = 'background: #fff3cd; border: 2px solid #ffc107; border-radius: 8px; padding: 1.5rem; margin-bottom: 2rem; text-align: center;';
+                    banner.innerHTML = `
+                        <h3 style="color: #856404; margin: 0 0 0.5rem 0;">⚠️ Backend Not Connected</h3>
+                        <p style="color: #856404; margin: 0 0 1rem 0;">
+                            Products are showing in preview mode. Start your backend server to enable full functionality.
+                        </p>
+                        <p style="color: #856404; margin: 0; font-size: 0.9rem;">
+                            <strong>Note:</strong> "View More" buttons will not work until the backend is running.
+                        </p>
+                    `;
+                    container.insertBefore(banner, container.firstChild);
                 }
             }
 
             function renderProducts(products) {
                 const container = document.getElementById('products-container');
+                
+                console.log('Rendering', products.length, 'products into dynamic container');
                 
                 if (products.length === 0) {
                     container.innerHTML = '<p class="text-center">No products found.</p>';
@@ -734,7 +765,7 @@
                     html += `
                         <section class="mb-4">
                             <h2 class="text-center mb-3" data-aos="fade-up">${category}</h2>
-                            <div class="grid grid-3">
+                            <div class="products-flex">
                     `;
                     
                     items.forEach(product => {
@@ -750,29 +781,50 @@
                 container.innerHTML = html;
                 container.style.display = 'block';
                 
+                console.log('✅ Dynamic products container is now visible');
+                
                 // Hide static products when API loads successfully
                 const staticSections = document.querySelectorAll('main.content-section > .container > section.mb-4');
+                console.log('Found', staticSections.length, 'static sections to hide');
+                
+                let hiddenCount = 0;
                 staticSections.forEach(section => {
                     if (!section.closest('#products-container')) {
                         section.style.display = 'none';
+                        hiddenCount++;
                     }
                 });
+                
+                console.log('✅ Hidden', hiddenCount, 'static product sections');
             }
 
             function createProductCard(product) {
-                const image = product.images && product.images[0] ? product.images[0] : '/images/default-product.png';
+                // Handle image objects or strings
+                const rawImage = product.images && product.images[0] ? product.images[0] : '/images/default-product.png';
+                const image = typeof rawImage === 'string' ? rawImage : (rawImage.url || '/images/default-product.png');
+                
                 const price = product.price || 'Contact for price';
                 const description = product.shortDescription || product.description || 'Premium quality product';
                 
+                // Handle both MongoDB _id and regular id
+                const productId = product.id || product._id;
+                
+                // Debug logging
+                console.log('Creating card for product:', product.name, 'ID:', productId, 'Image:', image);
+                
+                if (!productId) {
+                    console.error('⚠️ Product missing ID:', product);
+                }
+                
                 return `
-                    <div class="product-card card">
+                    <div class="product-card">
                         <img src="${image}" alt="${product.name}" />
                         <h3>${product.name}</h3>
                         <p>${description}</p>
                         <div class="price">${price} FCFA</div>
                         <div class="card-buttons">
-                            <a href="product-details.html?id=${product.id}" class="btn btn-secondary">View Details</a>
-                            <a href="cart.html?add=${product.id}" class="btn btn-primary">Add to Cart</a>
+                            <a href="product-details.html?id=${productId}" class="btn btn-secondary">View Details</a>
+                            <a href="cart.html?add=${productId}" class="btn btn-primary">Add to Cart</a>
                         </div>
                     </div>
                 `;

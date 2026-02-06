@@ -543,10 +543,11 @@
       // Load Featured Products
       async function loadFeaturedProducts() {
         try {
+          console.log('Loading featured products from API...');
           const response = await API.getFeaturedProducts();
           const products = response.data.products;
           
-          console.log('Featured products loaded:', products);
+          console.log('✅ Featured products loaded:', products.length, 'products');
           
           // Update the 3 product cards with API data
           const productCards = document.querySelectorAll('.product-card');
@@ -558,12 +559,16 @@
           });
           
         } catch (error) {
-          console.error('Error loading featured products:', error);
+          console.error('❌ Error loading featured products:', error);
+          console.warn('⚠️ Showing static fallback products. Start backend on http://localhost:3000 for full functionality.');
           // Fallback: keep static products (no action needed)
         }
       }
 
       function updateProductCard(card, product) {
+        // Handle both MongoDB _id and regular id
+        const productId = product.id || product._id;
+        
         // Update image
         const img = card.querySelector('img');
         if (img && product.images && product.images[0]) {
@@ -594,9 +599,9 @@
         links.forEach(link => {
           const isAddToCart = link.textContent.includes('Add to Cart');
           if (isAddToCart) {
-            link.href = `cart.html?add=${product.id}`;
+            link.href = `cart.html?add=${productId}`;
           } else {
-            link.href = `product-details.html?id=${product.id}`;
+            link.href = `product-details.html?id=${productId}`;
           }
         });
       }

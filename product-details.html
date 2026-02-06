@@ -21,25 +21,26 @@
         .product-hero {
             background: linear-gradient(135deg, var(--secondary-color), #613d2069, var(--secondary-color));
             padding: 2rem 1rem;
-            margin-top: 7.5rem;
             text-align: center;
         }
         
         .product-hero h1 {
             font-size: clamp(1.8rem, 4vw, 2.5rem);
             margin-bottom: 0.5rem;
+            color: #2c3e50 !important;
+            font-weight: bold;
         }
         
         .product-hero .tagline {
             font-style: italic;
-            color: var(--text-dark);
+            color: #2c3e50 !important;
             font-size: 1.1rem;
         }
         
         /* Product Detail Section */
         .product-detail-section {
             padding: 3rem 1rem;
-            background: var(--white);
+            background: #ffffff;
         }
         
         .product-detail-container {
@@ -102,8 +103,9 @@
         
         .product-info h2 {
             font-size: clamp(1.5rem, 4vw, 2rem);
-            color: var(--text-dark);
+            color: #2c3e50 !important;
             margin-bottom: 1rem;
+            font-weight: bold;
         }
         
         .product-info .tagline {
@@ -114,7 +116,7 @@
         }
         
         .product-info .description {
-            color: var(--text-light);
+            color: #555555 !important;
             line-height: 1.8;
             margin-bottom: 1.5rem;
         }
@@ -129,7 +131,7 @@
             padding: 0.75rem 0;
             padding-left: 2rem;
             position: relative;
-            color: var(--text-dark);
+            color: #2c3e50 !important;
             border-bottom: 1px solid #eee;
         }
         
@@ -152,7 +154,7 @@
         
         .price-label {
             font-size: 0.9rem;
-            color: var(--text-light);
+            color: #666666 !important;
             margin-bottom: 0.5rem;
         }
         
@@ -164,7 +166,7 @@
         
         .price-note {
             font-size: 0.85rem;
-            color: var(--text-light);
+            color: #666666 !important;
             margin-top: 0.5rem;
         }
         
@@ -175,7 +177,7 @@
         
         .size-options h4 {
             margin-bottom: 1rem;
-            color: var(--text-dark);
+            color: #2c3e50 !important;
         }
         
         .size-buttons {
@@ -419,128 +421,13 @@
         </div>
     </nav>
 
-    <!-- ============================================
-         PRODUCT 1: PRECIOUS LIQUID SOAP
-         ============================================ -->
-    <section id="liquid-soap">
-        <header class="product-hero">
-            <h1 data-aos="fade-up">PRECIOUS LIQUID SOAP</h1>
-            <p class="tagline" data-aos="fade-up" data-aos-delay="100">"Gentle on hands, tough on dirt"</p>
-        </header>
-
-        <div class="product-detail-section">
-            <div class="product-detail-container">
-                <!-- Product Gallery -->
-                <div class="product-gallery" data-aos="fade-right">
-                    <img src="/images/liquid1.webp" alt="Precious Liquid Soap" class="product-main-image" />
-                    <div class="product-thumbnails">
-                        <img src="/images/500.png" alt="500ml bottle" class="product-thumbnail active" />
-                        <img src="/images/1000.png" alt="1L bottle" class="product-thumbnail" />
-                        <img src="/images/5000.png" alt="5L container" class="product-thumbnail" />
-                    </div>
-                </div>
-
-                <!-- Product Info -->
-                <div class="product-info" data-aos="fade-left">
-                    <h2>Precious Liquid Soap</h2>
-                    <p class="tagline">"Gentle on hands, tough on dirt"</p>
-                    
-                    <p class="description">
-                        This powerful yet skin-friendly soap is perfect for daily cleaning—whether in the kitchen, 
-                        bathroom, or laundry. Our formula is designed to provide effective cleaning while being 
-                        gentle on your skin and fabrics.
-                    </p>
-
-                    <ul class="features-list">
-                        <li>Antibacterial formula for deep cleaning</li>
-                        <li>Long-lasting fresh scent</li>
-                        <li>Gentle on hands and fabrics</li>
-                        <li>Ideal for home and commercial use</li>
-                        <li>Biodegradable and eco-friendly</li>
-                    </ul>
-
-                    <div class="size-options">
-                        <h4>Available Sizes:</h4>
-                        <div class="size-buttons">
-                            <button class="size-btn" data-price="500">500ml - 500 FCFA</button>
-                            <button class="size-btn active" data-price="1000">1L - 1,000 FCFA</button>
-                            <button class="size-btn" data-price="5000">5L - 5,000 FCFA</button>
-                        </div>
-                    </div>
-
-                    <div class="price-display">
-                        <p class="price-label">Price</p>
-                        <p class="price-value">1,000 FCFA</p>
-                        <p class="price-note">Prices may vary for bulk orders. Contact us for wholesale pricing.</p>
-                    </div>
-
-                    <div class="cta-buttons">
-                        <a href="contact.html" class="btn">Add to Cart</a>
-                        <a href="contact.html" class="btn btn-secondary">
-                            <i class="fa fa-whatsapp"></i> WhatsApp
-                        </a>
-                    </div>
-                </div>
-            </div>
+    <!-- Dynamic Product Container (loads ONE product based on URL ?id=) -->
+    <div id="product-container" style="margin-top: 7.5rem; min-height: 400px; width: 100%; position: relative; z-index: 1;">
+        <!-- Product will be dynamically loaded here -->
+        <div style="text-align: center; padding: 4rem 1rem;">
+            <h2 style="color: var(--text-dark);">Loading product...</h2>
         </div>
-
-        <!-- Product Tabs -->
-        <div class="product-tabs">
-            <div class="tab-buttons">
-                <button class="tab-btn active" data-tab="details-1">Details</button>
-                <button class="tab-btn" data-tab="specs-1">Specifications</button>
-                <button class="tab-btn" data-tab="usage-1">How to Use</button>
-            </div>
-
-            <div class="tab-content active" id="details-1">
-                <h3>Product Details</h3>
-                <p>Precious Liquid Soap is formulated with a unique blend of cleaning agents that effectively 
-                   remove dirt, grease, and stains while being gentle on your skin. Perfect for everyday use 
-                   in households, offices, and commercial establishments.</p>
-                <p>Our liquid soap produces rich, long-lasting foam that provides excellent cleaning power 
-                   with less product usage, making it economical and efficient.</p>
-            </div>
-
-            <div class="tab-content" id="specs-1">
-                <table class="specs-table">
-                    <tr>
-                        <th>Product Type</th>
-                        <td>Liquid Soap</td>
-                    </tr>
-                    <tr>
-                        <th>Available Sizes</th>
-                        <td>500ml, 1L, 5L</td>
-                    </tr>
-                    <tr>
-                        <th>Scent</th>
-                        <td>Fresh Floral</td>
-                    </tr>
-                    <tr>
-                        <th>pH Level</th>
-                        <td>Neutral (7.0)</td>
-                    </tr>
-                    <tr>
-                        <th>Shelf Life</th>
-                        <td>24 months</td>
-                    </tr>
-                    <tr>
-                        <th>Made In</th>
-                        <td>Cameroon</td>
-                    </tr>
-                </table>
-            </div>
-
-            <div class="tab-content" id="usage-1">
-                <h3>How to Use</h3>
-                <ol style="padding-left: 1.5rem; line-height: 2;">
-                    <li>For hand washing: Apply a small amount to wet hands and lather well.</li>
-                    <li>For dishes: Add a few drops to warm water and wash as usual.</li>
-                    <li>For laundry: Use 50ml per load for hand washing or machine washing.</li>
-                    <li>Rinse thoroughly with clean water.</li>
-                </ol>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <!-- Call to Action -->
     <section class="section-hero" style="margin-top: 0;">
@@ -621,22 +508,31 @@
         // Get product ID from URL
         function getProductIdFromURL() {
             const urlParams = new URLSearchParams(window.location.search);
-            return urlParams.get('id');
+            const productId = urlParams.get('id');
+            console.log('Current URL:', window.location.href);
+            console.log('URL search params:', window.location.search);
+            console.log('Extracted product ID:', productId);
+            return productId;
         }
 
         // Load product details from API
         async function loadProductDetails() {
             const productId = getProductIdFromURL();
             
+            console.log('Loading product details for ID:', productId);
+            
             if (!productId) {
-                console.log('No product ID in URL, showing static products');
+                console.warn('No product ID found in URL');
+                showNoProductMessage();
                 return;
             }
 
             try {
+                console.log('Calling API.getProduct with ID:', productId);
                 const response = await API.getProduct(productId);
-                const product = response.data.product;
+                console.log('API response:', response);
                 
+                const product = response.data.product;
                 console.log('Product details loaded:', product);
                 
                 // Render product details
@@ -647,83 +543,108 @@
                 
             } catch (error) {
                 console.error('Error loading product details:', error);
-                alert('Product not found. Redirecting to products page...');
-                window.location.href = 'product.html';
+                showErrorMessage();
             }
+        }
+
+        function showNoProductMessage() {
+            const container = document.getElementById('product-container');
+            container.innerHTML = `
+                <div style="text-align: center; padding: 4rem 1rem;">
+                    <h2>No Product Selected</h2>
+                    <p style="margin: 1rem 0;">Please select a product to view its details.</p>
+                    <a href="product.html" class="btn">View All Products</a>
+                </div>
+            `;
+        }
+
+        function showErrorMessage() {
+            const container = document.getElementById('product-container');
+            container.innerHTML = `
+                <div style="text-align: center; padding: 4rem 1rem;">
+                    <h2>Product Not Found</h2>
+                    <p style="margin: 1rem 0;">The product you're looking for doesn't exist or has been removed.</p>
+                    <a href="product.html" class="btn">View All Products</a>
+                </div>
+            `;
         }
 
         function renderProductDetails(product) {
             // Update page title
             document.title = `${product.name} - MANKEFOR COSMETIC PRODUCTION`;
+            // Create product HTML
+            const productHTML = createProductSection(product);
             
-            // Hide all static product sections
-            document.querySelectorAll('section[id^="liquid-soap"], section[id^="essence"], section[id^="bath-glow"], section[id^="power-wash"], section[id^="pure-bleach"]').forEach(section => {
-                section.style.display = 'none';
-            });
+            // Insert into container
+            const container = document.getElementById('product-container');
+            if (!container) {
+                console.error('Product container not found!');
+                return;
+            }
             
-            // Create dynamic product section
-            const dynamicSection = createProductSection(product);
-            
-            // Insert after product nav
-            const productNav = document.querySelector('.product-nav');
-            productNav.insertAdjacentHTML('afterend', dynamicSection);
-            
+            console.log('Container found, inserting HTML...');
+            container.innerHTML = productHTML;
+            console.log('HTML inserted. Container children:', container.children.length);
+            return;
+
             // Re-initialize AOS for new elements
-            AOS.refresh();
-            
-            // Setup image gallery
+            AOS.refresh();            
+            // Setup interactive elements
             setupImageGallery();
-            
-            // Setup size selection
             setupSizeSelection();
+            setupTabs();
         }
 
         function createProductSection(product) {
-            const images = product.images || ['/images/default-product.png'];
+            // Handle image objects (extract url property from image objects)
+            const rawImages = product.images || [{url: '/images/default-product.png'}];
+            const images = rawImages.map(img => typeof img === 'string' ? img : img.url);
             const mainImage = images[0];
             const thumbnails = images.slice(0, 4).map((img, index) => 
-                `<img src="${img}" alt="${product.name}" class="product-thumbnail ${index === 0 ? 'active' : ''}" data-full="${img}" />`
+                `<img src="${img}" alt="${product.name}" class="product-thumbnail ${index === 0 ? 'active' : ''}" data-full="${img}" onclick="changeMainImage('${img}')" />`
             ).join('');
 
             const features = product.features || [];
-            const featuresList = features.map(f => `<li>${f}</li>`).join('');
+            const featuresList = features.length > 0 
+                ? `<ul class="features-list">${features.map(f => {
+                    // Handle if feature is an object or string
+                    const featureText = typeof f === 'string' ? f : (f.description || f.name || f.title || '');
+                    return `<li>${featureText}</li>`;
+                }).join('')}</ul>` 
+                : '';
 
-            const sizes = product.variants || [{ size: 'Standard', price: product.price }];
-            const sizeButtons = sizes.map((variant, index) => 
-                `<button class="size-btn ${index === 0 ? 'active' : ''}" data-price="${variant.price}">${variant.size} - ${variant.price} FCFA</button>`
-            ).join('');
+            const sizes = product.variants || (product.price ? [{ size: 'Standard', price: product.price }] : []);
+            const sizeButtons = sizes.length > 0 
+                ? sizes.map((variant, index) => 
+                    `<button class="size-btn ${index === 0 ? 'active' : ''}" data-price="${variant.price}">${variant.size} - ${variant.price} FCFA</button>`
+                  ).join('')
+                : '';
 
-            const defaultPrice = sizes[0]?.price || product.price || 'Contact for price';
+            const defaultPrice = sizes.length > 0 ? sizes[0].price : (product.price || 'Contact for price');
 
             return `
                 <section id="dynamic-product">
                     <header class="product-hero">
-                        <h1 data-aos="fade-up">${product.name.toUpperCase()}</h1>
-                        <p class="tagline" data-aos="fade-up" data-aos-delay="100">"${product.shortDescription || 'Premium quality product'}"</p>
+                        <h1>${product.name.toUpperCase()}</h1>
+                        <p class="tagline">"${product.shortDescription || 'Premium quality product'}"</p>
                     </header>
 
                     <div class="product-detail-section">
                         <div class="product-detail-container">
                             <!-- Product Gallery -->
-                            <div class="product-gallery" data-aos="fade-right">
+                            <div class="product-gallery">
                                 <img src="${mainImage}" alt="${product.name}" class="product-main-image" id="main-image" />
-                                <div class="product-thumbnails">
-                                    ${thumbnails}
-                                </div>
+                                ${thumbnails ? `<div class="product-thumbnails">${thumbnails}</div>` : ''}
                             </div>
 
                             <!-- Product Info -->
-                            <div class="product-info" data-aos="fade-left">
+                            <div class="product-info">
                                 <h2>${product.name}</h2>
-                                <p class="tagline">"${product.shortDescription || ''}"</p>
+                                ${product.shortDescription ? `<p class="tagline">"${product.shortDescription}"</p>` : ''}
                                 
-                                <p class="description">${product.description || ''}</p>
+                                <p class="description">${product.description || 'Premium quality product from MANKEFOR.'}</p>
 
-                                ${featuresList ? `
-                                <ul class="features-list">
-                                    ${featuresList}
-                                </ul>
-                                ` : ''}
+                                ${featuresList}
 
                                 ${sizeButtons ? `
                                 <div class="size-options">
@@ -742,7 +663,7 @@
 
                                 <div class="cta-buttons">
                                     <a href="cart.html?add=${product.id}" class="btn">Add to Cart</a>
-                                    <a href="contact.html" class="btn btn-secondary">
+                                    <a href="https://wa.me/237651586004" class="btn btn-secondary">
                                         <i class="fa fa-whatsapp"></i> WhatsApp
                                     </a>
                                 </div>
@@ -764,6 +685,7 @@
                         </div>
 
                         <div class="tab-content" id="specs-dynamic">
+                            <h3>Specifications</h3>
                             <table class="specs-table">
                                 <tr>
                                     <th>Product Type</th>
@@ -773,12 +695,16 @@
                                     <th>Brand</th>
                                     <td>MANKEFOR PRECIOUS</td>
                                 </tr>
-                                ${product.stock ? `
+                                ${product.stock !== undefined ? `
                                 <tr>
                                     <th>Availability</th>
-                                    <td>${product.stock > 0 ? 'In Stock' : 'Out of Stock'}</td>
+                                    <td>${product.stock > 0 ? `In Stock (${product.stock} units)` : 'Out of Stock'}</td>
                                 </tr>
                                 ` : ''}
+                                <tr>
+                                    <th>Made In</th>
+                                    <td>Cameroon</td>
+                                </tr>
                             </table>
                         </div>
 
@@ -790,7 +716,7 @@
                             ${API.isAuthenticated() ? `
                             <div class="review-form" style="margin-top: 2rem; padding: 1.5rem; background: #f9f9f9; border-radius: 8px;">
                                 <h3>Write a Review</h3>
-                                <form id="review-form">
+                                <form id="review-form" onsubmit="submitReview(event)">
                                     <div style="margin-bottom: 1rem;">
                                         <label>Rating:</label>
                                         <select id="review-rating" required style="padding: 0.5rem; margin-left: 0.5rem;">
@@ -829,12 +755,16 @@
                 
             } catch (error) {
                 console.error('Error loading reviews:', error);
-                document.getElementById('reviews-container').innerHTML = '<p>No reviews yet. Be the first to review this product!</p>';
+                const container = document.getElementById('reviews-container');
+                if (container) {
+                    container.innerHTML = '<p>No reviews yet. Be the first to review this product!</p>';
+                }
             }
         }
 
         function renderReviews(reviews) {
             const container = document.getElementById('reviews-container');
+            if (!container) return;
             
             if (reviews.length === 0) {
                 container.innerHTML = '<p>No reviews yet. Be the first to review this product!</p>';
@@ -859,17 +789,28 @@
             container.innerHTML = reviewsHTML;
         }
 
+        // Change main image when clicking thumbnails
+        function changeMainImage(imageSrc) {
+            const mainImage = document.getElementById('main-image');
+            if (mainImage) {
+                mainImage.src = imageSrc;
+            }
+            
+            // Update active thumbnail
+            document.querySelectorAll('.product-thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+                if (thumb.getAttribute('data-full') === imageSrc || thumb.src === imageSrc) {
+                    thumb.classList.add('active');
+                }
+            });
+        }
+
         // Setup image gallery click handlers
         function setupImageGallery() {
             document.querySelectorAll('.product-thumbnail').forEach(thumb => {
                 thumb.addEventListener('click', function() {
-                    const mainImage = document.getElementById('main-image');
                     const fullImageSrc = this.getAttribute('data-full') || this.src;
-                    
-                    mainImage.src = fullImageSrc;
-                    
-                    document.querySelectorAll('.product-thumbnail').forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
+                    changeMainImage(fullImageSrc);
                 });
             });
         }
@@ -891,69 +832,50 @@
             });
         }
 
+        // Setup tab functionality
+        function setupTabs() {
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    const section = this.closest('.product-tabs');
+                    
+                    // Update buttons
+                    section.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update content
+                    section.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                    const targetTab = document.getElementById(tabId);
+                    if (targetTab) {
+                        targetTab.classList.add('active');
+                    }
+                });
+            });
+        }
+
         // Handle review submission
-        document.addEventListener('submit', async function(e) {
-            if (e.target.id === 'review-form') {
-                e.preventDefault();
+        async function submitReview(event) {
+            event.preventDefault();
+            
+            const productId = getProductIdFromURL();
+            const rating = parseInt(document.getElementById('review-rating').value);
+            const comment = document.getElementById('review-comment').value;
+            
+            try {
+                await API.addProductReview(productId, { rating, comment });
+                alert('Review submitted successfully!');
                 
-                const productId = getProductIdFromURL();
-                const rating = parseInt(document.getElementById('review-rating').value);
-                const comment = document.getElementById('review-comment').value;
+                // Reload reviews
+                loadProductReviews(productId);
                 
-                try {
-                    await API.addProductReview(productId, { rating, comment });
-                    alert('Review submitted successfully!');
-                    
-                    // Reload reviews
-                    loadProductReviews(productId);
-                    
-                    // Clear form
-                    e.target.reset();
-                    
-                } catch (error) {
-                    console.error('Error submitting review:', error);
-                    alert(error.message || 'Failed to submit review. Please try again.');
-                }
+                // Clear form
+                document.getElementById('review-form').reset();
+                
+            } catch (error) {
+                console.error('Error submitting review:', error);
+                alert(error.message || 'Failed to submit review. Please try again.');
             }
-        });
-
-        // Tab functionality
-        document.addEventListener('click', function(e) {
-            if (e.target.classList.contains('tab-btn')) {
-                const tabId = e.target.getAttribute('data-tab');
-                const section = e.target.closest('section') || e.target.closest('.product-tabs').parentElement;
-                
-                // Update buttons
-                section.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                
-                // Update content
-                section.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-                const targetTab = document.getElementById(tabId);
-                if (targetTab) {
-                    targetTab.classList.add('active');
-                }
-            }
-        });
-
-        // Product nav highlighting
-        document.querySelectorAll('.product-nav-link').forEach(link => {
-            link.addEventListener('click', function() {
-                document.querySelectorAll('.product-nav-link').forEach(l => l.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
-
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
+        }
 
         // Load product details on page load
         document.addEventListener('DOMContentLoaded', function() {

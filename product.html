@@ -27,14 +27,14 @@
         <link rel="stylesheet" href="styles.css" />
 
         <!-- Favicon -->
-        <link rel="icon" type="image/png" href="/images/prelogo.png" />
+        <link rel="icon" type="image/png" href="/images/logo-mankefor.png" />
     </head>
     <body>
         <!-- Navigation -->
         <nav class="navbar" id="navbar">
         <div class="navbar-brand">
             <div class="logo">
-            <img src="/images/prelogo.png" alt="Mankefor Logo" />
+            <img src="/images/logo-mankefor.png" alt="Mankefor Logo" />
             </div>
             <div class="brand-text">
             <p class="brand-name">
@@ -667,6 +667,7 @@
         <!-- Scripts - AOS Animation Library Only -->
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script src="api.js"></script>
+        <script src="cart-manager.js"></script>
         <script src="navbar-auth.js"></script>
         <script>
             AOS.init({ duration: 800, once: true });
@@ -674,6 +675,32 @@
                 document.getElementById('nav-menu').classList.toggle('active');
                 this.classList.toggle('active');
             });
+
+            // Global function to add product to cart from product cards
+            function addToCart(product) {
+                console.log('🛒 addToCart() called with product:', product);
+                
+                if (!product) {
+                    console.error('❌ No product provided');
+                    alert('Product information missing');
+                    return;
+                }
+                
+                try {
+                    // Add to cart with default quantity 1 and Standard size
+                    CartManager.addItem(product, 1, { size: 'Standard', price: product.price });
+                    console.log('✅ Product added to cart');
+                    
+                    // Show success message
+                    alert(`✓ Added to cart:\n${product.name}\n\nView cart or continue shopping`);
+                    
+                    // Optional: redirect to cart
+                    // window.location.href = 'cart.html';
+                } catch (error) {
+                    console.error('❌ Error adding to cart:', error);
+                    alert('Failed to add item to cart. Please try again.');
+                }
+            }
 
             // Product loading state
             let currentPage = 1;
@@ -742,8 +769,6 @@
             function renderProducts(products) {
                 const container = document.getElementById('products-container');
                 
-                console.log('Rendering', products.length, 'products into dynamic container');
-                
                 if (products.length === 0) {
                     container.innerHTML = '<p class="text-center">No products found.</p>';
                     return;
@@ -781,11 +806,8 @@
                 container.innerHTML = html;
                 container.style.display = 'block';
                 
-                console.log('✅ Dynamic products container is now visible');
-                
                 // Hide static products when API loads successfully
                 const staticSections = document.querySelectorAll('main.content-section > .container > section.mb-4');
-                console.log('Found', staticSections.length, 'static sections to hide');
                 
                 let hiddenCount = 0;
                 staticSections.forEach(section => {
@@ -794,8 +816,6 @@
                         hiddenCount++;
                     }
                 });
-                
-                console.log('✅ Hidden', hiddenCount, 'static product sections');
             }
 
             function createProductCard(product) {
@@ -809,12 +829,15 @@
                 // Handle both MongoDB _id and regular id
                 const productId = product.id || product._id;
                 
-                // Debug logging
-                console.log('Creating card for product:', product.name, 'ID:', productId, 'Image:', image);
-                
-                if (!productId) {
-                    console.error('⚠️ Product missing ID:', product);
-                }
+                // Escape product data for onclick (encode as base64 to avoid quote issues)
+                const productJson = JSON.stringify({
+                    id: productId,
+                    name: product.name,
+                    price: price,
+                    images: [image],
+                    description: description
+                });
+                const productData = btoa(productJson); // base64 encode
                 
                 return `
                     <div class="product-card">
@@ -824,7 +847,7 @@
                         <div class="price">${price} FCFA</div>
                         <div class="card-buttons">
                             <a href="product-details.html?id=${productId}" class="btn btn-secondary">View Details</a>
-                            <a href="cart.html?add=${productId}" class="btn btn-primary">Add to Cart</a>
+                            <button class="btn btn-primary" onclick="addToCart(JSON.parse(atob('${productData}')))">Add to Cart</button>
                         </div>
                     </div>
                 `;

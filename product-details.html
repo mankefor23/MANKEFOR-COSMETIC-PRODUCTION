@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="styles.css" />
     
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/images/prelogo.png" />
+    <link rel="icon" type="image/png" href="/images/logo-mankefor.png" />
     
     <style>
         /* Product Details Page Specific Styles */
@@ -361,7 +361,7 @@
     <nav class="navbar" id="navbar">
       <div class="navbar-brand">
         <div class="logo">
-          <img src="/images/prelogo.png" alt="Mankefor Logo" />
+          <img src="/images/logo-mankefor.png" alt="Mankefor Logo" />
         </div>
         <div class="brand-text">
           <p class="brand-name">
@@ -494,8 +494,13 @@
     <!-- Scripts -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="api.js"></script>
+    <script src="cart-manager.js"></script>
     <script src="navbar-auth.js"></script>
     <script>
+        console.log('🔷 product-details.html script starting...');
+        console.log('🔷 CartManager available?', typeof CartManager);
+        console.log('🔷 API available?', typeof API);
+        
         // Initialize AOS animations
         AOS.init({ duration: 800, once: true });
         
@@ -504,6 +509,9 @@
             document.getElementById('nav-menu').classList.toggle('active');
             this.classList.toggle('active');
         });
+
+        // GLOBAL VARIABLE - Store current product for cart functionality
+        let currentProduct = null;
 
         // Get product ID from URL
         function getProductIdFromURL() {
@@ -570,8 +578,12 @@
         }
 
         function renderProductDetails(product) {
+            // Store product globally for cart functionality
+            currentProduct = product;
+            
             // Update page title
             document.title = `${product.name} - MANKEFOR COSMETIC PRODUCTION`;
+            
             // Create product HTML
             const productHTML = createProductSection(product);
             
@@ -585,7 +597,6 @@
             console.log('Container found, inserting HTML...');
             container.innerHTML = productHTML;
             console.log('HTML inserted. Container children:', container.children.length);
-            return;
 
             // Re-initialize AOS for new elements
             AOS.refresh();            
@@ -662,7 +673,7 @@
                                 </div>
 
                                 <div class="cta-buttons">
-                                    <a href="cart.html?add=${product.id}" class="btn">Add to Cart</a>
+                                    <button class="btn" onclick="addToCartFromDetails()">Add to Cart</button>
                                     <a href="https://wa.me/237651586004" class="btn btn-secondary">
                                         <i class="fa fa-whatsapp"></i> WhatsApp
                                     </a>
@@ -875,6 +886,55 @@
                 console.error('Error submitting review:', error);
                 alert(error.message || 'Failed to submit review. Please try again.');
             }
+        }
+
+        // Add to cart function (must be in global scope for onclick handler)
+        function addToCartFromDetails() {
+            console.log('🔵 addToCartFromDetails() - CLICKED!');
+            console.log('🔵 currentProduct:', currentProduct);
+            console.log('🔵 CartManager available?', typeof CartManager !== 'undefined');
+            
+            if (!currentProduct) {
+                console.error('❌ No product loaded!');
+                alert('Product information not loaded');
+                return;
+            }
+            
+            // Get selected size if any
+            console.log('🔵 Looking for selected size button...');
+            const selectedSizeBtn = document.querySelector('.size-btn.active');
+            console.log('🔵 Selected size button:', selectedSizeBtn);
+            let selectedSize = null;
+            
+            if (selectedSizeBtn) {
+                const price = selectedSizeBtn.getAttribute('data-price');
+                const sizeText = selectedSizeBtn.textContent;
+                const sizeName = sizeText.split(' - ')[0];
+                selectedSize = { size: sizeName, price: parseFloat(price) };
+                console.log('🔵 Selected size:', selectedSize);
+            } else {
+                console.log('🔵 No size selected - using default');
+            }
+            
+            // Add to cart
+            try {
+                console.log('🔵 Calling CartManager.addItem()...');
+                CartManager.addItem(currentProduct, 1, selectedSize);
+                console.log('✅ CartManager.addItem() completed successfully');
+                
+                // Show success message
+                const sizeName = selectedSize ? selectedSize.size : 'Standard';
+                alert(`✓ Added to cart:\n${currentProduct.name} (${sizeName})`);
+                
+                // Optional: Navigate to cart
+                // window.location.href = 'cart.html';
+            } catch (error) {
+                console.error('❌ Error in addToCartFromDetails:', error);
+                console.error('❌ Error stack:', error.stack);
+                alert('Failed to add item to cart. Please try again.');
+            }
+            
+            console.log('🔵 addToCartFromDetails() - END');
         }
 
         // Load product details on page load

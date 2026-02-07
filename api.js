@@ -465,6 +465,56 @@ async function getProductReviews(productId, params = {}) {
 }
 
 // ============================================
+// ORDERS
+// ============================================
+
+async function createOrder(orderData) {
+    try {
+        console.log('Creating order:', orderData);
+        const response = await fetchAPI('/api/orders', {
+            method: 'POST',
+            body: JSON.stringify(orderData)
+        });
+
+        console.log('Order created:', response);
+        return response;
+    } catch (error) {
+        console.error('Create order error:', error);
+        throw error;
+    }
+}
+
+async function getMyOrders() {
+    try {
+        console.log('Fetching user orders');
+        const response = await fetchAPI('/api/orders/my-orders', {
+            method: 'GET'
+        });
+
+        console.log('Orders fetched:', response);
+        return response;
+    } catch (error) {
+        console.error('Get orders error:', error);
+        throw error;
+    }
+}
+
+async function getOrderById(orderId) {
+    try {
+        console.log('Fetching order:', orderId);
+        const response = await fetchAPI(`/api/orders/${orderId}`, {
+            method: 'GET'
+        });
+
+        console.log('Order fetched:', response);
+        return response;
+    } catch (error) {
+        console.error('Get order error:', error);
+        throw error;
+    }
+}
+
+// ============================================
 // EXPORT API FUNCTIONS
 // ============================================
 
@@ -487,6 +537,11 @@ const API = {
     searchProducts,
     addProductReview,
     getProductReviews,
+    
+    // Orders endpoints
+    createOrder,
+    getMyOrders,
+    getOrderById,
     
     // Token management
     getToken,

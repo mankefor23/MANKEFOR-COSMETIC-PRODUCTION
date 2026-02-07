@@ -63,7 +63,6 @@ function updateNavbarUser() {
     if (API.isAuthenticated()) {
         // User is logged in - show avatar
         const user = API.getUser();
-        console.log('User is logged in:', user);
         const initials = getUserInitials(user?.name || 'User');
         const colorClass = getRandomAvatarColor();
 
@@ -71,15 +70,13 @@ function updateNavbarUser() {
             <div class="user-avatar ${colorClass}">${initials}</div>
         `;
         
-        // Update link to go to profile/dashboard instead of login
-        userLink.href = API.isAdmin() ? 'admin-dashboard.html' : '#';
+        // Always show dropdown menu for all logged-in users (including admins)
+        userLink.href = '#';
         
-        // Add dropdown menu for logged-in users
+        // Add dropdown menu for all logged-in users
         userLink.addEventListener('click', function(e) {
-            if (!API.isAdmin()) {
-                e.preventDefault();
-                showUserMenu(e);
-            }
+            e.preventDefault();
+            showUserMenu(e);
         });
     } else {
         // User is logged out - show outline icon
@@ -111,12 +108,25 @@ function showUserMenu(e) {
     // Create dropdown menu
     const menu = document.createElement('div');
     menu.className = 'user-dropdown-menu';
+    
+    // Build menu items based on user role
+    let menuItems = '';
+    if (API.isAdmin()) {
+        menuItems = `
+            <a href="admin-dashboard.html" class="user-dropdown-item">
+                <i class="fa fa-dashboard"></i> Admin Dashboard
+            </a>
+            <div class="user-dropdown-divider"></div>
+        `;
+    }
+    
     menu.innerHTML = `
         <div class="user-dropdown-header">
             <strong>${user?.name || 'User'}</strong>
             <small>${user?.email || ''}</small>
         </div>
         <div class="user-dropdown-divider"></div>
+        ${menuItems}
         <a href="#" class="user-dropdown-item" onclick="handleLogout(event)">
             <i class="fa fa-sign-out"></i> Logout
         </a>

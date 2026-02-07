@@ -27,14 +27,14 @@
         <link rel="stylesheet" href="styles.css" />
 
         <!-- Favicon -->
-        <link rel="icon" type="image/png" href="/images/prelogo.png" />
+        <link rel="icon" type="image/png" href="/images/logo-mankefor.png" />
     </head>
     <body>
         <!-- Navigation -->
         <nav class="navbar" id="navbar">
         <div class="navbar-brand">
             <div class="logo">
-            <img src="/images/prelogo.png" alt="Mankefor Logo" />
+            <img src="/images/logo-mankefor.png" alt="Mankefor Logo" />
             </div>
             <div class="brand-text">
             <p class="brand-name">
@@ -338,6 +338,12 @@
                             <i class="fa fa-instagram"></i>
                         </a>
                     </div>
+                    <!-- Admin Dashboard Link (Only visible to admin users) -->
+                    <div id="adminDashboardLink" style="margin-top: 1rem; display: none;">
+                        <a href="admin-dashboard.html" style="color: var(--primary-color); font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;">
+                            <i class="fa fa-dashboard"></i> Admin Dashboard
+                        </a>
+                    </div>
                 </div>
             </div>
 
@@ -359,6 +365,27 @@
                 document.getElementById('nav-menu').classList.toggle('active');
                 this.classList.toggle('active');
             });
+
+            // Show admin dashboard link if user is admin
+            function checkAdminAccess() {
+                const userString = localStorage.getItem('user');
+                if (userString) {
+                    try {
+                        const userData = JSON.parse(userString);
+                        if (userData.role === 'admin') {
+                            const adminLink = document.getElementById('adminDashboardLink');
+                            if (adminLink) {
+                                adminLink.style.display = 'block';
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Error checking admin access:', error);
+                    }
+                }
+            }
+            
+            // Check on page load
+            checkAdminAccess();
 
             // Message display functions
             function showContactMessage(message, type = 'success') {

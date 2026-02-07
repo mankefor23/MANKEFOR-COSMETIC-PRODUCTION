@@ -24,14 +24,14 @@
     <link rel="stylesheet" href="styles.css" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/images/prelogo.png" />
+    <link rel="icon" type="image/png" href="/images/logo-mankefor.png" />
   </head>
   <body>
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
       <div class="navbar-brand">
         <div class="logo">
-          <img src="/images/prelogo.png" alt="Mankefor Logo" />
+          <img src="/images/logo-mankefor.png" alt="Mankefor Logo" />
         </div>
         <div class="brand-text">
           <p class="brand-name">
@@ -115,7 +115,7 @@
           >
             <div class="landing-image">
               <img
-                src="/images/500.png"
+                src="/images/liquid-soap-500ml.png"
                 alt="500ml Precious Liquid Soap"
                 width="450"
                 height="330"
@@ -123,7 +123,7 @@
             </div>
             <div class="landing-image">
               <img
-                src="/images/1000.png"
+                src="/images/liquid-soap-1000ml.png"
                 alt="1000ml Precious Liquid Soap"
                 width="450"
                 height="330"
@@ -131,7 +131,7 @@
             </div>
             <div class="landing-image">
               <img
-                src="/images/5000.png"
+                src="/images/liquid-soap-5000ml.png"
                 alt="5000ml Precious Liquid Soap"
                 width="450"
                 height="330"
@@ -167,7 +167,7 @@
         <article class="tile">
           <div class="tile-content tile-image">
             <img
-              src="/images/liquid1.webp"
+              src="/images/liquid-soap-01.webp"
               alt="Precious Liquid Soap"
               data-aos="fade-down"
               data-aos-delay="900"
@@ -225,7 +225,7 @@
           </div>
           <div class="tile-content tile-image">
             <img
-              src="/images/perfume 7.jpg"
+              src="/images/essence-07.jpg"
               alt="Precious Essence"
               data-aos="fade-up"
               data-aos-delay="00"
@@ -237,7 +237,7 @@
         <article class="tile">
           <div class="tile-content tile-image">
             <img
-              src="/images/bathing 4.jpg"
+              src="/images/bath-glow-04.jpg"
               alt="Precious Bath Glow"
               data-aos="fade-down"
               data-aos-delay="900"
@@ -296,7 +296,7 @@
           </div>
           <div class="tile-content tile-image">
             <img
-              src="/images/power 2.webp"
+              src="/images/power-wash-02.webp"
               alt="Precious Power Wash"
               data-aos="fade-up"
               data-aos-delay="00"
@@ -308,7 +308,7 @@
         <article class="tile">
           <div class="tile-content tile-image">
             <img
-              src="/images/javel1.webp"
+              src="/images/bleach-01.webp"
               alt="Precious Pure Bleach"
               data-aos="fade-down"
               data-aos-delay="900"
@@ -360,106 +360,86 @@
     <!-- Product Cards -->
     <section class="content-section">
       <div class="container">
-        <div class="grid grid-3">
-          <div class="product-card card">
+        <div class="grid grid-3" id="featured-products-grid" style="max-width: 1200px; margin: 0 auto; gap: 2rem; justify-items: center;">
+          <!-- Loading state -->
+          <div class="product-card card" style="width: 100%; max-width: 350px;">
             <img
-              src="/images/500.png"
+              src="/images/liquid-soap-500ml.png"
               alt="Precious Liquid Soap 500ml"
               data-aos="flip-right"
               data-aos-duration="1900"
+              style="width: 100%; height: 250px; object-fit: contain;"
             />
-            <h3 data-aos="flip-right" data-aos-duration="1900">
-              Precious Liquid Soap
+            <h3 data-aos="flip-right" data-aos-duration="1900" style="margin: 1rem 0 0.5rem; font-size: 1.25rem; text-align: center;">
+              Loading...
             </h3>
-            <p data-aos="flip-right" data-aos-duration="1900">
-              Deep cleans clothes and keeps fabrics fresh and soft.
+            <p data-aos="flip-right" data-aos-duration="1900" style="text-align: center; color: #666; min-height: 60px; padding: 0 1rem;">
+              Fetching product details...
             </p>
-            <p class="price" data-aos="flip-right" data-aos-duration="1900">
-              1/2L - 500 FCFA
+            <p class="price" data-aos="flip-right" data-aos-duration="1900" style="text-align: center; font-size: 1.5rem; font-weight: bold; color: var(--primary-color); margin: 0.5rem 0;">
+              -
             </p>
-            <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: nowrap;">
-                <a
-                    href="product-details.html"
-                    class="btn"
-                    data-aos="flip-right"
-                    data-aos-duration="1900"
-                    >Add to Cart</a
-                >
-                <a
-                    href="product-details.html"
-                    class="btn"
-                    data-aos="flip-right"
-                    data-aos-duration="1900"
-                    >View More</a
-                >
+            <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; padding: 0 1rem 1rem;">
+                <button class="btn" disabled data-aos="flip-right" data-aos-duration="1900" style="flex: 1; min-width: 120px;">
+                  Loading...
+                </button>
+                <a href="product.html" class="btn" data-aos="flip-right" data-aos-duration="1900" style="flex: 1; min-width: 120px; text-align: center;">
+                  View All
+                </a>
             </div>
           </div>
 
-          <div class="product-card card">
+          <div class="product-card card" style="width: 100%; max-width: 350px;">
             <img
-              src="/images/1000.png"
+              src="/images/liquid-soap-1000ml.png"
               alt="Precious Liquid Soap 1000ml"
               data-aos="flip-right"
               data-aos-duration="1900"
+              style="width: 100%; height: 250px; object-fit: contain;"
             />
-            <h3 data-aos="flip-right" data-aos-duration="1900">
-              Precious Liquid Soap
+            <h3 data-aos="flip-right" data-aos-duration="1900" style="margin: 1rem 0 0.5rem; font-size: 1.25rem; text-align: center;">
+              Loading...
             </h3>
-            <p data-aos="flip-right" data-aos-duration="1900">
-              Deep cleans clothes and keeps fabrics fresh and soft.
+            <p data-aos="flip-right" data-aos-duration="1900" style="text-align: center; color: #666; min-height: 60px; padding: 0 1rem;">
+              Fetching product details...
             </p>
-            <p class="price" data-aos="flip-right" data-aos-duration="1900">
-              1L - 1000 FCFA
+            <p class="price" data-aos="flip-right" data-aos-duration="1900" style="text-align: center; font-size: 1.5rem; font-weight: bold; color: var(--primary-color); margin: 0.5rem 0;">
+              -
             </p>
-            <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: nowrap;">
-                <a
-                    href="product-details.html"
-                    class="btn"
-                    data-aos="flip-right"
-                    data-aos-duration="1900"
-                    >Add to Cart</a
-                >
-                <a
-                    href="product-details.html"
-                    class="btn"
-                    data-aos="flip-right"
-                    data-aos-duration="1900"
-                    >View More</a
-                >
+            <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; padding: 0 1rem 1rem;">
+                <button class="btn" disabled data-aos="flip-right" data-aos-duration="1900" style="flex: 1; min-width: 120px;">
+                  Loading...
+                </button>
+                <a href="product.html" class="btn" data-aos="flip-right" data-aos-duration="1900" style="flex: 1; min-width: 120px; text-align: center;">
+                  View All
+                </a>
             </div>
           </div>
 
-          <div class="product-card card">
+          <div class="product-card card" style="width: 100%; max-width: 350px;">
             <img
-              src="/images/5000.png"
+              src="/images/liquid-soap-5000ml.png"
               alt="Precious Liquid Soap 5000ml"
               data-aos="flip-right"
               data-aos-duration="1900"
+              style="width: 100%; height: 250px; object-fit: contain;"
             />
-            <h3 data-aos="flip-right" data-aos-duration="1900">
-              Precious Liquid Soap
+            <h3 data-aos="flip-right" data-aos-duration="1900" style="margin: 1rem 0 0.5rem; font-size: 1.25rem; text-align: center;">
+              Loading...
             </h3>
-            <p data-aos="flip-right" data-aos-duration="1900">
-              Deep cleans clothes and keeps fabrics fresh and soft.
+            <p data-aos="flip-right" data-aos-duration="1900" style="text-align: center; color: #666; min-height: 60px; padding: 0 1rem;">
+              Fetching product details...
             </p>
-            <p class="price" data-aos="flip-right" data-aos-duration="1900">
-              5L - 5000 FCFA
+            <p class="price" data-aos="flip-right" data-aos-duration="1900" style="text-align: center; font-size: 1.5rem; font-weight: bold; color: var(--primary-color); margin: 0.5rem 0;">
+              -
             </p>
-            <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: nowrap;">
-                <a
-                    href="product-details.html"
-                    class="btn"
-                    data-aos="flip-right"
-                    data-aos-duration="1900"
-                    >Add to Cart</a
-                >
-                <a
-                    href="product-details.html"
-                    class="btn"
-                    data-aos="flip-right"
-                    data-aos-duration="1900"
-                    >View More</a
-                >
+            <div style="display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; padding: 0 1rem 1rem;">
+                <button class="btn" disabled data-aos="flip-right" data-aos-duration="1900" style="flex: 1; min-width: 120px;">
+                  Loading...
+                </button>
+                <a href="product.html" class="btn" data-aos="flip-right" data-aos-duration="1900" style="flex: 1; min-width: 120px; text-align: center;">
+                  View All
+                </a>
             </div>
           </div>
         </div>
@@ -528,8 +508,7 @@
 
     <!-- Scripts - AOS Animation Library Only -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="api.js"></script>
-    <script src="navbar-auth.js"></script>
+    <script src="api.js"></script>  <script src="cart-manager.js"></script>    <script src="navbar-auth.js"></script>
     <script>
       // Initialize animations
       AOS.init({ duration: 800, once: true });
@@ -540,6 +519,29 @@
         this.classList.toggle('active');
       });
 
+      // Global function to add product to cart
+      function addToCart(product) {
+        console.log('🛒 addToCart() called with product:', product);
+        
+        if (!product) {
+          console.error('❌ No product provided');
+          alert('Product information missing');
+          return;
+        }
+        
+        try {
+          // Add to cart with default quantity 1 and Standard size
+          CartManager.addItem(product, 1, { size: 'Standard', price: product.price });
+          console.log('✅ Product added to cart');
+          
+          // Show success message
+          alert(`✓ Added to cart:\n${product.name}\n\nView cart or continue shopping`);
+        } catch (error) {
+          console.error('❌ Error adding to cart:', error);
+          alert('Failed to add item to cart. Please try again.');
+        }
+      }
+
       // Load Featured Products
       async function loadFeaturedProducts() {
         try {
@@ -548,6 +550,12 @@
           const products = response.data.products;
           
           console.log('✅ Featured products loaded:', products.length, 'products');
+          
+          if (products.length === 0) {
+            console.warn('No products returned from API');
+            showFallbackProducts();
+            return;
+          }
           
           // Update the 3 product cards with API data
           const productCards = document.querySelectorAll('.product-card');
@@ -558,21 +566,64 @@
             }
           });
           
+          // Re-initialize AOS after updating content
+          AOS.refresh();
+          
         } catch (error) {
           console.error('❌ Error loading featured products:', error);
           console.warn('⚠️ Showing static fallback products. Start backend on http://localhost:3000 for full functionality.');
-          // Fallback: keep static products (no action needed)
+          showFallbackProducts();
         }
+      }
+      
+      function showFallbackProducts() {
+        // Show static fallback products when backend is not available
+        const productCards = document.querySelectorAll('.product-card');
+        
+        const fallbackProducts = [
+          {
+            id: 'fallback-1',
+            name: 'Precious Liquid Soap - 500ml',
+            price: 500,
+            images: ['/images/liquid-soap-500ml.png'],
+            shortDescription: 'Deep cleans clothes and keeps fabrics fresh and soft.',
+            isFallback: true
+          },
+          {
+            id: 'fallback-2', 
+            name: 'Precious Liquid Soap - 1L',
+            price: 1000,
+            images: ['/images/liquid-soap-1000ml.png'],
+            shortDescription: 'Deep cleans clothes and keeps fabrics fresh and soft.',
+            isFallback: true
+          },
+          {
+            id: 'fallback-3',
+            name: 'Precious Liquid Soap - 5L',
+            price: 5000,
+            images: ['/images/liquid-soap-5000ml.png'],
+            shortDescription: 'Deep cleans clothes and keeps fabrics fresh and soft.',
+            isFallback: true
+          }
+        ];
+        
+        fallbackProducts.forEach((product, index) => {
+          if (productCards[index]) {
+            updateProductCard(productCards[index], product);
+          }
+        });
       }
 
       function updateProductCard(card, product) {
         // Handle both MongoDB _id and regular id
         const productId = product.id || product._id;
+        const isFallback = product.isFallback || false;
         
         // Update image
         const img = card.querySelector('img');
         if (img && product.images && product.images[0]) {
-          img.src = product.images[0];
+          const rawImage = product.images[0];
+          img.src = typeof rawImage === 'string' ? rawImage : rawImage.url;
           img.alt = product.name;
         }
         
@@ -583,7 +634,7 @@
         }
         
         // Update description
-        const paragraphs = card.querySelectorAll('p');
+        const paragraphs = card.querySelectorAll('p:not(.price)');
         if (paragraphs.length > 0) {
           paragraphs[0].textContent = product.shortDescription || product.description || 'Premium quality product';
         }
@@ -594,16 +645,44 @@
           priceElement.textContent = `${product.price} FCFA`;
         }
         
-        // Update links to point to product details
-        const links = card.querySelectorAll('a.btn');
-        links.forEach(link => {
-          const isAddToCart = link.textContent.includes('Add to Cart');
-          if (isAddToCart) {
-            link.href = `cart.html?add=${productId}`;
+        // Update button container with functional buttons
+        const buttonContainer = card.querySelector('div[style*="display: flex"]');
+        if (buttonContainer) {
+          if (isFallback) {
+            // For fallback products, show a message and link to all products
+            buttonContainer.innerHTML = `
+              <button class="btn" onclick="alert('Backend not connected. Please start your server or visit the Products page to see all items.')"
+                data-aos="flip-right" data-aos-duration="1900">
+                Add to Cart
+              </button>
+              <a href="product.html" class="btn"
+                data-aos="flip-right" data-aos-duration="1900">
+                View All Products
+              </a>
+            `;
           } else {
-            link.href = `product-details.html?id=${productId}`;
+            // For real products, create working Add to Cart button
+            const productData = {
+              id: productId,
+              name: product.name,
+              price: product.price,
+              images: product.images,
+              description: product.shortDescription || product.description
+            };
+            const encodedProduct = btoa(JSON.stringify(productData));
+            
+            buttonContainer.innerHTML = `
+              <button class="btn" onclick="addToCart(JSON.parse(atob('${encodedProduct}')))"
+                data-aos="flip-right" data-aos-duration="1900">
+                Add to Cart
+              </button>
+              <a href="product-details.html?id=${productId}" class="btn"
+                data-aos="flip-right" data-aos-duration="1900">
+                View More
+              </a>
+            `;
           }
-        });
+        }
       }
 
       // Load featured products on page load

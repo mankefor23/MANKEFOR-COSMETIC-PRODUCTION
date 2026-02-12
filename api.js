@@ -1,6 +1,6 @@
 // API Configuration
-// const API_BASE_URL = 'https://cosmetic-backend-zna0.onrender.com';
-const API_BASE_URL = 'http://localhost:3000'; // Use local backend for development
+const API_BASE_URL = 'https://cosmetic-backend-zna0.onrender.com';
+// const API_BASE_URL = 'http://localhost:3000'; // Use local backend for development
 
 // Token Management
 function getToken() {

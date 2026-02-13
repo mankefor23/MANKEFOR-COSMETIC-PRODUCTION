@@ -248,9 +248,13 @@
                 try {
                     console.log('Searching for:', query);
                     const response = await API.searchProducts(query);
-                    const products = response.data.products;
+                    const allProducts = response.data.products;
                     
-                    console.log('✅ Search results:', products.length, 'products found');
+                    // Filter to only show available products
+                    const products = allProducts.filter(p => p.isAvailable === true);
+                    
+                    console.log('✅ Search results:', products.length, 'available products found (out of', allProducts.length, 'total)');
+                    allProducts.forEach((p, i) => console.log(`  Product ${i+1}: ${p.name} - isAvailable: ${p.isAvailable}`));
                     
                     if (products.length === 0) {
                         productGrid.innerHTML = `
@@ -281,10 +285,14 @@
             async function loadAllProducts() {
                 try {
                     console.log('Loading all products from API...');
-                    const response = await API.getProducts({ limit: 12 });
-                    const products = response.data.products;
+                    const response = await API.getProducts({ limit: 20 });
+                    const allProducts = response.data.products;
                     
-                    console.log('✅ Products loaded:', products.length, 'products');
+                    // Filter to only show available products
+                    const products = allProducts.filter(p => p.isAvailable === true);
+                    
+                    console.log('✅ Products loaded:', products.length, 'available products (out of', allProducts.length, 'total)');
+                    allProducts.forEach((p, i) => console.log(`  Product ${i+1}: ${p.name} - isAvailable: ${p.isAvailable}`));
                     renderProducts(products);
                     searchResults.querySelector('h2').textContent = 'Our Products';
                     

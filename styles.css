@@ -442,13 +442,14 @@ p {
 .products-flex {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
+  justify-content: center;
   gap: 1.5rem;
 }
 
 .products-flex > * {
   flex: 0 1 calc((100% - 4.5rem) / 4);
   min-width: 200px;
+  max-width: 300px;
 }
 
 @media (max-width: 1200px) {

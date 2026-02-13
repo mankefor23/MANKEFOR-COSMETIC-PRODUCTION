@@ -705,7 +705,7 @@
             // Product loading state
             let currentPage = 1;
             let totalPages = 1;
-            const limit = 12;
+            const limit = 20;
 
             // Load products from API
             async function loadProducts(page = 1, category = null) {
@@ -724,12 +724,21 @@
                     console.log('✅ Products loaded from API:', products.length, 'products');
                     console.log('First product:', products[0]); // Debug: Check first product structure
                     
+                    // Filter to only show available products
+                    const availableProducts = products.filter(p => p.isAvailable === true);
+                    console.log('📦 Available products:', availableProducts.length, 'of', products.length);
+                    
+                    // Log each product's availability for debugging
+                    products.forEach((p, i) => {
+                        console.log(`  Product ${i+1}: ${p.name} - isAvailable: ${p.isAvailable}`);
+                    });
+                    
                     // Update pagination state
                     currentPage = pagination.page;
                     totalPages = pagination.totalPages;
                     
                     // Render products
-                    renderProducts(products);
+                    renderProducts(availableProducts);
                     
                     // Update pagination UI
                     updatePagination(pagination);
@@ -806,14 +815,12 @@
                 container.innerHTML = html;
                 container.style.display = 'block';
                 
-                // Hide static products when API loads successfully
-                const staticSections = document.querySelectorAll('main.content-section > .container > section.mb-4');
-                
-                let hiddenCount = 0;
-                staticSections.forEach(section => {
-                    if (!section.closest('#products-container')) {
+                // Hide ALL static sections outside products-container
+                const allStaticSections = document.querySelectorAll('.content-section > .container > section.mb-4, .content-section .container > section.mb-4');
+                allStaticSections.forEach(section => {
+                    // Only hide if it's not inside products-container
+                    if (!section.parentElement.id || section.parentElement.id !== 'products-container') {
                         section.style.display = 'none';
-                        hiddenCount++;
                     }
                 });
             }

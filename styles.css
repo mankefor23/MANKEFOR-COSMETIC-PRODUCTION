@@ -296,9 +296,8 @@ p {
   border-radius: 50%;
   width: 1.25rem;
   height: 1.25rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding-left: 5.5px;
+  padding-top: 1px;
   font-size: 0.75rem;
   font-weight: bold;
 }

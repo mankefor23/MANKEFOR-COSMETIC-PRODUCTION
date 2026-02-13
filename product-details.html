@@ -624,7 +624,7 @@
                 }).join('')}</ul>` 
                 : '';
 
-            const sizes = product.variants || (product.price ? [{ size: 'Standard', price: product.price }] : []);
+            const sizes = product.sizes || product.variants || (product.price ? [{ size: 'Standard', price: product.price }] : []);
             const sizeButtons = sizes.length > 0 
                 ? sizes.map((variant, index) => 
                     `<button class="size-btn ${index === 0 ? 'active' : ''}" data-price="${variant.price}">${variant.size} - ${variant.price} FCFA</button>`
@@ -674,9 +674,9 @@
 
                                 <div class="cta-buttons">
                                     <button class="btn" onclick="addToCartFromDetails()">Add to Cart</button>
-                                    <a href="https://wa.me/237651586004" class="btn btn-secondary">
+                                    <button class="btn btn-secondary" onclick="contactWhatsApp()">
                                         <i class="fa fa-whatsapp"></i> WhatsApp
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -782,7 +782,17 @@
                 return;
             }
 
-            const reviewsHTML = reviews.map(review => `
+            const reviewsHTML = reviews.map(review => {
+                // Format date safely
+                let dateDisplay = 'Recently';
+                if (review.createdAt) {
+                    const date = new Date(review.createdAt);
+                    if (!isNaN(date.getTime())) {
+                        dateDisplay = date.toLocaleDateString();
+                    }
+                }
+                
+                return `
                 <div class="review-item" style="padding: 1.5rem; border-bottom: 1px solid #eee; margin-bottom: 1rem;">
                     <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
                         <div>
@@ -791,11 +801,12 @@
                                 ${'⭐'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}
                             </div>
                         </div>
-                        <small style="color: #666;">${new Date(review.createdAt).toLocaleDateString()}</small>
+                        <small style="color: #666;">${dateDisplay}</small>
                     </div>
                     <p style="margin: 0; color: #333;">${review.comment}</p>
                 </div>
-            `).join('');
+            `;
+            }).join('');
 
             container.innerHTML = reviewsHTML;
         }
@@ -888,6 +899,41 @@
             }
         }
 
+        // Contact via WhatsApp with product details
+        function contactWhatsApp() {
+            if (!currentProduct) {
+                console.error('❌ No product loaded!');
+                alert('Product information not loaded');
+                return;
+            }
+            
+            // Get selected size if any
+            const selectedSizeBtn = document.querySelector('.size-btn.active');
+            let sizeInfo = '';
+            let priceInfo = '';
+            
+            if (selectedSizeBtn) {
+                const price = selectedSizeBtn.getAttribute('data-price');
+                const sizeText = selectedSizeBtn.textContent;
+                const sizeName = sizeText.split(' - ')[0];
+                sizeInfo = `- Size: ${sizeName}\n`;
+                priceInfo = `- Price: ${price} FCFA\n`;
+            } else if (currentProduct.price) {
+                priceInfo = `- Price: ${currentProduct.price} FCFA\n`;
+            }
+            
+            // Build WhatsApp message
+            const message = `Hello! I'm interested in:\n\n` +
+                `*${currentProduct.name}*\n` +
+                sizeInfo +
+                priceInfo +
+                `\nCould you provide more information?`;
+            
+            // Encode message and open WhatsApp
+            const whatsappUrl = `https://wa.me/237651586004?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+        
         // Add to cart function (must be in global scope for onclick handler)
         function addToCartFromDetails() {
             console.log('🔵 addToCartFromDetails() - CLICKED!');

@@ -110,7 +110,7 @@
                     <div class="grid grid-3" id="productGrid">
                         <!-- Product Card 1 -->
                         <div class="product-card card" data-aos="fade-up">
-                            <img src="/images/500.png" alt="Precious Liquid Soap 500ml" />
+                            <img src="/images/liquid-soap-500ml.png" alt="Precious Liquid Soap 500ml" />
                             <h3>Precious Liquid Soap</h3>
                             <p>Deep cleans clothes and keeps fabrics fresh and soft.</p>
                             <p class="price">500ml - 500 FCFA</p>
@@ -119,7 +119,7 @@
                         
                         <!-- Product Card 2 -->
                         <div class="product-card card" data-aos="fade-up" data-aos-delay="100">
-                            <img src="/images/1000.png" alt="Precious Liquid Soap 1L" />
+                            <img src="/images/liquid-soap-1000ml.png" alt="Precious Liquid Soap 1L" />
                             <h3>Precious Liquid Soap</h3>
                             <p>Deep cleans clothes and keeps fabrics fresh and soft.</p>
                             <p class="price">1L - 1,000 FCFA</p>
@@ -128,7 +128,7 @@
                         
                         <!-- Product Card 3 -->
                         <div class="product-card card" data-aos="fade-up" data-aos-delay="200">
-                            <img src="/images/5000.png" alt="Precious Liquid Soap 5L" />
+                            <img src="/images/liquid-soap-5000ml.png" alt="Precious Liquid Soap 5L" />
                             <h3>Precious Liquid Soap</h3>
                             <p>Deep cleans clothes and keeps fabrics fresh and soft.</p>
                             <p class="price">5L - 5,000 FCFA</p>
@@ -137,7 +137,7 @@
                         
                         <!-- Product Card 4 -->
                         <div class="product-card card" data-aos="fade-up" data-aos-delay="300">
-                            <img src="/images/perfume 7.jpg" alt="Precious Essence" />
+                            <img src="/images/essence-01.jpg" alt="Precious Essence" />
                             <h3>Precious Essence</h3>
                             <p>A timeless fragrance crafted for elegance and confidence.</p>
                             <p class="price">Contact for pricing</p>
@@ -146,7 +146,7 @@
                         
                         <!-- Product Card 5 -->
                         <div class="product-card card" data-aos="fade-up" data-aos-delay="400">
-                            <img src="/images/power 2.webp" alt="Precious Power Wash" />
+                            <img src="/images/power-wash-02.webp" alt="Precious Power Wash" />
                             <h3>Precious Power Wash</h3>
                             <p>Engineered for tough stains, safe for families.</p>
                             <p class="price">Contact for pricing</p>
@@ -155,7 +155,7 @@
                         
                         <!-- Product Card 6 -->
                         <div class="product-card card" data-aos="fade-up" data-aos-delay="500">
-                            <img src="/images/javel1.webp" alt="Precious Pure Bleach" />
+                            <img src="/images/bleach-01.webp" alt="Precious Pure Bleach" />
                             <h3>Precious Pure Bleach</h3>
                             <p>Gentle on fabrics, tough on dirt.</p>
                             <p class="price">Contact for pricing</p>
@@ -298,7 +298,9 @@
             // Render products in grid
             function renderProducts(products) {
                 const productsHTML = products.map((product, index) => {
-                    const image = product.images && product.images[0] ? product.images[0] : '/images/default-product.png';
+                    // Handle image objects - extract url property
+                    const imageObj = product.images && product.images[0];
+                    const image = imageObj ? (typeof imageObj === 'string' ? imageObj : imageObj.url) : '/images/default-product.png';
                     const price = product.price ? `${product.price} FCFA` : 'Contact for pricing';
                     const description = product.shortDescription || product.description || 'Premium quality product';
                     
